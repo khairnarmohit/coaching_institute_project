@@ -1,0 +1,212 @@
+<%-include("navbar.ejs")%>
+
+<style>
+    .about-header {
+        background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.7)),
+        url("https://tse4.mm.bing.net/th/id/OIP.eDao7xwU7dbMlKgf_EDoeAHaEv?pid=ImgDet&w=202&h=129&c=7&dpr=1.3&o=7&rm=3g") center/cover no-repeat;
+        padding: 120px 0;
+        text-align: center;
+        color: #fff;
+    }
+
+    .form-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 6px 20px rgba(0,0,0,.1);
+        border-top: 5px solid #FFD83A;
+    }
+
+    .section-card {
+        border: 1px solid #eee;
+        background: #fefefe;
+        border-radius: 8px;
+        padding: 20px 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #000;
+        background: #FFD83A;
+        padding: 6px 14px;
+        border-radius: 3px;
+        width: fit-content;
+        margin: 10px 0 15px;
+    }
+
+    .form-label {
+        font-size: 13px;
+        margin-bottom: 3px;
+        font-weight: 500;
+    }
+
+    /* Input fields smaller width and consistent style */
+    .form-control {
+        font-size: 13px;
+        padding: 5px 10px;
+        border: 1px solid #444;
+        border-radius: 5px;
+        height: 32px;
+        max-width: 100%;
+    }
+
+    textarea.form-control {
+        height: auto;
+    }
+
+    .row .col-md-6 .form-control {
+        width: 95%;
+    }
+
+    button {
+        border-radius: 5px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+    }
+</style>
+
+<div class="about-header">
+    <h1 class="animate__animated animate__fadeInDown fw-bold">Admission Form</h1>
+</div>
+
+<form class="form-container" action="/addmission_form" method="post" enctype="multipart/form-data">
+
+    <h6 class="fw-bold text-center" style="font-size:16px; margin-bottom:15px;">Student Details</h6>
+
+    <!-- Student Details -->
+    <div class="section-card">
+        <div class="mb-3">
+            <label class="form-label">Student Name *</label>
+            <input type="text" class="form-control" name="full_name">
+        </div>
+    </div>
+
+    <!-- Personal Details -->
+    <div class="section-title">Personal Details</div>
+    <div class="section-card">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Gender *</label>
+                <select class="form-control" name="gender">
+                    <option>-- Select --</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Date of Birth *</label>
+                <input type="date" class="form-control" name="date_of_birth">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Mobile Number *</label>
+                <input type="tel" class="form-control" name="mobile_number">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Email *</label>
+                <input type="email" class="form-control" name="email">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Address *</label>
+            <textarea class="form-control" name="address" rows="2"></textarea>
+        </div>
+    </div>
+
+    <!-- Education Details -->
+    <div class="section-title">Education Details</div>
+    <div class="section-card">
+        <div class="mb-3">
+            <label class="form-label">Qualification</label>
+            <input type="text" class="form-control" name="qualification">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">College Name</label>
+            <input type="text" class="form-control" name="college_name">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Passing Year</label>
+            <input type="number" class="form-control" name="passing_year">
+        </div>
+    </div>
+
+    <!-- Course Details -->
+    <div class="section-title">Course Details</div>
+    <div class="section-card">
+        <div class="mb-3">
+            <label class="form-label">Course Name</label>
+            <select class="form-control" name="course_name">
+                <option>-- Select Course --</option>
+                <option>Talathi</option>
+                <option>Police Bharti</option>
+                <option>Banking Exams</option>
+                <option>MPSC</option>
+                <option>Railway Exams</option>
+                <option>UPSC</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mode of Class</label>
+            <select class="form-control" name="mode_of_class">
+                <option>Online</option>
+                <option>Offline</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Parent Details -->
+    <div class="section-title">Parent / Guardian Details</div>
+    <div class="section-card">
+        <div class="mb-3">
+            <label class="form-label">Parent Name</label>
+            <input type="text" class="form-control" name="parent_name">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Parent Contact</label>
+            <input type="tel" class="form-control" name="parent_contact">
+        </div>
+    </div>
+
+    <!-- Documents -->
+    <div class="section-title">Documents</div>
+    <div class="section-card">
+        <div class="mb-3">
+            <label class="form-label">Photo</label>
+            <input type="file" class="form-control" name="photo">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">ID Proof</label>
+            <input type="file" class="form-control" name="id_proof">
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary w-100 mt-3" style="font-size:14px; padding:8px 0;">
+        Submit
+    </button>
+
+</form>
+
+
+<%-include("footer.ejs")%>
