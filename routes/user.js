@@ -17,5 +17,9 @@ router.get("/admission",function(req,res){
     res.render("user/admission.ejs")
 });
 
+router.get("/syllabus",(req,res)=>{
+  res.render("user/syllabus.ejs")
+})
+
 
 module.exports = router;
