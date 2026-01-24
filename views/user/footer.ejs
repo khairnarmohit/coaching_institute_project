@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Government Competitive Academy</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ================= FOOTER : GOVERNMENT STYLE ================= */
+
+.modern-footer {
+  background: #0b1c2d;
+  color: #e5e7eb;
+  padding: 50px 0 18px;
+  font-family: "Segoe UI", sans-serif;
+  position: relative;
+}
+
+/* Top Saffron Line */
+.modern-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #f59e0b;
+}
+
+/* Container */
+.footer-container {
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* Grid */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.2fr 1.5fr 1fr;
+  gap: 35px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Brand */
+.footer-logo {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.footer-logo i {
+  font-size: 34px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f59e0b;
+  color: #0b1c2d;
+}
+
+.logo-text h2 {
+  font-size: 20px;
+  margin: 0;
+  color: #ffffff;
+}
+
+.tagline {
+  font-size: 13px;
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.brand-description {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+/* Links */
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+.link-group h3 {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #fbbf24;
+}
+
+.link-group ul {
+  list-style: none;
+  padding: 0;
+}
+
+.link-group li {
+  margin-bottom: 8px;
+}
+
+.link-group a {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.link-group a:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+/* Contact */
+.footer-contact h3 {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #fbbf24;
+}
+
+.footer-contact p {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.footer-contact i {
+  color: #f59e0b;
+  margin-right: 6px;
+}
+
+/* Social */
+.follow-us {
+  margin-top: 15px;
+}
+
+.follow-us h4 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.social {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: 0.3s;
+}
+
+.social:hover {
+  background: #f59e0b;
+  color: #0b1c2d;
+}
+
+/* Bottom */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  font-size: 13px;
+}
+
+.legal-links {
+  display: flex;
+  gap: 16px;
+}
+
+.legal-links a {
+  color: #e5e7eb;
+  text-decoration: none;
+}
+
+.legal-links a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<footer class="modern-footer">
+  <div class="footer-container">
+
+    <div class="footer-top">
+
+      <!-- Brand -->
+      <div>
+        <div class="footer-logo">
+          <i class="fas fa-landmark"></i>
+          <div class="logo-text">
+            <h2>Government Competitive Academy</h2>
+            <p class="tagline">Excellence in Civil Service Preparation</p>
+          </div>
+        </div>
+
+        <p class="brand-description">
+          Premier coaching institute for UPSC, MPSC, SSC, Banking & other
+          government competitive examinations.
+        </p>
+      </div>
+
+      <!-- Links -->
+      <div class="footer-links-grid">
+        <div class="link-group">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Institute</a></li>
+            <li><a href="#">Faculty</a></li>
+            <li><a href="#">Results</a></li>
+          </ul>
+        </div>
+
+        <div class="link-group">
+          <h3>Courses</h3>
+          <ul>
+            <li><a href="#">UPSC / MPSC</a></li>
+            <li><a href="#">SSC</a></li>
+            <li><a href="#">Banking</a></li>
+            <li><a href="#">Railway</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-contact">
+        <h3>Contact</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Shivaji Nagar, Pune</p>
+        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+        <p><i class="fas fa-envelope"></i> info@govacademy.com</p>
+
+        <div class="follow-us">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a class="social"><i class="fab fa-facebook-f"></i></a>
+            <a class="social"><i class="fab fa-instagram"></i></a>
+            <a class="social"><i class="fab fa-youtube"></i></a>
+            <a class="social"><i class="fab fa-twitter"></i></a>
+            <a class="social"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom -->
+    <div class="footer-bottom">
+      <p>© 2026 Government Competitive Academy</p>
+      <div class="legal-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Disclaimer</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
