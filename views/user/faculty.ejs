@@ -1,14 +1,25 @@
 <%- include("navbar.ejs") %>
 
   <style>
+    :root {
+      --gov-white: #ffffff;
+      --gov-bg: #f1f5f9;
+      --gov-border: #e2e8f0;
+      --gov-text: #1e293b;
+      --gov-muted: #64748b;
+      --gov-primary: #1e3a8a;
+      --gov-success: #10b981;
+    }
+
     /* Faculty Page Specific Styles */
     .page-title {
-      background: linear-gradient(135deg, var(--gov-dark) 0%, #1e3a8a 100%);
+      background: linear-gradient(135deg, var(--gov-dark) 0%, var(--gov-primary) 100%);
       color: var(--gov-white);
       padding: 70px 0;
       text-align: center;
       position: relative;
       overflow: hidden;
+      border-bottom: 4px solid var(--gov-accent);
     }
 
     .page-title::before {
@@ -164,22 +175,22 @@
 
     /* Academic Head Card Styling */
     .academic-card {
-      border-left: 6px solid #28a745;
+      border-left: 6px solid var(--gov-success);
       background: linear-gradient(135deg, #f0fff4 0%, var(--gov-white) 100%);
     }
 
     .academic-card .designation {
-      color: #28a745;
+      color: var(--gov-success);
     }
 
     /* Special Card Styling */
     .special-card {
-      border-left: 6px solid #dc3545;
+      border-left: 6px solid #ef4444;
       background: linear-gradient(135deg, #fff0f0 0%, var(--gov-white) 100%);
     }
 
     .special-card .designation {
-      color: #dc3545;
+      color: #ef4444;
     }
 
     /* Faculty Stats */
@@ -261,12 +272,13 @@
 
     /* CTA Section */
     .cta-section {
-      background: linear-gradient(135deg, var(--gov-dark) 0%, #1e3a8a 100%);
+      background: linear-gradient(135deg, var(--gov-dark) 0%, var(--gov-primary) 100%);
       color: var(--gov-white);
       padding: 80px 0;
       text-align: center;
       position: relative;
       overflow: hidden;
+      border-top: 4px solid var(--gov-accent);
     }
 
     .cta-section h2 {
