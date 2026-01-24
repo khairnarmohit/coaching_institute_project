@@ -13,7 +13,7 @@ router.get("/contact",(req,res)=>{
     res.render("user/contact.ejs")
 })
 
-route.get("/admission",function(req,res){
+router.get("/admission",function(req,res){
     res.render("user/admission.ejs")
 });
 
