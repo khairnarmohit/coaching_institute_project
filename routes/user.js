@@ -21,5 +21,9 @@ router.get("/syllabus",(req,res)=>{
   res.render("user/syllabus.ejs")
 })
 
+router.get("/gallery",(req,res)=>{
+  res.render("user/gallery.ejs")
+})
+
 
 module.exports = router;
