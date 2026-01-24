@@ -1,0 +1,969 @@
+<%- include("navbar.ejs") %>
+
+  <style>
+    /* Faculty Page Specific Styles */
+    .page-title {
+      background: linear-gradient(135deg, var(--gov-dark) 0%, #1e3a8a 100%);
+      color: var(--gov-white);
+      padding: 70px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-title::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,128L48,122.7C96,117,192,107,288,112C384,117,480,139,576,149.3C672,160,768,160,864,138.7C960,117,1056,75,1152,69.3C1248,64,1344,96,1392,112L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-size: cover;
+    }
+
+    .page-title h1 {
+      font-weight: 800;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      position: relative;
+      color: var(--gov-white);
+    }
+
+    .page-title p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      color: var(--gov-border);
+    }
+
+    .faculty-card {
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid var(--gov-border);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      height: 100%;
+      background: var(--gov-white);
+    }
+
+    .faculty-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border-color: var(--gov-accent);
+    }
+
+    .faculty-img-container {
+      position: relative;
+      overflow: hidden;
+      background-color: var(--gov-bg);
+    }
+
+    .faculty-img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.5s ease;
+    }
+
+    .faculty-card:hover .faculty-img {
+      transform: scale(1.03);
+    }
+
+    .faculty-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, var(--gov-dark), transparent);
+      padding: 20px;
+      color: var(--gov-white);
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .faculty-card:hover .faculty-overlay {
+      transform: translateY(0);
+    }
+
+    .faculty-social {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .faculty-social a {
+      color: var(--gov-white);
+      background: rgba(255, 255, 255, 0.2);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .faculty-social a:hover {
+      background: var(--gov-accent);
+      transform: translateY(-3px);
+    }
+
+    .designation {
+      font-weight: 700;
+      color: var(--gov-accent);
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    .section-title {
+      font-weight: 800;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+      color: var(--gov-dark);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(to right, var(--gov-dark), var(--gov-accent));
+      border-radius: 2px;
+    }
+
+    .badge-subject {
+      background-color: var(--gov-bg);
+      color: var(--gov-text);
+      margin: 3px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: inline-block;
+      border: 1px solid var(--gov-border);
+    }
+
+    /* Founder Card Styling */
+    .founder-card {
+      border-left: 6px solid var(--gov-accent);
+      background: linear-gradient(135deg, #fffbf0 0%, var(--gov-white) 100%);
+    }
+
+    .founder-card .designation {
+      color: var(--gov-accent);
+    }
+
+    /* Academic Head Card Styling */
+    .academic-card {
+      border-left: 6px solid #28a745;
+      background: linear-gradient(135deg, #f0fff4 0%, var(--gov-white) 100%);
+    }
+
+    .academic-card .designation {
+      color: #28a745;
+    }
+
+    /* Special Card Styling */
+    .special-card {
+      border-left: 6px solid #dc3545;
+      background: linear-gradient(135deg, #fff0f0 0%, var(--gov-white) 100%);
+    }
+
+    .special-card .designation {
+      color: #dc3545;
+    }
+
+    /* Faculty Stats */
+    .faculty-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid var(--gov-border);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--gov-dark);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--gov-muted);
+    }
+
+    /* Faculty Achievements */
+    .achievement-badge {
+      display: inline-block;
+      background: var(--gov-accent);
+      color: var(--gov-dark);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin: 2px;
+    }
+
+    /* Tabs */
+    .faculty-tabs {
+      border-bottom: 2px solid var(--gov-border);
+      margin-bottom: 30px;
+    }
+
+    .nav-tabs .nav-link {
+      font-weight: 600;
+      color: var(--gov-muted);
+      border: none;
+      padding: 10px 20px;
+      margin-right: 5px;
+    }
+
+    .nav-tabs .nav-link.active {
+      color: var(--gov-dark);
+      border-bottom: 3px solid var(--gov-accent);
+      background-color: transparent;
+    }
+
+    .nav-tabs .nav-link:hover {
+      color: var(--gov-accent) !important;
+      background-color: rgba(11, 28, 45, 0.05);
+      border-color: transparent;
+    }
+
+    /* Dept Badge */
+    .dept-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--gov-dark);
+      color: var(--gov-white);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 1;
+      border: 1px solid var(--gov-accent);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--gov-dark) 0%, #1e3a8a 100%);
+      color: var(--gov-white);
+      padding: 80px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section h2 {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .cta-btn {
+      background: var(--gov-white);
+      color: var(--gov-dark);
+      font-weight: 700;
+      padding: 12px 30px;
+      border-radius: 50px;
+      border: none;
+      transition: all 0.3s;
+      margin: 10px;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      background: var(--gov-accent);
+      color: var(--gov-dark);
+    }
+
+    .cta-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--gov-accent);
+    }
+
+    @media (max-width: 768px) {
+      .page-title h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+
+  <!-- PAGE HEADER -->
+  <section class="page-title">
+    <div class="container">
+      <h1>Our Faculty Team</h1>
+      <p class="lead">Learn from India's finest educators, ex-bureaucrats, and subject matter experts with proven
+        track records of success in government exams</p>
+    </div>
+  </section>
+
+  <!-- FACULTY CATEGORY TABS -->
+  <section class="container my-5">
+    <h2 class="section-title text-center">Meet Our Expert Faculty</h2>
+
+    <ul class="nav nav-tabs faculty-tabs justify-content-center" id="facultyTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="founder-tab" data-bs-toggle="tab" data-bs-target="#founder" type="button"
+          role="tab">Founder & Leadership</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="gs-tab" data-bs-toggle="tab" data-bs-target="#gs" type="button" role="tab">General
+          Studies</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="optional-tab" data-bs-toggle="tab" data-bs-target="#optional" type="button"
+          role="tab">Optional Subjects</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="aptitude-tab" data-bs-toggle="tab" data-bs-target="#aptitude" type="button"
+          role="tab">Aptitude & CSAT</button>
+      </li>
+
+    </ul>
+  </section>
+
+  <!-- TAB CONTENT -->
+  <div class="tab-content" id="facultyTabContent">
+
+    <!-- FOUNDER & LEADERSHIP -->
+    <div class="tab-pane fade show active" id="founder" role="tabpanel">
+      <section class="container my-5">
+        <div class="row g-4 justify-content-center">
+
+          <!-- Founder -->
+          <div class="col-lg-6">
+            <div class="card faculty-card founder-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-md-5 faculty-img-container h-100">
+                  <span class="dept-badge">Founder</span>
+                  <img src="/images/Mr. Ramesh Patil.jpeg" class="img-fluid faculty-img h-100" alt="Founder"
+                    style="object-fit: cover;">
+                  <div class="faculty-overlay">
+                    <div class="faculty-social">
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
+                    <h3 class="mb-1">Mr. Ramesh Patil</h3>
+                    <p class="designation mb-3">Founder & Chairman | Ex-IRS Officer</p>
+
+                    <div class="mb-3">
+                      <span class="achievement-badge">15+ Years Experience</span>
+                      <span class="achievement-badge">NET Qualified</span>
+                    </div>
+
+                    <p class="small mb-2"><strong>Qualification:</strong> M.A. Pol. Sci., NET, Ex-IRS</p>
+                    <p class="small"><strong>Expertise:</strong> Polity, Ethics & Essay</p>
+
+                    <p class="mt-2 small text-muted">
+                      Former IRS officer ensuring quality education through innovative teaching methodologies.
+                    </p>
+
+                    <div class="faculty-stats mt-auto pt-3">
+                      <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Success Rate</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Years Exp</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">5000+</div>
+                        <div class="stat-label">Students</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Academic Head -->
+          <div class="col-lg-6">
+            <div class="card faculty-card academic-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-md-5 faculty-img-container h-100">
+                  <span class="dept-badge">Academic Head</span>
+                  <img src="/images/Dr. Sunita Deshmukh.png" class="img-fluid faculty-img h-100" alt="Academic Head"
+                    style="object-fit: cover;">
+                  <div class="faculty-overlay">
+                    <div class="faculty-social">
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="#"><i class="fab fa-researchgate"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
+                    <h3 class="mb-1">Dr. Sunita Deshmukh</h3>
+                    <p class="designation mb-3">Academic Director</p>
+
+                    <div class="mb-3">
+                      <span class="achievement-badge">PhD History</span>
+                      <span class="achievement-badge">Curriculum Designer</span>
+                    </div>
+
+                    <p class="small mb-2"><strong>Qualification:</strong> Ph.D. History (JNU)</p>
+                    <p class="small"><strong>Expertise:</strong> History, Art & Culture</p>
+
+                    <p class="mt-2 small text-muted">
+                      Responsible for academic planning and "Timeline Method" for history.
+                    </p>
+
+                    <div class="faculty-stats mt-auto pt-3">
+                      <div class="stat-item">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">Toppers</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">12+</div>
+                        <div class="stat-label">Years Exp</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Books Published</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <script>
+          // Number Counter Animation
+          document.addEventListener("DOMContentLoaded", () => {
+            const counters = document.querySelectorAll('.count-up');
+            const speed = 200; // The lower the slower
+
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  const counter = entry.target;
+                  const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = Math.ceil(target / 100); // Dynamic increment based on size
+
+                    if (count < target) {
+                      counter.innerText = count + inc > target ? target : count + inc;
+                      setTimeout(updateCount, 15);
+                    } else {
+                      counter.innerText = target;
+                    }
+                  };
+                  updateCount();
+                  observer.unobserve(counter);
+                }
+              });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => {
+              observer.observe(counter);
+            });
+          });
+        </script>
+      </section>
+    </div>
+
+    <!-- GENERAL STUDIES FACULTY -->
+    <div class="tab-pane fade" id="gs" role="tabpanel">
+      <section class="container my-5">
+        <div class="row g-4 justify-content-center">
+
+          <!-- GS Faculty 1 -->
+          <div class="col-lg-6">
+            <div class="card faculty-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-md-5 faculty-img-container h-100">
+                  <span class="dept-badge">Polity & Governance</span>
+                  <img src="/images/Prof. Amit Kulkarni.jpg" class="faculty-img h-100" alt=""
+                    style="object-fit: cover;">
+                  <div class="faculty-overlay">
+                    <div class="faculty-social">
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
+                    <h5 class="mb-1">Prof. Amit Kulkarni</h5>
+                    <p class="designation mb-3">Senior Faculty – Polity & Governance</p>
+
+                    <p class="small mb-2"><strong>Qualification:</strong> LL.M., NET Qualified</p>
+                    <p class="small"><strong>Experience:</strong> 10+ Years</p>
+
+                    <div class="mb-3">
+                      <span class="badge-subject">Indian Constitution</span>
+                      <span class="badge-subject">Governance</span>
+                    </div>
+
+                    <p class="mt-2 small text-muted">
+                      Expert in constitutional law with a unique case-study approach. Simplified complex legal
+                      concepts.
+                    </p>
+
+                    <div class="faculty-stats mt-auto pt-3">
+                      <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Success Rate</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Years</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GS Faculty 2 -->
+          <div class="col-lg-6">
+            <div class="card faculty-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-md-5 faculty-img-container h-100">
+                  <span class="dept-badge">Geography & Environment</span>
+                  <img src="/images/Dr. Priya Sharma.jpg" class="faculty-img h-100" alt="" style="object-fit: cover;">
+                  <div class="faculty-overlay">
+                    <div class="faculty-social">
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                      <a href="#"><i class="fab fa-researchgate"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
+                    <h5 class="mb-1">Dr. Priya Sharma</h5>
+                    <p class="designation mb-3">Faculty – Geography & Environment</p>
+
+                    <p class="small mb-2"><strong>Qualification:</strong> Ph.D. Geography, SET</p>
+                    <p class="small"><strong>Experience:</strong> 8+ Years</p>
+
+                    <div class="mb-3">
+                      <span class="badge-subject">Physical Geography</span>
+                      <span class="badge-subject">Environment</span>
+                    </div>
+
+                    <p class="mt-2 small text-muted">
+                      Known for clarity and visual explanation techniques using maps and diagrams.
+                    </p>
+
+                    <div class="faculty-stats mt-auto pt-3">
+                      <div class="stat-item">
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">Success Rate</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">8+</div>
+                        <div class="stat-label">Years</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- GS Faculty 3 -->
+          <div class="col-lg-6">
+            <div class="card faculty-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-md-5 faculty-img-container h-100">
+                  <span class="dept-badge">Economics</span>
+                  <img src="/images/Prof. Rajesh Verma.jpeg" class="faculty-img h-100" alt=""
+                    style="object-fit: cover;">
+                  <div class="faculty-overlay">
+                    <div class="faculty-social">
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
+                    <h5 class="mb-1">Prof. Rajesh Verma</h5>
+                    <p class="designation mb-3">Faculty – Indian Economy</p>
+
+                    <p class="small mb-2"><strong>Qualification:</strong> M.A. Eco (DSE), UGC-NET</p>
+                    <p class="small"><strong>Experience:</strong> 9+ Years</p>
+
+                    <div class="mb-3">
+                      <span class="badge-subject">Economic Survey</span>
+                      <span class="badge-subject">Budget</span>
+                    </div>
+
+                    <p class="mt-2 small text-muted">
+                      Specializes in making complex economic concepts accessible through real-world examples.
+                    </p>
+
+                    <div class="faculty-stats mt-auto pt-3">
+                      <div class="stat-item">
+                        <div class="stat-number">94%</div>
+                        <div class="stat-label">Success Rate</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">9+</div>
+                        <div class="stat-label">Years</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- OPTIONAL SUBJECTS FACULTY -->
+    <div class="tab-pane fade" id="optional" role="tabpanel">
+      <section class="container my-5">
+        <div class="row g-4 justify-content-center">
+
+          <!-- Optional Faculty 1 -->
+          <div class="col-lg-6">
+            <div class="card faculty-card special-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-md-5 faculty-img-container h-100">
+                  <span class="dept-badge">Public Administration</span>
+                  <img src="/images/Dr. Anil Kumar.png" class="faculty-img h-100" alt="" style="object-fit: cover;">
+                  <div class="faculty-overlay">
+                    <div class="faculty-social">
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
+                    <h5 class="mb-1">Dr. Anil Kumar</h5>
+                    <p class="designation mb-3">Faculty – Public Administration</p>
+
+                    <p class="small mb-2"><strong>Qualification:</strong> Ph.D. Pub. Admin</p>
+                    <p class="small"><strong>Experience:</strong> 12+ Years</p>
+
+                    <div class="mb-3">
+                      <span class="badge-subject">Administrative Theory</span>
+                      <span class="badge-subject">Personnel Admin</span>
+                    </div>
+
+                    <p class="mt-2 small text-muted">
+                      Former civil servant with practical insights into administrative theories.
+                    </p>
+
+                    <div class="faculty-stats mt-auto pt-3">
+                      <div class="stat-item">
+                        <div class="stat-number">320+</div>
+                        <div class="stat-label">Selections</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">12+</div>
+                        <div class="stat-label">Years</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Optional Faculty 2 -->
+          <div class="col-lg-6">
+            <div class="card faculty-card special-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-md-5 faculty-img-container h-100">
+                  <span class="dept-badge">Sociology</span>
+                  <img src="/images/Prof. Meena Singh.jpg" class="faculty-img h-100" alt="" style="object-fit: cover;">
+                  <div class="faculty-overlay">
+                    <div class="faculty-social">
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                      <a href="#"><i class="fab fa-researchgate"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
+                    <h5 class="mb-1">Prof. Meena Singh</h5>
+                    <p class="designation mb-3">Faculty – Sociology</p>
+
+                    <p class="small mb-2"><strong>Qualification:</strong> M.A. Sociology, NET, JRF</p>
+                    <p class="small"><strong>Experience:</strong> 8+ Years</p>
+
+                    <div class="mb-3">
+                      <span class="badge-subject">Indian Society</span>
+                      <span class="badge-subject">Social Thinkers</span>
+                    </div>
+
+                    <p class="mt-2 small text-muted">
+                      Expert in connecting sociological theories with contemporary social issues.
+                    </p>
+
+                    <div class="faculty-stats mt-auto pt-3">
+                      <div class="stat-item">
+                        <div class="stat-number">280+</div>
+                        <div class="stat-label">Selections</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">8+</div>
+                        <div class="stat-label">Years</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Optional Faculty 3 -->
+          <div class="col-lg-6">
+            <div class="card faculty-card special-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-md-5 faculty-img-container h-100">
+                  <span class="dept-badge">Political Science</span>
+                  <img src="/images/Prof. Arvind Joshi.jpg" class="faculty-img h-100" alt="" style="object-fit: cover;">
+                  <div class="faculty-overlay">
+                    <div class="faculty-social">
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
+                    <h5 class="mb-1">Prof. Arvind Joshi</h5>
+                    <p class="designation mb-3">Faculty – Political Science</p>
+
+                    <p class="small mb-2"><strong>Qualification:</strong> M.Phil. Pol. Sci.</p>
+                    <p class="small"><strong>Experience:</strong> 10+ Years</p>
+
+                    <div class="mb-3">
+                      <span class="badge-subject">Political Theory</span>
+                      <span class="badge-subject">IR</span>
+                    </div>
+
+                    <p class="mt-2 small text-muted">
+                      Specialist in political theories and IR with focus on global issues.
+                    </p>
+
+                    <div class="faculty-stats mt-auto pt-3">
+                      <div class="stat-item">
+                        <div class="stat-number">350+</div>
+                        <div class="stat-label">Selections</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Years</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- APTITUDE & CSAT FACULTY -->
+    <div class="tab-pane fade" id="aptitude" role="tabpanel">
+      <section class="container my-5">
+        <div class="row g-4 justify-content-center">
+
+          <!-- Aptitude Faculty 1 -->
+          <div class="col-lg-6">
+            <div class="card faculty-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-md-5 faculty-img-container h-100">
+                  <span class="dept-badge">Quantitative Aptitude</span>
+                  <img src="/images/Prof. Rahul Sharma.jpeg" class="faculty-img h-100" alt=""
+                    style="object-fit: cover;">
+                  <div class="faculty-overlay">
+                    <div class="faculty-social">
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
+                    <h5 class="mb-1">Prof. Rahul Sharma</h5>
+                    <p class="designation mb-3">Faculty – Quantitative Aptitude</p>
+
+                    <p class="small mb-2"><strong>Qualification:</strong> M.Sc. Math (IITD)</p>
+                    <p class="small"><strong>Experience:</strong> 11+ Years</p>
+
+                    <div class="mb-3">
+                      <span class="badge-subject">Arithmetic</span>
+                      <span class="badge-subject">Algebra</span>
+                    </div>
+
+                    <p class="mt-2 small text-muted">
+                      IIT Delhi alumnus, expert in time-saving techniques and problem-solving.
+                    </p>
+
+                    <div class="faculty-stats mt-auto pt-3">
+                      <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Qualified</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">11+</div>
+                        <div class="stat-label">Years</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aptitude Faculty 2 -->
+          <div class="col-lg-6">
+            <div class="card faculty-card h-100">
+              <div class="row g-0 h-100">
+                <div class="col-md-5 faculty-img-container h-100">
+                  <span class="dept-badge">Reasoning & CSAT</span>
+                  <img src="/images/Prof. Neha Gupta.jpg" class="faculty-img h-100" alt="" style="object-fit: cover;">
+                  <div class="faculty-overlay">
+                    <div class="faculty-social">
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                      <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
+                    <h5 class="mb-1">Prof. Neha Gupta</h5>
+                    <p class="designation mb-3">Faculty – Reasoning & CSAT</p>
+
+                    <p class="small mb-2"><strong>Qualification:</strong> M.Sc. Psychology, MBA</p>
+                    <p class="small"><strong>Experience:</strong> 7+ Years</p>
+
+                    <div class="mb-3">
+                      <span class="badge-subject">Logical Reasoning</span>
+                      <span class="badge-subject">CSAT II</span>
+                    </div>
+
+                    <p class="mt-2 small text-muted">
+                      Specializes in analytical and logical reasoning with psychological insights.
+                    </p>
+
+                    <div class="faculty-stats mt-auto pt-3">
+                      <div class="stat-item">
+                        <div class="stat-number">96%</div>
+                        <div class="stat-label">Success Rate</div>
+                      </div>
+                      <div class="stat-item">
+                        <div class="stat-number">7+</div>
+                        <div class="stat-label">Years</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+
+  </div>
+
+  <!-- FACULTY ACHIEVEMENTS SECTION -->
+  <section class="container my-5 py-5">
+    <div class="row">
+      <div class="col-md-12 text-center mb-5">
+        <h2 class="section-title">Our Faculty's Achievements</h2>
+        <p class="lead">Recognized excellence in government exam coaching</p>
+      </div>
+
+      <div class="col-md-3 col-6 text-center mb-4">
+        <div class="display-4 fw-bold text-primary"><span class="count-up" data-target="5000">0</span>+</div>
+        <p class="text-muted">Successful Selections</p>
+      </div>
+
+      <div class="col-md-3 col-6 text-center mb-4">
+        <div class="display-4 fw-bold text-primary"><span class="count-up" data-target="150">0</span>+</div>
+        <p class="text-muted">Rank Holders (Top 100)</p>
+      </div>
+
+      <div class="col-md-3 col-6 text-center mb-4">
+        <div class="display-4 fw-bold text-primary"><span class="count-up" data-target="25">0</span>+</div>
+        <p class="text-muted">Books & Publications</p>
+      </div>
+
+      <div class="col-md-3 col-6 text-center mb-4">
+        <div class="display-4 fw-bold text-primary"><span class="count-up" data-target="2000">0</span>+</div>
+        <p class="text-muted">Hours of Video Content</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <section class="cta-section">
+    <div class="container">
+      <i class="fas fa-chalkboard-teacher cta-icon"></i>
+      <h2>Learn from India's Best Faculty</h2>
+      <p class="lead mb-4">Join thousands of successful aspirants who transformed their careers with our expert
+        guidance</p>
+
+      <button class="btn cta-btn btn-lg">
+        <i class="fas fa-calendar-check me-2"></i>Book Free Demo Class
+      </button>
+
+      <button class="btn cta-btn btn-lg" style="background: var(--gov-accent); color: var(--gov-dark);">
+        <i class="fas fa-download me-2"></i>Download Faculty Brochure
+      </button>
+
+      <div class="mt-4">
+        <p><i class="fas fa-phone-alt me-2"></i> Call for counseling: +91-9876543210</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    // Faculty card click effect
+    document.querySelectorAll('.faculty-card').forEach(card => {
+      card.addEventListener('click', function () {
+        // You can add modal functionality here
+        console.log('Faculty card clicked:', this.querySelector('h5').textContent);
+      });
+    });
+  </script>
+  <%- include("footer.ejs") %>
