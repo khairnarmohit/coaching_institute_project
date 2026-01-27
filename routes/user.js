@@ -30,7 +30,7 @@ router.get("/faculty",(req,res)=>{
 })
 
 router.get("/batches",(req,res)=>{
-  res.render("user/batches.ejs")
+  res.render("user/batch.ejs")
 })
 
 
