@@ -32,6 +32,22 @@ router.get("/faculty",(req,res)=>{
 router.get("/batches",(req,res)=>{
   res.render("user/batch.ejs")
 })
+ 
+router.get("/courses",(req,res)=>{
+  res.render("user/courses.ejs")
+})  
+
+router.get("/course-details",(req,res)=>{
+  res.render("user/course-details.ejs")
+})
+
+router.get("/academy_info",(req,res)=>{
+  res.render("user/academy_info.ejs") 
+})
+
+router.get("/founder_info",(req,res)=>{
+  res.render("user/founder_info.ejs") 
+})
 
 
 
