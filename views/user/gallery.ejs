@@ -59,13 +59,120 @@
         color: #fff;
         text-align: center;
     }
+
+    /* Lightbox Modal Styles */
+    .lightbox-modal {
+        display: none;
+        position: fixed;
+        z-index: 1050;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        overflow: hidden;
+    }
+
+    .lightbox-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 80vh;
+        margin-top: 5vh;
+        border-radius: 8px;
+    }
+
+    .lightbox-video {
+        width: 90%;
+        max-width: 1000px;
+        height: 70vh;
+        margin: 5vh auto;
+        display: block;
+    }
+
+    .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        z-index: 1060;
+    }
+
+    .lightbox-nav button {
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: none;
+        font-size: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lightbox-nav button:hover {
+        background: rgba(0, 0, 0, 0.9);
+        transform: scale(1.1);
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        z-index: 1060;
+        background: rgba(0, 0, 0, 0.5);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+    }
+
+    .lightbox-close:hover {
+        color: #f00;
+        transform: rotate(90deg);
+    }
+
+    .lightbox-caption {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        color: white;
+        font-size: 18px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    .lightbox-counter {
+        position: absolute;
+        top: 20px;
+        left: 30px;
+        color: white;
+        font-size: 18px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 8px 16px;
+        border-radius: 20px;
+    }
 </style>
 
 <!-- Header -->
 <div class="about-header">
     <h1 class="animate__animated animate__fadeInDown fw-bold">Gallery</h1>
 </div>
-
 
 <!-- Categories -->
 <section class="big-section">
@@ -76,67 +183,268 @@
         <div class="row g-4" id="galleryContainer">
 
             <!-- IMAGES -->
-            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="fade-up">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/class1.jpg" alt="">
-                          </div>
+            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="fade-up" 
+                 data-src="https://riimacademy.com/wp-content/uploads/gallery/class1.jpg" 
+                 data-type="image" data-index="0">
+                <img src="https://riimacademy.com/wp-content/uploads/gallery/class1.jpg" alt="Classroom">
+            </div>
 
-            <div class="col-lg-4 col-md-6 gallery-card event" data-aos="fade-up" data-aos-delay="100">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/lab1.jpg" alt="">
-                         </div>
+            <div class="col-lg-4 col-md-6 gallery-card event" data-aos="fade-up" data-aos-delay="100" 
+                 data-src="https://riimacademy.com/wp-content/uploads/gallery/lab1.jpg" 
+                 data-type="image" data-index="1">
+                <img src="https://riimacademy.com/wp-content/uploads/gallery/lab1.jpg" alt="Laboratory">
+            </div>
 
-            <div class="col-lg-4 col-md-6 gallery-card seminar" data-aos="fade-up" data-aos-delay="200">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/lab2.jpg" alt="">
-                      </div>
+            <div class="col-lg-4 col-md-6 gallery-card seminar" data-aos="fade-up" data-aos-delay="200" 
+                 data-src="https://riimacademy.com/wp-content/uploads/gallery/lab2.jpg" 
+                 data-type="image" data-index="2">
+                <img src="https://riimacademy.com/wp-content/uploads/gallery/lab2.jpg" alt="Lab">
+            </div>
 
-            <div class="col-lg-4 col-md-6 gallery-card media" data-aos="zoom-in">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/fac3.jpg" alt="">
-                       </div>
+            <div class="col-lg-4 col-md-6 gallery-card media" data-aos="zoom-in" 
+                 data-src="https://riimacademy.com/wp-content/uploads/gallery/fac3.jpg" 
+                 data-type="image" data-index="3">
+                <img src="https://riimacademy.com/wp-content/uploads/gallery/fac3.jpg" alt="Faculty">
+            </div>
 
-            <div class="col-lg-4 col-md-6 gallery-card event" data-aos="zoom-in" data-aos-delay="150">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/sla2.jpg" alt="">
-                        </div>
+            <div class="col-lg-4 col-md-6 gallery-card event" data-aos="zoom-in" data-aos-delay="150" 
+                 data-src="https://riimacademy.com/wp-content/uploads/gallery/sla2.jpg" 
+                 data-type="image" data-index="4">
+                <img src="https://riimacademy.com/wp-content/uploads/gallery/sla2.jpg" alt="Student Activity">
+            </div>
 
-            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/hostel6.jpg" alt="">
-                            </div>
-            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/lib3.jpg" alt="">
-                            </div>
-            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/fac2.jpg" alt="">
-                            </div>
-            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/fac5.jpg" alt="">
-                            </div>
+            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250" 
+                 data-src="https://riimacademy.com/wp-content/uploads/gallery/hostel6.jpg" 
+                 data-type="image" data-index="5">
+                <img src="https://riimacademy.com/wp-content/uploads/gallery/hostel6.jpg" alt="Hostel">
+            </div>
+            
+            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250" 
+                 data-src="https://riimacademy.com/wp-content/uploads/gallery/lib3.jpg" 
+                 data-type="image" data-index="6">
+                <img src="https://riimacademy.com/wp-content/uploads/gallery/lib3.jpg" alt="Library">
+            </div>
+            
+            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250" 
+                 data-src="https://riimacademy.com/wp-content/uploads/gallery/fac2.jpg" 
+                 data-type="image" data-index="7">
+                <img src="https://riimacademy.com/wp-content/uploads/gallery/fac2.jpg" alt="Faculty">
+            </div>
+            
+            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250" 
+                 data-src="https://riimacademy.com/wp-content/uploads/gallery/fac5.jpg" 
+                 data-type="image" data-index="8">
+                <img src="https://riimacademy.com/wp-content/uploads/gallery/fac5.jpg" alt="Faculty">
+            </div>
 
             <div class="mt-5 p-2">
-            <h2 class="fw-bold text-danger">Videos</h2>
-        </div>
+                <h2 class="fw-bold text-danger">Videos</h2>
+            </div>
 
             <!-- VIDEOS -->
-            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up">
-                 <iframe width="600" height="230" src="https://www.youtube.com/embed/Tv-2_k73xMw" title="छत्तीसगढ़ के राष्ट्रीय उद्यान से पूछे गए प्रश्न उत्तर एवं संभावित प्रश्न By HR Patel Sir" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-             </div>
+            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up" 
+                 data-src="https://www.youtube.com/embed/Tv-2_k73xMw" 
+                 data-type="video" data-index="9">
+                <iframe width="100%" height="230" src="https://www.youtube.com/embed/Tv-2_k73xMw" 
+                        title="छत्तीसगढ़ के राष्ट्रीय उद्यान" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
 
-            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up" data-aos-delay="150">
-                 <iframe width="600" height="230" src="https://www.youtube.com/embed/KX25gorA8Ho" title="ip address MCQ ke sath#cgvyapam #hostelsuperidentent #computer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-             </div>
-             <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up">
-                 <iframe width="600" height="230" src="https://www.youtube.com/embed/481sSsq4DP4" title="छ. ग. के 100 महत्वपूर्ण प्रश्न 100 मिनट में व्याख्या सहित (जो 1000 प्रश्न के आधार बनेंगे)By HR Patel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-             </div>
+            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up" data-aos-delay="150" 
+                 data-src="https://www.youtube.com/embed/KX25gorA8Ho" 
+                 data-type="video" data-index="10">
+                <iframe width="100%" height="230" src="https://www.youtube.com/embed/KX25gorA8Ho" 
+                        title="IP Address MCQ" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            
+            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up" 
+                 data-src="https://www.youtube.com/embed/481sSsq4DP4" 
+                 data-type="video" data-index="11">
+                <iframe width="100%" height="230" src="https://www.youtube.com/embed/481sSsq4DP4" 
+                        title="छ. ग. के 100 महत्वपूर्ण प्रश्न" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
 
-            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up" data-aos-delay="150">
-                 <iframe width="600" height="230" src="https://www.youtube.com/embed/A1SaWTH9onM" title="छात्रावास अधीक्षक हेतु ।। कम्प्यूटर वस्तुनिष्ठ विशेष -  श्रेय पाण्डेय सर रायपुर ब्रांच" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-             </div>
+            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up" data-aos-delay="150" 
+                 data-src="https://www.youtube.com/embed/A1SaWTH9onM" 
+                 data-type="video" data-index="12">
+                <iframe width="100%" height="230" src="https://www.youtube.com/embed/A1SaWTH9onM" 
+                        title="छात्रावास अधीक्षक हेतु" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 </section>
 
+<!-- Lightbox Modal -->
+<div id="lightboxModal" class="lightbox-modal">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-counter">
+        <span id="currentIndex">1</span> / <span id="totalItems">13</span>
+    </div>
+    
+    <div class="lightbox-nav">
+        <button id="prevBtn">❮</button>
+        <button id="nextBtn">❯</button>
+    </div>
+    
+    <div id="lightboxContainer"></div>
+    <div id="lightboxCaption" class="lightbox-caption"></div>
+</div>
 
 <!-- Scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>AOS.init();</script>
+<script>
+    AOS.init();
+    
+    // Gallery items data
+    const galleryItems = [];
+    let currentIndex = 0;
+    
+    // Initialize gallery items from DOM
+    $(document).ready(function() {
+        // Collect all gallery items
+        $('.gallery-card').each(function(index) {
+            const item = {
+                index: index,
+                src: $(this).data('src'),
+                type: $(this).data('type'),
+                alt: $(this).find('img').attr('alt') || $(this).find('iframe').attr('title') || 'Gallery Item'
+            };
+            galleryItems.push(item);
+        });
+        
+        // Update total items counter
+        $('#totalItems').text(galleryItems.length);
+        
+        // Open lightbox when clicking on gallery item
+        $('.gallery-card').click(function() {
+            const index = $(this).data('index');
+            openLightbox(index);
+        });
+        
+        // Close lightbox
+        $('.lightbox-close').click(function() {
+            closeLightbox();
+        });
+        
+        // Close on ESC key
+        $(document).keydown(function(e) {
+            if (e.keyCode === 27) { // ESC key
+                closeLightbox();
+            } else if (e.keyCode === 37) { // Left arrow
+                navigate(-1);
+            } else if (e.keyCode === 39) { // Right arrow
+                navigate(1);
+            }
+        });
+        
+        // Navigation buttons
+        $('#prevBtn').click(function() {
+            navigate(-1);
+        });
+        
+        $('#nextBtn').click(function() {
+            navigate(1);
+        });
+        
+        // Close when clicking outside content
+        $('#lightboxModal').click(function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+    });
+    
+    function openLightbox(index) {
+        currentIndex = index;
+        updateLightbox();
+        $('#lightboxModal').fadeIn(300);
+        $('body').css('overflow', 'hidden'); // Prevent scrolling
+    }
+    
+    function closeLightbox() {
+        $('#lightboxModal').fadeOut(300);
+        $('body').css('overflow', 'auto'); // Restore scrolling
+        // Stop video playback when closing
+        $('#lightboxContainer iframe').attr('src', $('#lightboxContainer iframe').attr('src'));
+    }
+    
+    function navigate(direction) {
+        currentIndex += direction;
+        
+        // Loop around
+        if (currentIndex < 0) {
+            currentIndex = galleryItems.length - 1;
+        } else if (currentIndex >= galleryItems.length) {
+            currentIndex = 0;
+        }
+        
+        updateLightbox();
+    }
+    
+    function updateLightbox() {
+        const item = galleryItems[currentIndex];
+        
+        // Update counter
+        $('#currentIndex').text(currentIndex + 1);
+        
+        // Clear container
+        $('#lightboxContainer').empty();
+        $('#lightboxCaption').text(item.alt);
+        
+        if (item.type === 'image') {
+            // Display image
+            const img = $('<img>', {
+                class: 'lightbox-content',
+                src: item.src,
+                alt: item.alt
+            });
+            $('#lightboxContainer').append(img);
+        } else if (item.type === 'video') {
+            // Display video
+            const iframe = $('<iframe>', {
+                class: 'lightbox-video',
+                src: item.src,
+                frameborder: '0',
+                allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+                allowfullscreen: 'allowfullscreen'
+            });
+            $('#lightboxContainer').append(iframe);
+        }
+    }
+    
+    // Auto slide (optional - uncomment if you want auto slide)
+    
+    let autoSlideInterval;
+    
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(() => {
+            navigate(1);
+        }, 5000); // Change slide every 5 seconds
+    }
+    
+    function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+    }
+    
+    // Start auto slide when lightbox opens
+    $('#lightboxModal').on('show', function() {
+        startAutoSlide();
+    });
+    
+    // Stop auto slide when lightbox closes
+    $('#lightboxModal').on('hide', function() {
+        stopAutoSlide();
+    });
+    
+</script>
 
 <%-include("footer.ejs")%>
