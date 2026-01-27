@@ -29,6 +29,10 @@ router.get("/faculty",(req,res)=>{
   res.render("user/faculty.ejs")
 })
 
+router.get("/batches",(req,res)=>{
+  res.render("user/batch.ejs")
+})
+
 
 
 module.exports = router;
