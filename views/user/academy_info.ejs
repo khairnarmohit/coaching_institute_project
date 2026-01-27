@@ -1,0 +1,350 @@
+<%-include("navbar.ejs")%>
+
+<style>
+:root {
+  --gov-dark: #0b1c2d;
+  --gov-accent: #f59e0b;
+  --gov-bg: #f8fafc;
+  --gov-white: #ffffff;
+  --gov-text: #1e293b;
+  --gov-muted: #475569;
+  --gov-border: #e5e7eb;
+}
+
+body {
+  background-color: var(--gov-bg);
+  color: var(--gov-text);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* HEADER */
+.about-header {
+  background: linear-gradient(rgba(11, 28, 45, 0.85), rgba(11, 28, 45, 0.7)), 
+              url("https://tse4.mm.bing.net/th/id/OIP.eDao7xwU7dbMlKgf_EDoeAHaEv?pid=ImgDet&w=202&h=129&c=7&dpr=1.3&o=7&rm=3g") 
+              center/cover no-repeat;
+  padding: 130px 0;
+  color: var(--gov-white);
+  text-align: center;
+}
+
+.about-header h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* SECTION */
+.about-section {
+  padding: 80px 0;
+  background: var(--gov-white);
+}
+
+/* IMAGE */
+.about-img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 3px solid var(--gov-accent);
+  box-shadow: 0px 14px 35px rgba(11, 28, 45, 0.15);
+  opacity: 0;
+  animation: fadeInLeft .65s ease-out forwards;
+  animation-delay: .45s;
+  transition: transform 0.4s ease;
+}
+
+.about-img:hover {
+  transform: scale(1.02);
+}
+
+/* TEXT */
+.about-content {
+  opacity: 0;
+  animation: slideRight .65s ease-out forwards;
+  animation-delay: .70s;
+  padding-left: 20px;
+}
+
+/* TITLE */
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gov-dark);
+  margin-bottom: 20px;
+  position: relative;
+  letter-spacing: .5px;
+}
+
+/* TITLE Accent Line */
+.section-title::after {
+  content: "";
+  width: 70px;
+  height: 4px;
+  background: var(--gov-accent);
+  border-radius: 8px;
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+}
+
+/* TEXT */
+.about-text {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--gov-muted);
+  margin-bottom: 20px;
+}
+
+/* FACTS */
+.about-facts span {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gov-text);
+  border-left: 4px solid var(--gov-accent);
+  padding-left: 15px;
+  margin-bottom: 10px;
+  background-color: rgba(245, 158, 11, 0.05);
+  padding: 12px 15px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 12px;
+}
+
+.about-facts b {
+  color: var(--gov-dark);
+  font-weight: 600;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInLeft {
+  0% { transform: translateX(-55px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideRight {
+  0% { transform: translateX(55px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Teaching Methodology Theme Design */
+.tm-section {
+  background: var(--gov-bg);
+  padding: 80px 0;
+}
+
+.tm-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.tm-content {
+  flex: 1;
+  min-width: 380px;
+  opacity: 0;
+  animation: fadeRight .7s ease-out forwards;
+  animation-delay: .45s;
+}
+
+.tm-heading {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gov-dark);
+  margin-bottom: 12px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.tm-heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 4px;
+  background-color: var(--gov-accent);
+  border-radius: 2px;
+}
+
+.tm-sub {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--gov-muted);
+  margin-bottom: 30px;
+}
+
+.tm-list {
+  list-style: none;
+  padding: 0;
+}
+
+.tm-list li {
+  font-size: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--gov-dark);
+  background: var(--gov-white);
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(11, 28, 45, 0.08);
+  border-left: 4px solid var(--gov-accent);
+  transition: all 0.3s ease;
+}
+
+.tm-list li:hover {
+  transform: translateX(10px);
+  box-shadow: 0 12px 30px rgba(245, 158, 11, 0.15);
+  border-left-color: var(--gov-dark);
+}
+
+.tm-list li::before {
+  content: "✓";
+  color: var(--gov-accent);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.tm-graphic {
+  flex: 1;
+  min-width: 380px;
+  opacity: 0;
+  animation: fadeLeft .7s ease-out forwards;
+  animation-delay: .20s;
+}
+
+.tm-graphic img {
+  width: 100%;
+  height: 600px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: var(--gov-white);
+  padding: 20px;
+  box-shadow: 0 15px 35px rgba(11, 28, 45, 0.1);
+  border: 1px solid var(--gov-border);
+}
+
+/* Animations */
+@keyframes fadeRight {
+  0% { transform: translateX(55px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeLeft {
+  0% { transform: translateX(-55px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .about-header {
+    padding: 80px 0;
+  }
+  
+  .about-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .about-img {
+    height: 300px;
+    margin-bottom: 30px;
+  }
+  
+  .about-content {
+    padding-left: 0;
+  }
+  
+  .tm-container {
+    flex-direction: column-reverse;
+    text-align: left;
+  }
+  
+  .tm-heading {
+    font-size: 28px;
+  }
+  
+  .tm-graphic img {
+    height: 400px;
+  }
+  
+  .tm-list li {
+    padding: 14px 16px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+  }
+}
+
+/* Container padding */
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+</style>
+
+<div class="about-header">
+    <h1 class="fw-bold">Academy Information</h1>
+</div>
+
+<section class="about-section">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-md-6">
+                <img src="https://riimacademy.com/wp-content/uploads/2022/08/riimpune-8066116-2.jpg" class="about-img">
+            </div>
+            <div class="col-md-6 about-content">
+                <h2 class="section-title">Overview</h2>
+                <p class="about-text">
+                    EduInstitute is a reputed government competitive exam academy providing structured training
+                    for Civil Services, UPSC, MPSC and State Commission examinations.
+                </p>
+                <p class="about-text">
+                    The academy focuses on discipline, analytical thinking, and leadership development with
+                    expert mentorship and result-oriented pedagogy. We provide quality and holistic education for carving efficient and socially sensitive bureaucrats for the country.
+                </p>
+                <div class="about-facts">
+                    <span><b>Established:</b> 2022</span>
+                    <span><b>Location:</b> Pune, Maharashtra</span>
+                    <span><b>Branches:</b> No other branch</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="teaching-methodology" class="tm-section">
+  <div class="container tm-container">
+
+    <div class="tm-content">
+      <h2 class="tm-heading">Teaching Methodology</h2>
+      <p class="tm-sub">
+        Our structured and result-oriented methodology ensures that every learner progresses
+        strategically towards clearing UPSC & MPSC examinations.
+      </p>
+
+      <ul class="tm-list">
+        <li>Foundation building through NCERT & concept clarity</li>
+        <li>Topic-wise understanding + integrated approach</li>
+        <li>Regular answer writing & analytical reasoning focus</li>
+        <li>Weekly Tests + Performance Evaluation + Feedback</li>
+        <li>Prelims + Mains + Interview Structured Preparation</li>
+        <li>Current Affairs integration with static subjects</li>
+        <li>Personalized mentorship & career guidance</li>
+      </ul>
+    </div>
+
+    <div class="tm-graphic">
+      <img src="https://riimacademy.com/wp-content/uploads/2022/08/infographic-1.png" 
+           alt="Teaching Methodology Illustration">
+    </div>
+
+  </div>
+</section>
+
+<%-include("footer.ejs")%>

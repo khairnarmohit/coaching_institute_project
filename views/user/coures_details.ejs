@@ -1,0 +1,255 @@
+<%-include("navbar.ejs")%>
+
+<style>
+:root {
+  --gov-dark: #0b1c2d;
+  --gov-accent: #f59e0b; /* Yellow-orange accent */
+  --gov-bg: #f8fafc;
+  --gov-white: #ffffff;
+  --gov-text: #1e293b;
+  --gov-muted: #475569;
+  --gov-border: #e5e7eb;
+  --gov-fees: #16a34a; /* Green for fees */
+}
+
+body{
+  background:var(--gov-bg);
+  font-family:"Segoe UI", sans-serif;
+  margin:0;
+  padding:0;
+}
+
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 20px;
+}
+
+.page-title{
+  text-align:center;
+  font-size:32px;
+  font-weight:700;
+  padding:30px 0 20px;
+  color:var(--gov-dark);
+}
+
+/* === GRID OF 3 CARDS PER ROW === */
+.course-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  margin-bottom:28px;
+}
+
+.course-card{
+  background:var(--gov-white);
+  border-radius:8px;
+  overflow:hidden;
+  border-left:6px solid var(--gov-accent);
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  transition:.3s ease;
+}
+
+.course-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 6px 18px rgba(0,0,0,0.10);
+}
+
+.course-img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+
+.course-content{
+  padding:18px 20px;
+}
+
+.course-title{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:8px;
+  color:var(--gov-text);
+}
+
+.course-info{
+  font-size:14px;
+  color:var(--gov-muted);
+  margin-bottom:6px;
+}
+
+.duration{
+  font-size:14px;
+  font-weight:500;
+  color:var(--gov-text);
+  margin-bottom:4px;
+}
+
+.course-extra{
+  font-size:13px;
+  color:var(--gov-muted);
+  line-height:1.45;
+  margin-bottom:8px;
+}
+
+/* Fees green and visible */
+.fees{
+  font-size:16px;
+  font-weight:700;
+  color:var(--gov-fees);
+  margin-bottom:10px;
+}
+
+.btn{
+  display:inline-block;
+  background:var(--gov-accent);
+  color:white;
+  padding:7px 16px;
+  border-radius:6px;
+  font-size:14px;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .course-row{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+@media(max-width:600px){
+  .course-row{
+    grid-template-columns:repeat(1,1fr);
+  }
+}
+
+footer{
+  margin-top:0 !important;
+  padding-top:10px;
+}
+</style>
+
+<body>
+
+<div class="container">
+  <h2 class="page-title"> Courses Detailes</h2>
+
+  <!-- ROW 1 -->
+  <div class="course-row">
+    <div class="course-card">
+      <img src="https://assets.pratahkal.com/h-upload/2025/11/19/2093985-how-to-apply-for-the-talathi-recruitment-2025.webp" class="course-img">
+      <div class="course-content">
+        <div class="course-title">Talathi</div>
+        <div class="course-info">State Govt Recruitment Preparation</div>
+        <div class="duration">Duration: 3–6 Months</div>
+        <div class="course-extra">
+          Eligibility: Graduate <br>
+          Includes: Pre + Mains <br>
+          Mode: Online + Offline <br>
+          Batch: Morning / Evening <br>
+          Materials: Printed Notes <br>
+          Tests: Weekly + Full Length
+        </div>
+        <div class="fees">Fees: ₹15,000 – ₹20,000</div>
+        <a href="/admission" class="btn">Apply Now</a>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="https://www.cgi.guru/wp-content/uploads/2022/01/police-online-test-_-thumb-1-scaled.jpg" class="course-img">
+      <div class="course-content">
+        <div class="course-title">Police Bharti</div>
+        <div class="course-info">Written + Physical + Interview</div>
+        <div class="duration">Duration: 2–5 Months</div>
+        <div class="course-extra">
+          Eligibility: 10th / 12th <br>
+          Includes: Written + Physical + Interview <br>
+          Mode: Offline Only <br>
+          Materials: Printed Notes <br>
+          Test: Weekly + Final Mock <br>
+          Physical: Ground Practice
+        </div>
+        <div class="fees">Fees: ₹10,000 – ₹15,000</div>
+        <a href="/admission" class="btn">Apply Now</a>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="https://bankedge.in/wp-content/uploads/2024/07/CBO_Web-Banner_v01.jpg" class="course-img">
+      <div class="course-content">
+        <div class="course-title">Banking Exams</div>
+        <div class="course-info">IBPS | SBI | RRB</div>
+        <div class="duration">Duration: 4–8 Months</div>
+        <div class="course-extra">
+          Includes: Pre + Mains <br>
+          Mode: Online + Offline <br>
+          Material: Printed + Digital Notes <br>
+          Tests: Sectional + Full Mock <br>
+          Batch: Morning / Evening
+        </div>
+        <div class="fees">Fees: ₹20,000 – ₹30,000</div>
+        <a href="/admission" class="btn">Apply Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2 -->
+  <div class="course-row">
+    <div class="course-card">
+      <img src="https://www.ndaclasses.in/images/mpsc.jpeg" class="course-img">
+      <div class="course-content">
+        <div class="course-title">MPSC</div>
+        <div class="course-info">Pre + Mains + Interview</div>
+        <div class="duration">Duration: 10–12 Months</div>
+        <div class="course-extra">
+          Includes: Pre + Mains + Interview + Test Series <br>
+          Mode: Offline + Online <br>
+          Materials: Printed Notes + Current Affairs <br>
+          Tests: Weekly + Full Length <br>
+          Optional: Extra Available
+        </div>
+        <div class="fees">Fees: ₹35,000 – ₹65,000</div>
+        <a href="/admission" class="btn">Apply Now</a>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="https://blog.bihartouch.in/wp-content/uploads/2025/10/bihartouchNTPC.png" class="course-img">
+      <div class="course-content">
+        <div class="course-title">Railway Exams</div>
+        <div class="course-info">RRB – NTPC, ALP, Group-D</div>
+        <div class="duration">Duration: 3–6 Months</div>
+        <div class="course-extra">
+          Includes: Pre + Mains <br>
+          Mode: Offline + Online <br>
+          Materials: Printed Notes <br>
+          Tests: Weekly + Full Mock <br>
+          Batch: Morning / Evening
+        </div>
+        <div class="fees">Fees: ₹18,000 – ₹28,000</div>
+        <a href="/admission" class="btn">Apply Now</a>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="https://images.financialexpressdigital.com/2023/05/Offline-Centre-2-3.jpg?quality=100" class="course-img">
+      <div class="course-content">
+        <div class="course-title">UPSC</div>
+        <div class="course-info">Pre + Mains + Interview + Optional</div>
+        <div class="duration">Duration: 12–18 Months</div>
+        <div class="course-extra">
+          Includes: GS + CSAT + Essay + Test Series + Optional <br>
+          Mode: Offline + Online <br>
+          Materials: Printed Notes + Handwritten Notes <br>
+          Interviews: Panel Guidance <br>
+          Tests: Weekly + Full Length
+        </div>
+        <div class="fees">Fees: ₹80,000 – ₹1,20,000</div>
+        <a href="/admission" class="btn">Apply Now</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<%-include("footer.ejs")%>

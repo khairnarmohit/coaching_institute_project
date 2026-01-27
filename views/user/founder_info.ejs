@@ -1,0 +1,269 @@
+<%-include("navbar.ejs")%>
+
+<style>
+:root {
+  --gov-dark: #0b1c2d;
+  --gov-accent: #f59e0b; 
+  --gov-bg: #f8fafc;
+  --gov-white: #ffffff;
+  --gov-text: #1e293b;
+  --gov-muted: #475569;
+  --gov-border: #e5e7eb;
+}
+
+body {
+  background-color: var(--gov-bg);
+  color: var(--gov-text);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* HEADER */
+.about-header {
+  background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.7)), 
+              url("https://tse4.mm.bing.net/th/id/OIP.eDao7xwU7dbMlKgf_EDoeAHaEv?pid=ImgDet&w=202&h=129&c=7&dpr=1.3&o=7&rm=3g") 
+              center/cover no-repeat;
+  padding: 130px 0;
+  color: var(--gov-white);
+  text-align: center;
+}
+
+.about-header h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Founder Section */
+.founder-section {
+  padding: 80px 0;
+  background-color: var(--gov-white);
+}
+
+.founder-img {
+  width: 100%;
+  max-width: 500px;
+  height: 550px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 3px solid var(--gov-accent);
+  opacity: 0;
+  animation: slideLeft 1s ease-out forwards;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  box-shadow: 0 10px 30px rgba(11, 28, 45, 0.15);
+}
+
+.founder-img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2);
+}
+
+.founder-text {
+  opacity: 0;
+  animation: slideRight 1s ease-out forwards;
+  padding: 20px;
+}
+
+.founder-text h2 {
+  color: var(--gov-accent);
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 25px;
+  border-bottom: 3px solid var(--gov-accent);
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.founder-text p {
+  color: var(--gov-text);
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.founder-text b {
+  color: var(--gov-accent);
+  font-weight: 700;
+}
+
+/* Keyframes */
+@keyframes slideLeft {
+  0% { transform: translateX(-50px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideRight {
+  0% { transform: translateX(50px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Vision & Mission Section */
+.vm-section {
+  background-color: var(--gov-bg);
+  padding: 80px 0;
+}
+
+.section-heading {
+  color: var(--gov-dark);
+  font-weight: 800;
+  font-size: 2.8rem;
+  margin-bottom: 50px;
+  text-align: center;
+  position: relative;
+}
+
+.section-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background-color: var(--gov-accent);
+  border-radius: 2px;
+}
+
+/* VM Cards */
+.vm-card {
+  background: var(--gov-white);
+  border-radius: 16px;
+  border-top: 5px solid var(--gov-accent);
+  padding: 40px 30px;
+  box-shadow: 0 10px 30px rgba(11, 28, 45, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  height: 100%;
+  border-left: none;
+}
+
+.vm-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(245, 158, 11, 0.15);
+  border-top-color: var(--gov-dark);
+}
+
+.vm-card h4 {
+  color: var(--gov-accent);
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.vm-card h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--gov-dark);
+  border-radius: 1.5px;
+}
+
+.vm-card p {
+  font-style: italic;
+  color: var(--gov-muted);
+  line-height: 1.8;
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-header {
+    padding: 80px 0;
+  }
+  
+  .about-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .founder-img {
+    height: 400px;
+    margin-bottom: 30px;
+  }
+  
+  .founder-text h2 {
+    font-size: 2rem;
+  }
+  
+  .section-heading {
+    font-size: 2.2rem;
+  }
+  
+  .vm-card {
+    padding: 30px 20px;
+    margin-bottom: 20px;
+  }
+  
+  .vm-card h4 {
+    font-size: 1.5rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="about-header">
+    <h1 class="animate__animated animate__fadeInDown fw-bold">Founder Information</h1>
+</div>
+
+<section class="founder-section">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-md-6" data-aos="fade-right">
+                <img src="https://riimacademy.com/wp-content/uploads/2022/09/Rajendra-Singh-Sir1-1-1024x1024.jpg" class="founder-img">
+            </div>
+            <div class="col-md-6 founder-text" data-aos="fade-left">
+                <h2>Founder</h2>
+                <p>
+                    Dear Aspirants,<br>
+                    We are committed to creating a responsible and ethical administrative workforce for the betterment of the nation. At EduInstitute Academy Pune we leave no stone unturned in ensuring that every aspirant is motivated to surpass his own potential through the exhaustive teaching methodology. Our candidates are also trained with all necessary modern educational skills. We pull out all the stops in making the candidate absolutely ready in all sense for a job in the prestigious Civil Services.
+                </p>
+                <p>
+                    They are given multiple opportunities to interact and hear valuable insights from bureaucrats, industry experts, public servants, and influential functionaries.
+                </p>
+                <p>
+                    <b>Come – let the experts at EduInstitute Academy guide you towards a bright future in the administrative sector of the nation.<br>
+                    Hon. Rajendra Singh – IPS</b>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="vm-section">
+    <div class="container">
+        <h2 class="section-heading">Vision and Mission</h2>
+        <div class="row g-4 mt-5">
+            <div class="col-md-6" data-aos="fade-right">
+                <div class="vm-card">
+                    <h4>Vision</h4>
+                    <p>"Producing an eminent center of excellence in IAS coaching and training to attract more and efficient youth to transform themselves into future civil servants."</p>
+                </div>
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+                <div class="vm-card">
+                    <h4>Mission</h4>
+                    <p>"Become a prominent and foremost institute of IAS coaching and training to help create disciplined and competent Civil Service professionals."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%-include("footer.ejs")%>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000,
+    once: true,
+    offset: 100
+  });
+</script>
+
+</body>
+</html>
