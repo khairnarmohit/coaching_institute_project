@@ -1,450 +1,640 @@
-<%-include("navbar.ejs")%>
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-    .page-header {
-        background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.7)), url('img/banner.jpg') center/cover no-repeat;
-        padding: 120px 0;
-        color: #fff;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - GCA</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gov-dark: #0b1c2d;
+            --gov-accent: #f59e0b;
+            --gov-bg: #f8fafc;
+            --gov-white: #ffffff;
+            --gov-text: #1e293b;
+            --gov-muted: #475569;
+            --gov-border: #e5e7eb;
+            --gov-green: #16a34a;
+        }
 
-    .gallery-tabs button {
-        border-radius: 40px;
-        padding: 10px 22px;
-        font-size: 15px;
-        transition: 0.3s;
-    }
+        body {
+            background: var(--gov-bg);
+            font-family: system-ui, -apple-system, sans-serif;
+        }
 
-    .gallery-tabs button.active {
-        background: #0d6efd;
-        color: #fff;
-        border-color: #0d6efd;
-    }
+        /* PREMIUM HERO SECTION */
+        .gallery-hero {
+            background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.8)),
+                url("https://images.unsplash.com/photo-1523050853064-dbad350e02ee?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
+            padding: 140px 0;
+            text-align: center;
+            color: var(--gov-white);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .gallery-card {
-        position: relative;
-        overflow: hidden;
-        border-radius: 12px;
-        cursor: pointer;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-        transition: .35s;
-    }
-    .gallery-card img,
-    .gallery-card video {
-        width: 100%;
-        height: 240px;
-        object-fit: cover;
-        transition: .4s;
-    }
-    .gallery-card:hover img,
-    .gallery-card:hover video {
-        transform: scale(1.08);
-    }
-    .gallery-overlay {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        padding: 10px 14px;
-        background: rgba(0,0,0,.6);
-        color: #fff;
-        font-size: 14px;
-    }
+        .gallery-hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
 
-    .big-section {
-        padding: 90px 0;
-    }
-    .about-header {
-        background: linear-gradient(rgba(139,0,0,.6), rgba(75,0,0,.8)), 
-        url("https://tse4.mm.bing.net/th/id/OIP.eDao7xwU7dbMlKgf_EDoeAHaEv?pid=ImgDet&w=202&h=129&c=7&dpr=1.3&o=7&rm=3g") center/cover no-repeat;
-        padding: 130px 0;
-        color: #fff;
-        text-align: center;
-    }
+        .gallery-hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
 
-    /* Lightbox Modal Styles */
-    .lightbox-modal {
-        display: none;
-        position: fixed;
-        z-index: 1050;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
-        overflow: hidden;
-    }
+        .hero-shape {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
 
-    .lightbox-content {
-        margin: auto;
-        display: block;
-        max-width: 90%;
-        max-height: 80vh;
-        margin-top: 5vh;
-        border-radius: 8px;
-    }
+        .hero-shape svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 50px;
+        }
 
-    .lightbox-video {
-        width: 90%;
-        max-width: 1000px;
-        height: 70vh;
-        margin: 5vh auto;
-        display: block;
-    }
+        .hero-shape .shape-fill {
+            fill: var(--gov-bg);
+        }
 
-    .lightbox-nav {
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        transform: translateY(-50%);
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px;
-        z-index: 1060;
-    }
+        /* GALLERY CARDS */
+        .gallery-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 280px;
+            border: 4px solid var(--gov-white);
+        }
 
-    .lightbox-nav button {
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        border: none;
-        font-size: 30px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: all 0.3s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        .gallery-card img,
+        .gallery-card iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
 
-    .lightbox-nav button:hover {
-        background: rgba(0, 0, 0, 0.9);
-        transform: scale(1.1);
-    }
+        .gallery-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(11, 28, 45, 0.2);
+            border-color: var(--gov-accent);
+        }
 
-    .lightbox-close {
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        color: white;
-        font-size: 40px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-        z-index: 1060;
-        background: rgba(0, 0, 0, 0.5);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1;
-    }
+        .gallery-card:hover img {
+            transform: scale(1.15);
+        }
 
-    .lightbox-close:hover {
-        color: #f00;
-        transform: rotate(90deg);
-    }
+        /* OVERLAY EFFECT */
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(11, 28, 45, 0.9), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
 
-    .lightbox-caption {
-        position: absolute;
-        bottom: 20px;
-        width: 100%;
-        text-align: center;
-        color: white;
-        font-size: 18px;
-        padding: 10px;
-        background: rgba(0, 0, 0, 0.7);
-    }
+        .gallery-card:hover .gallery-overlay {
+            opacity: 1;
+        }
 
-    .lightbox-counter {
-        position: absolute;
-        top: 20px;
-        left: 30px;
-        color: white;
-        font-size: 18px;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 8px 16px;
-        border-radius: 20px;
-    }
-</style>
+        .overlay-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gov-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            transform: translateY(20px);
+            transition: all 0.4s ease 0.1s;
+            color: var(--gov-dark);
+            font-size: 1.2rem;
+        }
 
-<!-- Header -->
-<div class="about-header">
-    <h1 class="animate__animated animate__fadeInDown fw-bold">Gallery</h1>
-</div>
+        .gallery-card:hover .overlay-icon {
+            transform: translateY(0);
+        }
 
-<!-- Categories -->
-<section class="big-section">
-    <div class="container text-center">
-        <div class="mb-4">
-            <h2 class="fw-bold text-danger">Images</h2>
-        </div>
-        <div class="row g-4" id="galleryContainer">
+        .overlay-text {
+            color: var(--gov-white);
+            transform: translateY(20px);
+            transition: all 0.4s ease 0.2s;
+        }
 
-            <!-- IMAGES -->
-            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="fade-up" 
-                 data-src="https://riimacademy.com/wp-content/uploads/gallery/class1.jpg" 
-                 data-type="image" data-index="0">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/class1.jpg" alt="Classroom">
+        .overlay-text h5 {
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .overlay-text span {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .gallery-card:hover .overlay-text {
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--gov-dark);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex-grow: 1;
+            height: 2px;
+            background: var(--gov-border);
+        }
+
+        .section-title i {
+            color: var(--gov-accent);
+        }
+
+        /* LIGHTBOX MODAL UPGRADE */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            inset: 0;
+            background-color: rgba(11, 28, 45, 0.98);
+            padding: 40px;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85vh;
+            margin: auto;
+            display: block;
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            background: var(--gov-accent);
+            color: var(--gov-dark);
+            transform: rotate(90deg);
+        }
+
+        .insight-card {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid var(--gov-border);
+            border-left: 6px solid var(--gov-accent) !important;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(11, 28, 45, 0.1) !important;
+        }
+
+        .insight-card .stat-badge {
+            transition: all 0.4s ease;
+        }
+
+        .insight-card:hover .stat-badge {
+            transform: scale(1.1) rotate(5deg);
+            border-color: var(--gov-accent) !important;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <%-include("navbar.ejs")%>
+
+        <div class="gallery-hero">
+            <div class="container relative">
+                <h1 class="animate__animated animate__fadeInUp">Visual Journey</h1>
+                <p class="animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                    Explore the vibrant life at our academy—from intensive classroom sessions to milestone events and
+                    student success celebrations.
+                </p>
             </div>
-
-            <div class="col-lg-4 col-md-6 gallery-card event" data-aos="fade-up" data-aos-delay="100" 
-                 data-src="https://riimacademy.com/wp-content/uploads/gallery/lab1.jpg" 
-                 data-type="image" data-index="1">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/lab1.jpg" alt="Laboratory">
-            </div>
-
-            <div class="col-lg-4 col-md-6 gallery-card seminar" data-aos="fade-up" data-aos-delay="200" 
-                 data-src="https://riimacademy.com/wp-content/uploads/gallery/lab2.jpg" 
-                 data-type="image" data-index="2">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/lab2.jpg" alt="Lab">
-            </div>
-
-            <div class="col-lg-4 col-md-6 gallery-card media" data-aos="zoom-in" 
-                 data-src="https://riimacademy.com/wp-content/uploads/gallery/fac3.jpg" 
-                 data-type="image" data-index="3">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/fac3.jpg" alt="Faculty">
-            </div>
-
-            <div class="col-lg-4 col-md-6 gallery-card event" data-aos="zoom-in" data-aos-delay="150" 
-                 data-src="https://riimacademy.com/wp-content/uploads/gallery/sla2.jpg" 
-                 data-type="image" data-index="4">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/sla2.jpg" alt="Student Activity">
-            </div>
-
-            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250" 
-                 data-src="https://riimacademy.com/wp-content/uploads/gallery/hostel6.jpg" 
-                 data-type="image" data-index="5">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/hostel6.jpg" alt="Hostel">
-            </div>
-            
-            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250" 
-                 data-src="https://riimacademy.com/wp-content/uploads/gallery/lib3.jpg" 
-                 data-type="image" data-index="6">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/lib3.jpg" alt="Library">
-            </div>
-            
-            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250" 
-                 data-src="https://riimacademy.com/wp-content/uploads/gallery/fac2.jpg" 
-                 data-type="image" data-index="7">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/fac2.jpg" alt="Faculty">
-            </div>
-            
-            <div class="col-lg-4 col-md-6 gallery-card classroom" data-aos="zoom-in" data-aos-delay="250" 
-                 data-src="https://riimacademy.com/wp-content/uploads/gallery/fac5.jpg" 
-                 data-type="image" data-index="8">
-                <img src="https://riimacademy.com/wp-content/uploads/gallery/fac5.jpg" alt="Faculty">
-            </div>
-
-            <div class="mt-5 p-2">
-                <h2 class="fw-bold text-danger">Videos</h2>
-            </div>
-
-            <!-- VIDEOS -->
-            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up" 
-                 data-src="https://www.youtube.com/embed/Tv-2_k73xMw" 
-                 data-type="video" data-index="9">
-                <iframe width="100%" height="230" src="https://www.youtube.com/embed/Tv-2_k73xMw" 
-                        title="छत्तीसगढ़ के राष्ट्रीय उद्यान" frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-
-            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up" data-aos-delay="150" 
-                 data-src="https://www.youtube.com/embed/KX25gorA8Ho" 
-                 data-type="video" data-index="10">
-                <iframe width="100%" height="230" src="https://www.youtube.com/embed/KX25gorA8Ho" 
-                        title="IP Address MCQ" frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-            
-            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up" 
-                 data-src="https://www.youtube.com/embed/481sSsq4DP4" 
-                 data-type="video" data-index="11">
-                <iframe width="100%" height="230" src="https://www.youtube.com/embed/481sSsq4DP4" 
-                        title="छ. ग. के 100 महत्वपूर्ण प्रश्न" frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-
-            <div class="col-lg-6 col-md-6 gallery-card video" data-aos="fade-up" data-aos-delay="150" 
-                 data-src="https://www.youtube.com/embed/A1SaWTH9onM" 
-                 data-type="video" data-index="12">
-                <iframe width="100%" height="230" src="https://www.youtube.com/embed/A1SaWTH9onM" 
-                        title="छात्रावास अधीक्षक हेतु" frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div class="hero-shape">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                    preserveAspectRatio="none">
+                    <!-- <path
+                        d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                        class="shape-fill"></path> -->
+                </svg>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- Lightbox Modal -->
-<div id="lightboxModal" class="lightbox-modal">
-    <span class="lightbox-close">&times;</span>
-    <div class="lightbox-counter">
-        <span id="currentIndex">1</span> / <span id="totalItems">13</span>
-    </div>
-    
-    <div class="lightbox-nav">
-        <button id="prevBtn">❮</button>
-        <button id="nextBtn">❯</button>
-    </div>
-    
-    <div id="lightboxContainer"></div>
-    <div id="lightboxCaption" class="lightbox-caption"></div>
-</div>
+        <!-- Gallery Grid -->
+        <section class="py-5">
+            <div class="container">
 
-<!-- Scripts -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-    AOS.init();
-    
-    // Gallery items data
-    const galleryItems = [];
-    let currentIndex = 0;
-    
-    // Initialize gallery items from DOM
-    $(document).ready(function() {
-        // Collect all gallery items
-        $('.gallery-card').each(function(index) {
-            const item = {
-                index: index,
-                src: $(this).data('src'),
-                type: $(this).data('type'),
-                alt: $(this).find('img').attr('alt') || $(this).find('iframe').attr('title') || 'Gallery Item'
-            };
-            galleryItems.push(item);
-        });
-        
-        // Update total items counter
-        $('#totalItems').text(galleryItems.length);
-        
-        // Open lightbox when clicking on gallery item
-        $('.gallery-card').click(function() {
-            const index = $(this).data('index');
-            openLightbox(index);
-        });
-        
-        // Close lightbox
-        $('.lightbox-close').click(function() {
-            closeLightbox();
-        });
-        
-        // Close on ESC key
-        $(document).keydown(function(e) {
-            if (e.keyCode === 27) { // ESC key
-                closeLightbox();
-            } else if (e.keyCode === 37) { // Left arrow
-                navigate(-1);
-            } else if (e.keyCode === 39) { // Right arrow
-                navigate(1);
-            }
-        });
-        
-        // Navigation buttons
-        $('#prevBtn').click(function() {
-            navigate(-1);
-        });
-        
-        $('#nextBtn').click(function() {
-            navigate(1);
-        });
-        
-        // Close when clicking outside content
-        $('#lightboxModal').click(function(e) {
-            if (e.target === this) {
-                closeLightbox();
-            }
-        });
-    });
-    
-    function openLightbox(index) {
-        currentIndex = index;
-        updateLightbox();
-        $('#lightboxModal').fadeIn(300);
-        $('body').css('overflow', 'hidden'); // Prevent scrolling
-    }
-    
-    function closeLightbox() {
-        $('#lightboxModal').fadeOut(300);
-        $('body').css('overflow', 'auto'); // Restore scrolling
-        // Stop video playback when closing
-        $('#lightboxContainer iframe').attr('src', $('#lightboxContainer iframe').attr('src'));
-    }
-    
-    function navigate(direction) {
-        currentIndex += direction;
-        
-        // Loop around
-        if (currentIndex < 0) {
-            currentIndex = galleryItems.length - 1;
-        } else if (currentIndex >= galleryItems.length) {
-            currentIndex = 0;
-        }
-        
-        updateLightbox();
-    }
-    
-    function updateLightbox() {
-        const item = galleryItems[currentIndex];
-        
-        // Update counter
-        $('#currentIndex').text(currentIndex + 1);
-        
-        // Clear container
-        $('#lightboxContainer').empty();
-        $('#lightboxCaption').text(item.alt);
-        
-        if (item.type === 'image') {
-            // Display image
-            const img = $('<img>', {
-                class: 'lightbox-content',
-                src: item.src,
-                alt: item.alt
+                <h2 class="section-title"><i class="fas fa-camera"></i> Campus Life & Facilities</h2>
+
+                <div class="row g-4 mb-5" id="imageGallery">
+                    <div class="col-lg-4 col-md-6 gallery-card" data-aos="fade-up"
+                        data-src="https://riimacademy.com/wp-content/uploads/gallery/class1.jpg" data-type="image"
+                        data-index="0">
+                        <img src="https://riimacademy.com/wp-content/uploads/gallery/class1.jpg" alt="Classroom">
+                        <div class="gallery-overlay">
+                            <div class="overlay-icon"><i class="fas fa-expand"></i></div>
+                            <div class="overlay-text">
+                                <h5>Smart Classrooms</h5>
+                                <span>Interactive Learning Sessions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 gallery-card" data-aos="fade-up" data-aos-delay="100"
+                        data-src="https://riimacademy.com/wp-content/uploads/gallery/lab1.jpg" data-type="image"
+                        data-index="1">
+                        <img src="https://riimacademy.com/wp-content/uploads/gallery/lab1.jpg" alt="Laboratory">
+                        <div class="gallery-overlay">
+                            <div class="overlay-icon"><i class="fas fa-expand"></i></div>
+                            <div class="overlay-text">
+                                <h5>IT Laboratory</h5>
+                                <span>Computer Guided Learning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 gallery-card" data-aos="fade-up" data-aos-delay="200"
+                        data-src="https://riimacademy.com/wp-content/uploads/gallery/lib3.jpg" data-type="image"
+                        data-index="2">
+                        <img src="https://riimacademy.com/wp-content/uploads/gallery/lib3.jpg" alt="Library">
+                        <div class="gallery-overlay">
+                            <div class="overlay-icon"><i class="fas fa-expand"></i></div>
+                            <div class="overlay-text">
+                                <h5>Study Library</h5>
+                                <span>24/7 Access to Resources</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 gallery-card" data-aos="zoom-in"
+                        data-src="https://riimacademy.com/wp-content/uploads/gallery/fac3.jpg" data-type="image"
+                        data-index="3">
+                        <img src="https://riimacademy.com/wp-content/uploads/gallery/fac3.jpg" alt="Faculty">
+                        <div class="gallery-overlay">
+                            <div class="overlay-icon"><i class="fas fa-expand"></i></div>
+                            <div class="overlay-text">
+                                <h5>Faculty Lounge</h5>
+                                <span>Mentorship & Discussion</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 gallery-card" data-aos="zoom-in" data-aos-delay="150"
+                        data-src="https://riimacademy.com/wp-content/uploads/gallery/sla2.jpg" data-type="image"
+                        data-index="4">
+                        <img src="https://riimacademy.com/wp-content/uploads/gallery/sla2.jpg" alt="Student Activity">
+                        <div class="gallery-overlay">
+                            <div class="overlay-icon"><i class="fas fa-expand"></i></div>
+                            <div class="overlay-text">
+                                <h5>Cultural Events</h5>
+                                <span>Holistic Development</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 gallery-card" data-aos="zoom-in" data-aos-delay="250"
+                        data-src="https://riimacademy.com/wp-content/uploads/gallery/hostel6.jpg" data-type="image"
+                        data-index="5">
+                        <img src="https://riimacademy.com/wp-content/uploads/gallery/hostel6.jpg" alt="Hostel">
+                        <div class="gallery-overlay">
+                            <div class="overlay-icon"><i class="fas fa-expand"></i></div>
+                            <div class="overlay-text">
+                                <h5>Residential Facility</h5>
+                                <span>Safe & Comfortable Stay</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title"><i class="fas fa-video"></i> Educational Videos</h2>
+
+                <div class="row g-4" id="videoGallery">
+                    <div class="col-lg-6 col-md-6 gallery-card" data-aos="fade-up"
+                        data-src="https://www.youtube.com/embed/Tv-2_k73xMw" data-type="video" data-index="6">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Tv-2_k73xMw"
+                            title="Geography Special" frameborder="0" allowfullscreen></iframe>
+                        <div class="gallery-overlay">
+                            <div class="overlay-icon"><i class="fas fa-play"></i></div>
+                            <div class="overlay-text">
+                                <h5>Geography Special</h5>
+                                <span>National Parks of India</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 gallery-card" data-aos="fade-up" data-aos-delay="150"
+                        data-src="https://www.youtube.com/embed/KX25gorA8Ho" data-type="video" data-index="7">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/KX25gorA8Ho" title="IT GS"
+                            frameborder="0" allowfullscreen></iframe>
+                        <div class="gallery-overlay">
+                            <div class="overlay-icon"><i class="fas fa-play"></i></div>
+                            <div class="overlay-text">
+                                <h5>IT & Computer GS</h5>
+                                <span>Important MCQs Discussion</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 gallery-card" data-aos="fade-up"
+                        data-src="https://www.youtube.com/embed/481sSsq4DP4" data-type="video" data-index="8">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/481sSsq4DP4"
+                            title="Exam Strategy" frameborder="0" allowfullscreen></iframe>
+                        <div class="gallery-overlay">
+                            <div class="overlay-icon"><i class="fas fa-play"></i></div>
+                            <div class="overlay-text">
+                                <h5>Exam Strategy</h5>
+                                <span>Top 100 Selected Questions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 gallery-card" data-aos="fade-up" data-aos-delay="150"
+                        data-src="https://www.youtube.com/embed/A1SaWTH9onM" data-type="video" data-index="9">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/A1SaWTH9onM"
+                            title="Special Recruitment" frameborder="0" allowfullscreen></iframe>
+                        <div class="gallery-overlay">
+                            <div class="overlay-icon"><i class="fas fa-play"></i></div>
+                            <div class="overlay-text">
+                                <h5>Special Recruitment</h5>
+                                <span>Preparation Roadmap</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Digital Learning Insight Section -->
+                    <div class="row mt-5" data-aos="fade-up">
+                        <div class="col-12">
+                            <div class="insight-card p-4 p-md-5 rounded-4 shadow-sm">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-8">
+                                        <h3 class="fw-bold mb-3" style="color: var(--gov-dark);">Digital Learning at GCA
+                                        </h3>
+                                        <p class="lead text-muted mb-4">Our YouTube sessions and digital resources are
+                                            designed to bridge the gap between complex theories and practical exam
+                                            applications.</p>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <i class="fas fa-check-circle text-success"></i>
+                                                    <span class="fw-medium">Real-time MCQ Discussions</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <i class="fas fa-check-circle text-success"></i>
+                                                    <span class="fw-medium">Subject-Specific Roadmaps</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <i class="fas fa-check-circle text-success"></i>
+                                                    <span class="fw-medium">Expert Strategy Sessions</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <i class="fas fa-check-circle text-success"></i>
+                                                    <span class="fw-medium">Concept Clarity Focus</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 text-center mt-4 mt-lg-0">
+                                        <div
+                                            class="stat-badge p-4 bg-white rounded-circle shadow-sm d-inline-block border">
+                                            <div class="h2 fw-bold text-primary mb-0">500+</div>
+                                            <small class="text-muted fw-bold">Video Hours</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- Lightbox Modal -->
+        <div id="lightboxModal" class="lightbox-modal">
+            <span class="lightbox-close">&times;</span>
+            <div class="lightbox-counter">
+                <span id="currentIndex">1</span> / <span id="totalItems">10</span>
+            </div>
+
+            <div class="lightbox-nav">
+                <button id="prevBtn">❮</button>
+                <button id="nextBtn">❯</button>
+            </div>
+
+            <div id="lightboxContainer"></div>
+            <div id="lightboxCaption" class="lightbox-caption"></div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+        <script>
+            AOS.init();
+
+            // Gallery items data
+            const galleryItems = [];
+            let currentIndex = 0;
+
+            // Initialize gallery items from DOM
+            $(document).ready(function () {
+                // Collect all gallery items
+                $('.gallery-card').each(function (index) {
+                    const item = {
+                        index: index,
+                        src: $(this).data('src'),
+                        type: $(this).data('type'),
+                        alt: $(this).find('img').attr('alt') || $(this).find('iframe').attr('title') || 'Gallery Item'
+                    };
+                    galleryItems.push(item);
+                });
+
+                // Update total items counter
+                $('#totalItems').text(galleryItems.length);
+
+                // Open lightbox when clicking on gallery item
+                $('.gallery-card').click(function () {
+                    const index = $(this).data('index');
+                    openLightbox(index);
+                });
+
+                // Close lightbox
+                $('.lightbox-close').click(function () {
+                    closeLightbox();
+                });
+
+                // Close on ESC key
+                $(document).keydown(function (e) {
+                    if (e.keyCode === 27) { // ESC key
+                        closeLightbox();
+                    } else if (e.keyCode === 37) { // Left arrow
+                        navigate(-1);
+                    } else if (e.keyCode === 39) { // Right arrow
+                        navigate(1);
+                    }
+                });
+
+                // Navigation buttons
+                $('#prevBtn').click(function () {
+                    navigate(-1);
+                });
+
+                $('#nextBtn').click(function () {
+                    navigate(1);
+                });
+
+                // Close when clicking outside content
+                $('#lightboxModal').click(function (e) {
+                    if (e.target === this) {
+                        closeLightbox();
+                    }
+                });
             });
-            $('#lightboxContainer').append(img);
-        } else if (item.type === 'video') {
-            // Display video
-            const iframe = $('<iframe>', {
-                class: 'lightbox-video',
-                src: item.src,
-                frameborder: '0',
-                allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
-                allowfullscreen: 'allowfullscreen'
-            });
-            $('#lightboxContainer').append(iframe);
-        }
-    }
-    
-    // Auto slide (optional - uncomment if you want auto slide)
-    
-    let autoSlideInterval;
-    
-    function startAutoSlide() {
-        autoSlideInterval = setInterval(() => {
-            navigate(1);
-        }, 5000); // Change slide every 5 seconds
-    }
-    
-    function stopAutoSlide() {
-        clearInterval(autoSlideInterval);
-    }
-    
-    // Start auto slide when lightbox opens
-    $('#lightboxModal').on('show', function() {
-        startAutoSlide();
-    });
-    
-    // Stop auto slide when lightbox closes
-    $('#lightboxModal').on('hide', function() {
-        stopAutoSlide();
-    });
-    
-</script>
 
-<%-include("footer.ejs")%>
+            function openLightbox(index) {
+                currentIndex = index;
+                updateLightbox();
+                $('#lightboxModal').fadeIn(300);
+                $('body').css('overflow', 'hidden'); // Prevent scrolling
+            }
+
+            function closeLightbox() {
+                $('#lightboxModal').fadeOut(300);
+                $('body').css('overflow', 'auto'); // Restore scrolling
+                // Stop video playback when closing
+                $('#lightboxContainer iframe').attr('src', $('#lightboxContainer iframe').attr('src'));
+            }
+
+            function navigate(direction) {
+                currentIndex += direction;
+
+                // Loop around
+                if (currentIndex < 0) {
+                    currentIndex = galleryItems.length - 1;
+                } else if (currentIndex >= galleryItems.length) {
+                    currentIndex = 0;
+                }
+
+                updateLightbox();
+            }
+
+            function updateLightbox() {
+                const item = galleryItems[currentIndex];
+
+                // Update counter
+                $('#currentIndex').text(currentIndex + 1);
+
+                // Clear container
+                $('#lightboxContainer').empty();
+                $('#lightboxCaption').text(item.alt);
+
+                if (item.type === 'image') {
+                    // Display image
+                    const img = $('<img>', {
+                        class: 'lightbox-content',
+                        src: item.src,
+                        alt: item.alt
+                    });
+                    $('#lightboxContainer').append(img);
+                } else if (item.type === 'video') {
+                    // Display video
+                    const iframe = $('<iframe>', {
+                        class: 'lightbox-video',
+                        src: item.src,
+                        frameborder: '0',
+                        allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+                        allowfullscreen: 'allowfullscreen'
+                    });
+                    $('#lightboxContainer').append(iframe);
+                }
+            }
+
+            // Auto slide (optional - uncomment if you want auto slide)
+
+            let autoSlideInterval;
+
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(() => {
+                    navigate(1);
+                }, 5000); // Change slide every 5 seconds
+            }
+
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+
+            // Start auto slide when lightbox opens
+            $('#lightboxModal').on('show', function () {
+                startAutoSlide();
+            });
+
+            // Stop auto slide when lightbox closes
+            $('#lightboxModal').on('hide', function () {
+                stopAutoSlide();
+            });
+
+        </script>
+
+        <%-include("footer.ejs")%>
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

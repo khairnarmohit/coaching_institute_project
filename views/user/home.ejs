@@ -47,7 +47,7 @@
                         </p>
 
                         <div class="mt-4">
-                            <a href="/addmission" class="btn btn-primary btn-lg me-3 px-4">Apply Now</a>
+                            <a href="/admission" class="btn btn-primary btn-lg me-3 px-4">Apply Now</a>
                             <a href="/contact" class="btn btn-outline-warning btn-lg px-4">Enquiry</a>
                         </div>
 
@@ -91,7 +91,7 @@
                         <div class="featured-card upsc">
                             <h4>UPSC Department</h4>
                             <p>India's toughest exam preparation with expert faculty.</p>
-                            <a href="/course" class="featured-btn">Explore Course</a>
+                            <a href="/course-details?type=upsc" class="featured-btn">Explore Course</a>
                         </div>
                     </div>
 
@@ -99,7 +99,7 @@
                         <div class="featured-card mpsc">
                             <h4>MPSC Department</h4>
                             <p>State service exams with updated syllabus & mock tests.</p>
-                            <a href="/course" class="featured-btn">Explore Course</a>
+                            <a href="/course-details?type=mpsc" class="featured-btn">Explore Course</a>
                         </div>
                     </div>
 
@@ -107,7 +107,7 @@
                         <div class="featured-card ssc">
                             <h4>SSC Department</h4>
                             <p>Central government jobs with result-oriented training.</p>
-                            <a href="/course" class="featured-btn">Explore Course</a>
+                            <a href="/course-details?type=ssc" class="featured-btn">Explore Course</a>
                         </div>
                     </div>
 
@@ -382,7 +382,11 @@
                             <div class="video-testimonial-card">
                                 <div class="video-frame">
                                     <div class="ratio ratio-16x9">
-                                        <iframe width="727" height="409" src="https://www.youtube.com/embed/PHJVAQ6kFHM" title="Coaching Institute Advertisement Video | Coaching Institute Video | Video Production agency in India" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                        <iframe width="727" height="409" src="https://www.youtube.com/embed/PHJVAQ6kFHM"
+                                            title="Coaching Institute Advertisement Video | Coaching Institute Video | Video Production agency in India"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                         </iframe>
                                     </div>
                                     <!-- <div class="play-overlay">▶</div> -->
@@ -404,7 +408,11 @@
                             <div class="video-testimonial-card">
                                 <div class="video-frame">
                                     <div class="ratio ratio-16x9">
-                                       <iframe width="727" height="409" src="https://www.youtube.com/embed/gjYqYg76mRc" title="Best Defence Academy in India | OGC-Dehradun Defence Academy |NDA, CDS, OTA, AFCAT, IMU-CET Coaching" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                        <iframe width="727" height="409" src="https://www.youtube.com/embed/gjYqYg76mRc"
+                                            title="Best Defence Academy in India | OGC-Dehradun Defence Academy |NDA, CDS, OTA, AFCAT, IMU-CET Coaching"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                     </div>
                                     <!-- <div class="play-overlay">▶</div> -->
                                 </div>
@@ -472,7 +480,9 @@
 
         <!-- FOOTER -->
         <%- include('footer') %>
-        <script src="js/script.js"></script>
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="js/script.js"></script>
 </body>
 
 </html>

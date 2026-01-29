@@ -1,212 +1,294 @@
-<%-include("navbar.ejs")%>
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-    .about-header {
-        background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.7)),
-        url("https://tse4.mm.bing.net/th/id/OIP.eDao7xwU7dbMlKgf_EDoeAHaEv?pid=ImgDet&w=202&h=129&c=7&dpr=1.3&o=7&rm=3g") center/cover no-repeat;
-        padding: 120px 0;
-        text-align: center;
-        color: #fff;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Form - GCA</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gov-dark: #0b1c2d;
+            --gov-accent: #f59e0b;
+            --gov-bg: #f8fafc;
+            --gov-white: #ffffff;
+            --gov-text: #1e293b;
+            --gov-muted: #475569;
+            --gov-border: #e5e7eb;
+        }
 
-    .form-container {
-        max-width: 800px;
-        margin: 40px auto;
-        background: #fff;
-        padding: 25px;
-        border-radius: 10px;
-        box-shadow: 0 6px 20px rgba(0,0,0,.1);
-        border-top: 5px solid #FFD83A;
-    }
 
-    .section-card {
-        border: 1px solid #eee;
-        background: #fefefe;
-        border-radius: 8px;
-        padding: 20px 20px;
-        margin-bottom: 25px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
+        /* PREMIUM HERO SECTION */
+        .admission-hero {
+            background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.8)),
+                url("https://images.unsplash.com/photo-152305085306e-880005f847b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
+            padding: 100px 0;
+            text-align: center;
+            color: var(--gov-white);
+        }
 
-    .section-title {
-        font-size: 15px;
-        font-weight: 600;
-        color: #000;
-        background: #FFD83A;
-        padding: 6px 14px;
-        border-radius: 3px;
-        width: fit-content;
-        margin: 10px 0 15px;
-    }
+        .admission-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
 
-    .form-label {
-        font-size: 13px;
-        margin-bottom: 3px;
-        font-weight: 500;
-    }
+        /* FORM DESIGN */
+        .admission-form-container {
+            max-width: 900px;
+            margin: -50px auto 100px;
+            background: var(--gov-white);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(11, 28, 45, 0.1);
+            position: relative;
+            z-index: 10;
+            border: 1px solid var(--gov-border);
+        }
 
-    /* Input fields smaller width and consistent style */
-    .form-control {
-        font-size: 13px;
-        padding: 5px 10px;
-        border: 1px solid #444;
-        border-radius: 5px;
-        height: 32px;
-        max-width: 100%;
-    }
+        .form-section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gov-dark);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--gov-accent);
+            display: inline-block;
+        }
 
-    textarea.form-control {
-        height: auto;
-    }
+        .form-label {
+            font-weight: 600;
+            color: var(--gov-dark);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
 
-    .row .col-md-6 .form-control {
-        width: 95%;
-    }
+        .form-control {
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid var(--gov-border);
+            background: var(--gov-bg);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
 
-    button {
-        border-radius: 5px;
-        font-weight: 500;
-        transition: 0.3s;
-    }
+        .form-control:focus {
+            background: var(--gov-white);
+            border-color: var(--gov-accent);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+        }
 
-    button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-    }
-</style>
+        .btn-submit {
+            background: #ffcc00;
+            /* Vibrant Yellow */
+            color: var(--gov-dark);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            transition: all 0.4s ease;
+            width: 100%;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+        }
 
-<div class="about-header">
-    <h1 class="animate__animated animate__fadeInDown fw-bold">Admission Form</h1>
-</div>
+        .btn-submit:hover {
+            background: #ffdb1f;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.5);
+        }
 
-<form class="form-container" action="/addmission_form" method="post" enctype="multipart/form-data">
+        .section-card {
+            background: var(--gov-bg);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid var(--gov-border);
+        }
 
-    <h6 class="fw-bold text-center" style="font-size:16px; margin-bottom:15px;">Student Details</h6>
+        /* REQUIRED MARKER */
+        .required-star {
+            color: #ef4444;
+            margin-left: 3px;
+        }
+    </style>
+</head>
 
-    <!-- Student Details -->
-    <div class="section-card">
-        <div class="mb-3">
-            <label class="form-label">Student Name *</label>
-            <input type="text" class="form-control" name="full_name">
-        </div>
-    </div>
+<body>
+    <%-include("navbar.ejs")%>
 
-    <!-- Personal Details -->
-    <div class="section-title">Personal Details</div>
-    <div class="section-card">
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Gender *</label>
-                <select class="form-control" name="gender">
-                    <option>-- Select --</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Other</option>
-                </select>
+        <!-- Add AOS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+        <div class="admission-hero">
+            <div class="container">
+                <h1 data-aos="fade-up">Enrollment Form</h1>
+                <p class="lead" data-aos="fade-up" data-aos-delay="100">Take the first step towards your career in
+                    public
+                    service. Fill out the form below to apply.</p>
             </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Date of Birth *</label>
-                <input type="date" class="form-control" name="date_of_birth">
-            </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Mobile Number *</label>
-                <input type="tel" class="form-control" name="mobile_number">
-            </div>
+        <div class="container">
+            <form class="admission-form-container" action="/addmission_form" method="post" enctype="multipart/form-data"
+                data-aos="fade-up" data-aos-delay="200">
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Email *</label>
-                <input type="email" class="form-control" name="email">
-            </div>
+                <!-- Student Identity -->
+                <div class="mb-5 text-center">
+                    <h3 class="fw-bold" style="color: var(--gov-dark);">Registration Details</h3>
+                    <p class="text-muted">Academic Year 2026-27</p>
+                </div>
+
+                <!-- Personal Details -->
+                <h5 class="form-section-title">Personal Information</h5>
+                <div class="section-card">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <label class="form-label">Full Name<span class="required-star">*</span></label>
+                            <input type="text" class="form-control" name="full_name"
+                                placeholder="As per official documents" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Gender<span class="required-star">*</span></label>
+                            <select class="form-control" name="gender" required>
+                                <option value="">-- Choose --</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Date of Birth<span class="required-star">*</span></label>
+                            <input type="date" class="form-control" name="date_of_birth" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mobile Number<span class="required-star">*</span></label>
+                            <input type="tel" class="form-control" name="mobile_number" placeholder="+91" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email Address<span class="required-star">*</span></label>
+                            <input type="email" class="form-control" name="email" placeholder="example@mail.com"
+                                required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Permanent Address<span class="required-star">*</span></label>
+                            <textarea class="form-control" name="address" rows="3"
+                                placeholder="Full residential address" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Details -->
+                <h5 class="form-section-title">Educational Background</h5>
+                <div class="section-card">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Highest Qualification</label>
+                            <input type="text" class="form-control" name="qualification" placeholder="e.g. B.A., M.Sc.">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">College/University</label>
+                            <input type="text" class="form-control" name="college_name"
+                                placeholder="Full name of institute">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Year of Passing</label>
+                            <input type="number" class="form-control" name="passing_year" placeholder="YYYY">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program Choice -->
+                <h5 class="form-section-title">Course Selection</h5>
+                <div class="section-card">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Selected Course<span class="required-star">*</span></label>
+                            <select class="form-control" name="course_name" required>
+                                <option value="">-- Select Course --</option>
+                                <option>UPSC Civil Services</option>
+                                <option>MPSC State Services</option>
+                                <option>Banking Exams</option>
+                                <option>Police Bharti</option>
+                                <option>Talathi</option>
+                                <option>Railway Exams</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mode of Study<span class="required-star">*</span></label>
+                            <select class="form-control" name="mode_of_class" required>
+                                <option>Online (Live Classes)</option>
+                                <option>Offline (Campus)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parent Details -->
+                <h5 class="form-section-title">Guardian Information</h5>
+                <div class="section-card">
+                    <div class="row g-4">
+                        <div class="col-md-7">
+                            <label class="form-label">Parent/Guardian Name</label>
+                            <input type="text" class="form-control" name="parent_name" placeholder="Full name">
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label">Emergency Contact Number</label>
+                            <input type="tel" class="form-control" name="parent_contact" placeholder="+91">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Upload -->
+                <h5 class="form-section-title">Required Documents</h5>
+                <div class="section-card">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Passport Size Photo</label>
+                            <input type="file" class="form-control" name="photo">
+                            <small class="text-muted mt-1 d-block">Max 2MB (JPG/PNG)</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Identity Proof (Aadhaar/PAN)</label>
+                            <input type="file" class="form-control" name="id_proof">
+                            <small class="text-muted mt-1 d-block">PDF preferred</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Information Accuracy Declaration -->
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" id="declareCheck" required>
+                    <label class="form-check-label small text-muted" for="declareCheck">
+                        I hereby declare that the information provided above is true and accurate to the best of my
+                        knowledge.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-submit">
+                    Confirm & Submit Admission
+                </button>
+            </form>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Address *</label>
-            <textarea class="form-control" name="address" rows="2"></textarea>
-        </div>
-    </div>
-
-    <!-- Education Details -->
-    <div class="section-title">Education Details</div>
-    <div class="section-card">
-        <div class="mb-3">
-            <label class="form-label">Qualification</label>
-            <input type="text" class="form-control" name="qualification">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">College Name</label>
-            <input type="text" class="form-control" name="college_name">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Passing Year</label>
-            <input type="number" class="form-control" name="passing_year">
-        </div>
-    </div>
-
-    <!-- Course Details -->
-    <div class="section-title">Course Details</div>
-    <div class="section-card">
-        <div class="mb-3">
-            <label class="form-label">Course Name</label>
-            <select class="form-control" name="course_name">
-                <option>-- Select Course --</option>
-                <option>Talathi</option>
-                <option>Police Bharti</option>
-                <option>Banking Exams</option>
-                <option>MPSC</option>
-                <option>Railway Exams</option>
-                <option>UPSC</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Mode of Class</label>
-            <select class="form-control" name="mode_of_class">
-                <option>Online</option>
-                <option>Offline</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Parent Details -->
-    <div class="section-title">Parent / Guardian Details</div>
-    <div class="section-card">
-        <div class="mb-3">
-            <label class="form-label">Parent Name</label>
-            <input type="text" class="form-control" name="parent_name">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Parent Contact</label>
-            <input type="tel" class="form-control" name="parent_contact">
-        </div>
-    </div>
-
-    <!-- Documents -->
-    <div class="section-title">Documents</div>
-    <div class="section-card">
-        <div class="mb-3">
-            <label class="form-label">Photo</label>
-            <input type="file" class="form-control" name="photo">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">ID Proof</label>
-            <input type="file" class="form-control" name="id_proof">
-        </div>
-    </div>
-
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary w-100 mt-3" style="font-size:14px; padding:8px 0;">
-        Submit
-    </button>
-
-</form>
+        <!-- Scripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 800,
+                once: true
+            });
+        </script>
 
 
-<%-include("footer.ejs")%>
+        <%-include("footer.ejs")%>
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

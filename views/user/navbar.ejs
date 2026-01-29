@@ -1,105 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GCA-Institute</title>
-
 <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-:root{
-  --gov-dark:#0b1c2d;
-  --gov-accent:#f59e0b;
-  --gov-light:#f8fafc;
-}
+  :root {
+    --gov-dark: #0b1c2d;
+    --gov-accent: #f59e0b;
+    --gov-light: #f8fafc;
+  }
 
-/* Page BG */
-body{
-  background:#f1f5f9;
-  min-height:100vh;
-  font-family:"Segoe UI",sans-serif;
-}
+  /* Global Layout Unification */
+  html {
+    overflow-y: scroll;
+    /* Always show scrollbar to prevent layout jump */
+  }
 
-/* NAVBAR */
-.navbar{
-  background:#ffffff;
-  border-bottom:3px solid var(--gov-accent);
-  box-shadow:0 4px 14px rgba(0,0,0,0.08);
-}
+  body {
+    margin: 0;
+    padding: 0;
+    padding-top: 75px;
+    /* Added padding to prevent content overlap with fixed navbar */
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f1f5f9;
+  }
 
-/* Brand */
-.navbar-brand{
-  font-weight:800;
-  color:var(--gov-dark)!important;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
+  /* Unify all containers to 1200px for consistency */
+  .container {
+    max-width: 1200px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
 
-.navbar-brand i{
-  background:var(--gov-accent);
-  color:var(--gov-dark);
-  padding:8px;
-  border-radius:6px;
-  font-size:18px;
-}
+  /* NAVBAR styling */
+  .navbar {
+    background: #ffffff;
+    border-bottom: 3px solid var(--gov-accent);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    z-index: 2000 !important;
+    /* Extremely high z-index to always stay on top */
+  }
 
-/* Nav links */
-.nav-link{
-  font-weight:600;
-  color:#1e293b!important;
-  margin:0 3px;
-  padding:8px 14px!important;
-  border-radius:4px;
-  transition:0.3s;
-}
+  /* Brand */
+  .navbar-brand {
+    font-weight: 800;
+    color: var(--gov-dark) !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-.nav-link:hover{
-  background:var(--gov-light);
-  color:var(--gov-dark)!important;
-}
+  .navbar-brand i {
+    background: var(--gov-accent);
+    color: var(--gov-dark);
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 18px;
+  }
 
-/* Active link */
-.nav-link.active{
-  background:var(--gov-accent);
-  color:var(--gov-dark)!important;
-}
+  /* Nav links */
+  .nav-link {
+    font-weight: 600;
+    color: #1e293b !important;
+    margin: 0 3px;
+    padding: 8px 14px !important;
+    border-radius: 4px;
+    transition: 0.3s;
+  }
 
-/* Dropdown */
-.dropdown-menu{
-  border:1px solid #e5e7eb;
-  border-radius:4px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.1);
-}
+  .nav-link:hover {
+    background: var(--gov-light);
+    color: var(--gov-dark) !important;
+  }
 
-.dropdown-item{
-  font-size:14px;
-  font-weight:500;
-}
+  /* Active link */
+  .nav-link.active {
+    background: var(--gov-accent);
+    color: var(--gov-dark) !important;
+  }
 
-.dropdown-item:hover{
-  background:#f1f5f9;
-  color:var(--gov-dark);
-}
+  /* Dropdown */
+  .dropdown-menu {
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
 
-/* Toggler */
-.navbar-toggler{
-  border:1px solid #cbd5e1;
-}
-.navbar-toggler:focus{
-  box-shadow:none;
-}
+  .dropdown-item {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .dropdown-item:hover {
+    background: #f1f5f9;
+    color: var(--gov-dark);
+  }
+
+  /* Toggler */
+  .navbar-toggler {
+    border: 1px solid #cbd5e1;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: none;
+  }
+
+  /* Mobile container padding */
+  @media (max-width: 1200px) {
+    .container {
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+  }
 </style>
-</head>
 
-<body>
-
-<nav class="navbar navbar-expand-lg sticky-top">
+<nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
 
     <!-- Brand -->
@@ -131,7 +145,7 @@ body{
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Courses</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/courses">Course List</a></li>
-            <li><a class="dropdown-item" href="/course-details">Course Details</a></li>
+            <li><a class="dropdown-item" href="/courses">Course Details</a></li>
           </ul>
         </li>
 
@@ -147,24 +161,18 @@ body{
   </div>
 </nav>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <!-- Active Link Script -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const currentPath = window.location.pathname;
-  document.querySelectorAll(".nav-link").forEach(link => {
-    if (link.getAttribute("href") === currentPath) {
-      link.classList.add("active");
-      const dropdown = link.closest(".dropdown");
-      if (dropdown) {
-        dropdown.querySelector(".nav-link").classList.add("active");
+  document.addEventListener("DOMContentLoaded", () => {
+    const currentPath = window.location.pathname;
+    document.querySelectorAll(".nav-link").forEach(link => {
+      if (link.getAttribute("href") === currentPath) {
+        link.classList.add("active");
+        const dropdown = link.closest(".dropdown");
+        if (dropdown) {
+          dropdown.querySelector(".nav-link").classList.add("active");
+        }
       }
-    }
+    });
   });
-});
 </script>
-
-</body>
-</html>

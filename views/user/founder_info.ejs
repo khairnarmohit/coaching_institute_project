@@ -1,269 +1,375 @@
-<%-include("navbar.ejs")%>
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-:root {
-  --gov-dark: #0b1c2d;
-  --gov-accent: #f59e0b; 
-  --gov-bg: #f8fafc;
-  --gov-white: #ffffff;
-  --gov-text: #1e293b;
-  --gov-muted: #475569;
-  --gov-border: #e5e7eb;
-}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Founder Info - GCA</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --gov-dark: #0b1c2d;
+      --gov-accent: #f59e0b;
+      --gov-bg: #f8fafc;
+      --gov-white: #ffffff;
+      --gov-text: #1e293b;
+      --gov-muted: #475569;
+      --gov-border: #e5e7eb;
+    }
 
-body {
-  background-color: var(--gov-bg);
-  color: var(--gov-text);
-  font-family: system-ui, -apple-system, sans-serif;
-}
+    body {
+      background-color: var(--gov-bg);
+      color: var(--gov-text);
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
 
-/* HEADER */
-.about-header {
-  background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.7)), 
-              url("https://tse4.mm.bing.net/th/id/OIP.eDao7xwU7dbMlKgf_EDoeAHaEv?pid=ImgDet&w=202&h=129&c=7&dpr=1.3&o=7&rm=3g") 
-              center/cover no-repeat;
-  padding: 130px 0;
-  color: var(--gov-white);
-  text-align: center;
-}
+    /* HEADER */
+    .about-header {
+      background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.75)),
+        url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80") center/cover no-repeat fixed;
+      padding: 150px 0;
+      color: var(--gov-white);
+      text-align: center;
+      position: relative;
+    }
 
-.about-header h1 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
+    .about-header h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    }
 
-/* Founder Section */
-.founder-section {
-  padding: 80px 0;
-  background-color: var(--gov-white);
-}
+    /* FOUNDER PROFILE */
+    .founder-card {
+      background: var(--gov-white);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(11, 28, 45, 0.1);
+      margin-top: -80px;
+      position: relative;
+      z-index: 10;
+    }
 
-.founder-img {
-  width: 100%;
-  max-width: 500px;
-  height: 550px;
-  object-fit: cover;
-  border-radius: 16px;
-  border: 3px solid var(--gov-accent);
-  opacity: 0;
-  animation: slideLeft 1s ease-out forwards;
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
-  box-shadow: 0 10px 30px rgba(11, 28, 45, 0.15);
-}
+    .founder-img-box {
+      padding: 20px;
+      background: var(--gov-bg);
+    }
 
-.founder-img:hover {
-  transform: scale(1.02);
-  box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2);
-}
+    .founder-img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 4px solid var(--gov-white);
+    }
 
-.founder-text {
-  opacity: 0;
-  animation: slideRight 1s ease-out forwards;
-  padding: 20px;
-}
+    .founder-details {
+      padding: 50px;
+    }
 
-.founder-text h2 {
-  color: var(--gov-accent);
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 25px;
-  border-bottom: 3px solid var(--gov-accent);
-  padding-bottom: 10px;
-  display: inline-block;
-}
+    .founder-name {
+      color: var(--gov-dark);
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
 
-.founder-text p {
-  color: var(--gov-text);
-  line-height: 1.8;
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-}
+    .founder-title {
+      color: var(--gov-accent);
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      display: block;
+    }
 
-.founder-text b {
-  color: var(--gov-accent);
-  font-weight: 700;
-}
+    .quote-box {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--gov-muted);
+      font-style: italic;
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 40px;
+    }
 
-/* Keyframes */
-@keyframes slideLeft {
-  0% { transform: translateX(-50px); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
-}
+    .quote-box::before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      top: -10px;
+      font-size: 5rem;
+      color: var(--gov-accent);
+      opacity: 0.3;
+      font-family: serif;
+    }
 
-@keyframes slideRight {
-  0% { transform: translateX(50px); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
-}
+    /* ACHIEVEMENTS */
+    .stats-section {
+      padding: 80px 0;
+      background: var(--gov-dark);
+      color: var(--gov-white);
+    }
 
-/* Vision & Mission Section */
-.vm-section {
-  background-color: var(--gov-bg);
-  padding: 80px 0;
-}
+    .stat-item {
+      text-align: center;
+    }
 
-.section-heading {
-  color: var(--gov-dark);
-  font-weight: 800;
-  font-size: 2.8rem;
-  margin-bottom: 50px;
-  text-align: center;
-  position: relative;
-}
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--gov-accent);
+      margin-bottom: 10px;
+      display: block;
+    }
 
-.section-heading::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 4px;
-  background-color: var(--gov-accent);
-  border-radius: 2px;
-}
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.8;
+    }
 
-/* VM Cards */
-.vm-card {
-  background: var(--gov-white);
-  border-radius: 16px;
-  border-top: 5px solid var(--gov-accent);
-  padding: 40px 30px;
-  box-shadow: 0 10px 30px rgba(11, 28, 45, 0.1);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  height: 100%;
-  border-left: none;
-}
+    /* BIOGRAPHY SECTION */
+    .bio-section {
+      padding: 100px 0;
+    }
 
-.vm-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(245, 158, 11, 0.15);
-  border-top-color: var(--gov-dark);
-}
+    .bio-content h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gov-dark);
+      margin-bottom: 25px;
+    }
 
-.vm-card h4 {
-  color: var(--gov-accent);
-  font-weight: 700;
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-  position: relative;
-  padding-bottom: 15px;
-}
+    .bio-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--gov-muted);
+      margin-bottom: 20px;
+    }
 
-.vm-card h4::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background-color: var(--gov-dark);
-  border-radius: 1.5px;
-}
+    .achievement-list {
+      list-style: none;
+      padding: 0;
+    }
 
-.vm-card p {
-  font-style: italic;
-  color: var(--gov-muted);
-  line-height: 1.8;
-  font-size: 1.15rem;
-  margin: 0;
-}
+    .achievement-list li {
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--gov-border);
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+      transition: all 0.3s ease;
+      border-radius: 12px;
+    }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .about-header {
-    padding: 80px 0;
-  }
-  
-  .about-header h1 {
-    font-size: 2.5rem;
-  }
-  
-  .founder-img {
-    height: 400px;
-    margin-bottom: 30px;
-  }
-  
-  .founder-text h2 {
-    font-size: 2rem;
-  }
-  
-  .section-heading {
-    font-size: 2.2rem;
-  }
-  
-  .vm-card {
-    padding: 30px 20px;
-    margin-bottom: 20px;
-  }
-  
-  .vm-card h4 {
-    font-size: 1.5rem;
-  }
-}
-</style>
+    .achievement-list li:hover {
+      background: var(--gov-white);
+      transform: translateX(10px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      border-bottom-color: transparent;
+    }
+
+    .achievement-list li i {
+      color: var(--gov-accent);
+      font-size: 1.2rem;
+      margin-top: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .achievement-list li:hover i {
+      transform: scale(1.2);
+    }
+
+    .signature-box {
+      margin-top: 50px;
+    }
+
+    .signature-img {
+      max-width: 200px;
+      margin-bottom: 10px;
+      filter: grayscale(1) contrast(1.5);
+    }
+
+
+
+    .achievement-item {
+      transition: all 0.3s ease;
+      padding: 15px;
+      border-radius: 12px;
+    }
+
+    .achievement-item:hover {
+      background: var(--gov-white);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+    }
+
+    .achievement-item:hover .text-accent {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .text-accent {
+      color: var(--gov-accent);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+      .founder-card {
+        margin-top: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .founder-details {
+        padding: 30px;
+      }
+
+      .founder-name {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <%-include("navbar.ejs")%>
 
-<div class="about-header">
-    <h1 class="animate__animated animate__fadeInDown fw-bold">Founder Information</h1>
-</div>
-
-<section class="founder-section">
-    <div class="container">
-        <div class="row g-5 align-items-center">
-            <div class="col-md-6" data-aos="fade-right">
-                <img src="https://riimacademy.com/wp-content/uploads/2022/09/Rajendra-Singh-Sir1-1-1024x1024.jpg" class="founder-img">
-            </div>
-            <div class="col-md-6 founder-text" data-aos="fade-left">
-                <h2>Founder</h2>
-                <p>
-                    Dear Aspirants,<br>
-                    We are committed to creating a responsible and ethical administrative workforce for the betterment of the nation. At EduInstitute Academy Pune we leave no stone unturned in ensuring that every aspirant is motivated to surpass his own potential through the exhaustive teaching methodology. Our candidates are also trained with all necessary modern educational skills. We pull out all the stops in making the candidate absolutely ready in all sense for a job in the prestigious Civil Services.
-                </p>
-                <p>
-                    They are given multiple opportunities to interact and hear valuable insights from bureaucrats, industry experts, public servants, and influential functionaries.
-                </p>
-                <p>
-                    <b>Come – let the experts at EduInstitute Academy guide you towards a bright future in the administrative sector of the nation.<br>
-                    Hon. Rajendra Singh – IPS</b>
-                </p>
-            </div>
-        </div>
+    <div class="about-header">
+      <div class="container">
+        <h1>Leadership & Vision</h1>
+      </div>
     </div>
-</section>
 
-<section class="vm-section">
-    <div class="container">
-        <h2 class="section-heading">Vision and Mission</h2>
-        <div class="row g-4 mt-5">
-            <div class="col-md-6" data-aos="fade-right">
-                <div class="vm-card">
-                    <h4>Vision</h4>
-                    <p>"Producing an eminent center of excellence in IAS coaching and training to attract more and efficient youth to transform themselves into future civil servants."</p>
-                </div>
+    <section class="founder-profile">
+      <div class="container">
+        <div class="founder-card">
+          <div class="row g-0">
+            <div class="col-lg-5 founder-img-box text-center">
+              <img src="https://riimacademy.com/wp-content/uploads/2022/09/Rajendra-Singh-Sir1-1-1024x1024.jpg"
+                class="founder-img" alt="Hon. Rajendra Singh">
             </div>
-            <div class="col-md-6" data-aos="fade-left">
-                <div class="vm-card">
-                    <h4>Mission</h4>
-                    <p>"Become a prominent and foremost institute of IAS coaching and training to help create disciplined and competent Civil Service professionals."</p>
+            <div class="col-lg-7 founder-details">
+              <span class="founder-title">Founder & Mentor</span>
+              <h2 class="founder-name">Hon. Rajendra Singh</h2>
+              <p class="mb-4 text-muted fw-bold">IPS (Retd.)</p>
+
+              <div class="quote-box">
+                At EduInstitute, we don't just teach subjects; we build character and cultivate the administrative
+                mindset. Our goal is to transform every aspirant into an officer who serves the nation with integrity
+                and
+                excellence.
+              </div>
+
+              <div class="founder-message">
+                <p>We are committed to creating a responsible and ethical administrative workforce for the betterment of
+                  the nation. At EduInstitute, we leave no stone unturned in ensuring that every aspirant is motivated
+                  to
+                  surpass their own potential through our exhaustive teaching methodology.</p>
+
+                <div class="signature-box">
+                  <h5 class="fw-bold m-0" style="color: var(--gov-dark);">Hon. Rajendra Singh</h5>
+                  <small class="text-accent">Founder, EduInstitute Academy</small>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-</section>
+      </div>
+    </section>
 
-<%-include("footer.ejs")%>
+    <section class="bio-section">
+      <div class="container">
+        <div class="row g-5">
+          <div class="col-lg-7 bio-content">
+            <h3>The Journey of a Visionary</h3>
+            <p>Hon. Rajendra Singh, a former IPS officer, brings a wealth of on-field administrative experience to the
+              classroom. His journey from a dedicated student to a distinguished police officer has been the foundation
+              of
+              his teaching philosophy.</p>
+            <p>Having witnessed the challenges and rewards of public service first-hand, he established EduInstitute
+              with
+              a singular goal: to provide aspirants with a realistic and comprehensive roadmap to success in UPSC and
+              MPSC
+              examinations.</p>
+
+            <h4 class="mt-5 fw-bold mb-4">Core Philosophy</h4>
+            <ul class="achievement-list">
+              <li><i class="fas fa-medal"></i> <strong>Integrated Learning:</strong> Combining static theory with
+                dynamic
+                current affairs.</li>
+              <li><i class="fas fa-medal"></i> <strong>Ethical Foundation:</strong> Emphasizing integrity as much as
+                intelligence.</li>
+              <li><i class="fas fa-medal"></i> <strong>Personalized Guidance:</strong> Tailoring strategies to
+                individual
+                student strengths.</li>
+              <li><i class="fas fa-medal"></i> <strong>Continuous Mentorship:</strong> Supporting students from Prelims
+                to
+                Interviews.</li>
+            </ul>
+          </div>
+          <div class="col-lg-5">
+            <div class="bg-light p-5 rounded-4 border">
+              <h4 class="fw-bold mb-4" style="color: var(--gov-dark);">Major Achievements</h4>
+              <div class="achievement-item d-flex gap-3 mb-4">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-award fa-2x text-accent"></i>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-1">Excellent Service Medal</h6>
+                  <p class="small text-muted mb-0">For distinguished contribution to public safety and administration.
+                  </p>
+                </div>
+              </div>
+              <div class="achievement-item d-flex gap-3 mb-4">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-star fa-2x text-accent"></i>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-1">Best Academician Award 2023</h6>
+                  <p class="small text-muted mb-0">Recognized for innovative teaching methodologies in civil services.
+                  </p>
+                </div>
+              </div>
+              <div class="achievement-item d-flex gap-3">
+                <div class="flex-shrink-0">
+                  <i class="fas fa-users fa-2x text-accent"></i>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-1">Youth Icon Recognition</h6>
+                  <p class="small text-muted mb-0">Awarded for inspiring thousands of youth towards public service.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <%-include("footer.ejs")%>
+      <!-- Bootstrap JS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script>
-  AOS.init({
-    duration: 1000,
-    once: true,
-    offset: 100
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+      });
+    }
   });
 </script>
-
-</body>
-</html>

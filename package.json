@@ -1,11 +1,30 @@
 {
   "dependencies": {
     "body-parser": "^2.2.2",
+    "dotenv": "^17.2.3",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
     "express-fileupload": "^1.5.2",
     "express-session": "^1.18.2",
     "mysql2": "^3.16.1",
     "util": "^0.12.5"
-  }
+  },
+  "name": "backup_coaching_institute",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hamrajshaikh02-png/coaching_institute.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hamrajshaikh02-png/coaching_institute/issues"
+  },
+  "homepage": "https://github.com/hamrajshaikh02-png/coaching_institute#readme",
+  "description": ""
 }

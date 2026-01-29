@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Batch Information - Government Competitive Academy</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --gov-dark: #0b1c2d;
@@ -16,24 +20,7 @@
             --gov-border: #e5e7eb;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--gov-bg);
-            color: var(--gov-text);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        /* Page Styles */
 
         .page-header {
             background: linear-gradient(135deg, var(--gov-dark) 0%, #1a365d 100%);
@@ -70,9 +57,22 @@
 
         .batches-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
+            /* Force 3 columns for consistency on large screens */
             gap: 2rem;
             margin-top: 1.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .batches-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .batches-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .batch-card {
@@ -82,6 +82,9 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid var(--gov-border);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .batch-card:hover {
@@ -118,6 +121,14 @@
 
         .batch-content {
             padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .batch-detail:last-of-type {
+            margin-bottom: auto;
+            /* Pushes the register button to the bottom */
         }
 
         .batch-detail {
@@ -178,6 +189,12 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border-left: 4px solid var(--gov-accent);
+            transition: all 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         .info-box h3 {
@@ -280,7 +297,7 @@
                                     <span class="mode-indicator mode-offline">Offline</span>
                                 </span>
                             </div>
-                            <a href="#" class="register-btn">Apply Now</a>
+                            <a href="/admission" class="register-btn">Apply Now</a>
                         </div>
                     </div>
 
@@ -309,7 +326,7 @@
                                     <span class="mode-indicator mode-online">Online Live</span>
                                 </span>
                             </div>
-                            <a href="#" class="register-btn">Register Now</a>
+                            <a href="/admission" class="register-btn">Apply Now</a>
                         </div>
                     </div>
 
@@ -338,7 +355,7 @@
                                     <span class="mode-indicator mode-online">Online Recorded</span>
                                 </span>
                             </div>
-                            <a href="#" class="register-btn">Apply Now</a>
+                            <a href="/admission" class="register-btn">Apply Now</a>
                         </div>
                     </div>
                 </div>
@@ -409,7 +426,7 @@
             </section>
 
             <!-- Additional Information -->
-            <section class="info-boxes">
+            <section class="info-boxes mb-5">
                 <div class="info-box">
                     <h3>Batch Duration</h3>
                     <p>Our batches range from 4 to 12 months depending on the examination pattern and syllabus coverage.
@@ -437,13 +454,12 @@
 
                     registerButtons.forEach(button => {
                         button.addEventListener('click', function (e) {
-                            const batchTitle = this.closest('.batch-card').querySelector('h3').textContent;
-
-                            // For demonstration, show an alert
-                            alert(`Thank you for your interest in ${batchTitle}. You will be redirected to the registration form.`);
-
-                            // Redirect to registration page
-                            window.location.href = '/admission';
+                            // If it's a button and not a link with href, handle redirection
+                            if (this.tagName === 'BUTTON' || !this.getAttribute('href')) {
+                                e.preventDefault();
+                                window.location.href = '/admission';
+                            }
+                            // Popup removed as requested
                         });
                     });
 
@@ -471,6 +487,8 @@
                     });
                 });
             </script>
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

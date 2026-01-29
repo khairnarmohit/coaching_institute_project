@@ -1,19 +1,21 @@
-   <%- include("navbar.ejs") %>
-   <style>
-        :root {
-          --gov-dark: #0b1c2d;
-          --gov-accent: #f59e0b;
-          --gov-bg: #f8fafc;
-          --gov-white: #ffffff;
-          --gov-text: #1e293b;
-          --gov-muted: #475569;
-          --gov-border: #e5e7eb;
-        }
+<!DOCTYPE html>
+<html lang="en">
 
-        body {
-            background-color: var(--gov-bg);
-            color: var(--gov-text);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syllabus - Government Competitive Academy</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gov-bg: #f8fafc;
+            --gov-white: #ffffff;
+            --gov-text: #1e293b;
+            --gov-muted: #475569;
+            --gov-border: #e5e7eb;
         }
 
         /* Page Header */
@@ -86,6 +88,7 @@
                 opacity: 0;
                 transform: translateY(30px) scale(0.95);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
@@ -98,12 +101,29 @@
         }
 
         /* Stagger the card animations */
-        .card-1 { animation-delay: 0.1s; }
-        .card-2 { animation-delay: 0.2s; }
-        .card-3 { animation-delay: 0.3s; }
-        .card-4 { animation-delay: 0.4s; }
-        .card-5 { animation-delay: 0.5s; }
-        .card-6 { animation-delay: 0.6s; }
+        .card-1 {
+            animation-delay: 0.1s;
+        }
+
+        .card-2 {
+            animation-delay: 0.2s;
+        }
+
+        .card-3 {
+            animation-delay: 0.3s;
+        }
+
+        .card-4 {
+            animation-delay: 0.4s;
+        }
+
+        .card-5 {
+            animation-delay: 0.5s;
+        }
+
+        .card-6 {
+            animation-delay: 0.6s;
+        }
 
         /* Updated badge */
         .updated-badge {
@@ -227,6 +247,7 @@
         /* Container adjustments */
         .container {
             max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* Responsive adjustments */
@@ -234,11 +255,11 @@
             .page-header {
                 padding: 60px 0 40px;
             }
-            
+
             .page-header h1 {
                 font-size: 2.5rem;
             }
-            
+
             .card-body p {
                 height: auto;
             }
@@ -246,8 +267,15 @@
 
         /* Floating animation for page header */
         @keyframes floating {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .page-header .container {
@@ -256,9 +284,17 @@
 
         /* Pulse animation for updated badge */
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+            }
         }
 
         .updated-badge {
@@ -266,187 +302,197 @@
         }
     </style>
 </head>
+
 <body>
-    <!-- Page Header -->
-    <div class="page-header">
-        <div class="container">
-            <h1>Syllabus</h1>
-            <p>Download or view complete updated syllabus PDFs for all major competitive exams. Get comprehensive study material curated by our expert faculty.</p>
+    <%- include("navbar.ejs") %>
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="container">
+                <h1>Syllabus</h1>
+                <p>Download or view complete updated syllabus PDFs for all major competitive exams. Get comprehensive
+                    study material curated by our expert faculty.</p>
+            </div>
         </div>
-    </div>
 
-    <!-- Syllabus Cards Section -->
-    <div class="container mt-5">
-        <div class="row mt-5">
-            <!-- MPSC Card -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="syllabus-card animated-card card-1">
-                    <div class="updated-badge">Updated</div>
-                    <div class="card-header text-center">
-                        <div class="exam-icon">
-                            <i class="fas fa-landmark"></i>
+        <!-- Syllabus Cards Section -->
+        <div class="container mt-5">
+            <div class="row mt-5">
+                <!-- MPSC Card -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="syllabus-card animated-card card-1">
+                        <div class="updated-badge">Updated</div>
+                        <div class="card-header text-center">
+                            <div class="exam-icon">
+                                <i class="fas fa-landmark"></i>
+                            </div>
+                            <h3>MPSC</h3>
                         </div>
-                        <h3>MPSC</h3>
-                    </div>
-                    <div class="card-body">
-                        <p>Complete updated syllabus for Maharashtra Public Service Commission exams. Includes detailed topics for Prelims, Mains, and Interview stages.</p>
-                       <a href="pdf/mpsc.pdf">
-                         <button class="btn btn-download">
-                            <i class="fas fa-eye"></i> View PDF
-                        </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- UPSC Card -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="syllabus-card animated-card card-2">
-                    <div class="updated-badge">Updated</div>
-                    <div class="card-header text-center">
-                        <div class="exam-icon">
-                            <i class="fas fa-user-tie"></i>
+                        <div class="card-body">
+                            <p>Complete updated syllabus for Maharashtra Public Service Commission exams. Includes
+                                detailed topics for Prelims, Mains, and Interview stages.</p>
+                            <a href="pdf/mpsc.pdf" target="_blank">
+                                <button class="btn btn-download">
+                                    <i class="fas fa-eye"></i> View PDF
+                                </button>
+                            </a>
                         </div>
-                        <h3>UPSC</h3>
-                    </div>
-                    <div class="card-body">
-                        <p>Comprehensive syllabus for Union Public Service Commission exams. Covering all subjects for Civil Services Preliminary and Main examinations.</p>
-                        <a href="pdf/upsc.pdf">
-                        <button class="btn btn-download">
-                            <i class="fas fa-eye"></i> View PDF
-                        </button>
-                        </a>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Banking Exams Card -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="syllabus-card animated-card card-3">
-                    <div class="updated-badge">Updated</div>
-                    <div class="card-header text-center">
-                        <div class="exam-icon">
-                            <i class="fas fa-university"></i>
-                        </div>
-                        <h3>Banking Exams</h3>
-                    </div>
-                    <div class="card-body">
-                        <p>Syllabus for all major banking exams including IBPS, SBI, RBI. Covers Quantitative Aptitude, Reasoning, English, and Banking Awareness.</p>
-                        <a href="pdf/banking.pdf">
-                        <button class="btn btn-download">
-                            <i class="fas fa-eye"></i> View PDF
-                        </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Police Bharti Card -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="syllabus-card animated-card card-4">
-                    <div class="updated-badge">Updated</div>
-                    <div class="card-header text-center">
-                        <div class="exam-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Police Bharti</h3>
-                    </div>
-                    <div class="card-body">
-                        <p>Complete syllabus for Police recruitment exams. Includes physical standards, written exam pattern, and interview preparation guidelines.</p>
-                       <a href="pdf/police_bharti.pdf">
-                        <button class="btn btn-download">
-                            <i class="fas fa-eye"></i> View PDF
-                        </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Talathi Card -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="syllabus-card animated-card card-5">
-                    <div class="updated-badge">Updated</div>
-                    <div class="card-header text-center">
-                        <div class="exam-icon">
-                            <i class="fas fa-file-contract"></i>
-                        </div>
-                        <h3>Talathi</h3>
-                    </div>
-                    <div class="card-body">
-                        <p>Updated syllabus for Talathi recruitment exams. Covers Marathi, English, Mathematics, General Knowledge, and Agriculture topics.</p>
-                       <a href="pdf/talathi.pdf">
-                        <button class="btn btn-download">
-                            <i class="fas fa-eye"></i> View PDF
-                        </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Railway Exams Card -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="syllabus-card animated-card card-6">
-                    <div class="updated-badge">Updated</div>
-                    <div class="card-header text-center">
-                        <div class="exam-icon">
-                            <i class="fas fa-train"></i>
-                        </div>
-                        <h3>Railway Exams</h3>
-                    </div>
-                    <div class="card-body">
-                        <p>Syllabus for RRB NTPC, Group D, JE, and other railway exams. Includes General Awareness, Mathematics, General Intelligence, and Reasoning.</p>
-                        <a href="pdf/railway.pdf">
-                        <button class="btn btn-download">
-                            <i class="fas fa-eye"></i> View PDF
-                        </button>
-                    </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Additional Info Section -->
-        <div class="row mt-5">
-            <div class="col-12">
-                <div class="alert alert-info" style="border-left: 5px solid var(--secondary-color);">
-                    <h4 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Important Note</h4>
-                    <p>All syllabus PDFs are regularly updated as per the latest exam patterns and notifications. For any clarification regarding the syllabus, please contact our faculty members.</p>
-                    <hr>
-                    <p class="mb-0">You can download the PDFs directly or view them online. We recommend using the latest version of Adobe Reader for best viewing experience.</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Add a subtle scroll animation for cards when they come into view
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add hover effect to cards
-            const cards = document.querySelectorAll('.syllabus-card');
-            
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.zIndex = '10';
+                <!-- UPSC Card -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="syllabus-card animated-card card-2">
+                        <div class="updated-badge">Updated</div>
+                        <div class="card-header text-center">
+                            <div class="exam-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <h3>UPSC</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Comprehensive syllabus for Union Public Service Commission exams. Covering all subjects
+                                for Civil Services Preliminary and Main examinations.</p>
+                            <a href="pdf/upsc.pdf" target="_blank">
+                                <button class="btn btn-download">
+                                    <i class="fas fa-eye"></i> View PDF
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banking Exams Card -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="syllabus-card animated-card card-3">
+                        <div class="updated-badge">Updated</div>
+                        <div class="card-header text-center">
+                            <div class="exam-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <h3>Banking Exams</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Syllabus for all major banking exams including IBPS, SBI, RBI. Covers Quantitative
+                                Aptitude, Reasoning, English, and Banking Awareness.</p>
+                            <a href="pdf/banking.pdf" target="_blank">
+                                <button class="btn btn-download">
+                                    <i class="fas fa-eye"></i> View PDF
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Police Bharti Card -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="syllabus-card animated-card card-4">
+                        <div class="updated-badge">Updated</div>
+                        <div class="card-header text-center">
+                            <div class="exam-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Police Bharti</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Complete syllabus for Police recruitment exams. Includes physical standards, written exam
+                                pattern, and interview preparation guidelines.</p>
+                            <a href="pdf/police_bharti.pdf" target="_blank">
+                                <button class="btn btn-download">
+                                    <i class="fas fa-eye"></i> View PDF
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Talathi Card -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="syllabus-card animated-card card-5">
+                        <div class="updated-badge">Updated</div>
+                        <div class="card-header text-center">
+                            <div class="exam-icon">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <h3>Talathi</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Updated syllabus for Talathi recruitment exams. Covers Marathi, English, Mathematics,
+                                General Knowledge, and Agriculture topics.</p>
+                            <a href="pdf/talathi.pdf" target="_blank">
+                                <button class="btn btn-download">
+                                    <i class="fas fa-eye"></i> View PDF
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Railway Exams Card -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="syllabus-card animated-card card-6">
+                        <div class="updated-badge">Updated</div>
+                        <div class="card-header text-center">
+                            <div class="exam-icon">
+                                <i class="fas fa-train"></i>
+                            </div>
+                            <h3>Railway Exams</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Syllabus for RRB NTPC, Group D, JE, and other railway exams. Includes General Awareness,
+                                Mathematics, General Intelligence, and Reasoning.</p>
+                            <a href="pdf/railway.pdf" target="_blank">
+                                <button class="btn btn-download">
+                                    <i class="fas fa-eye"></i> View PDF
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Info Section -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="alert alert-info" style="border-left: 5px solid var(--secondary-color);">
+                        <h4 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Important Note</h4>
+                        <p>All syllabus PDFs are regularly updated as per the latest exam patterns and notifications.
+                            For any clarification regarding the syllabus, please contact our faculty members.</p>
+                        <hr>
+                        <p class="mb-0">You can download the PDFs directly or view them online. We recommend using the
+                            latest version of Adobe Reader for best viewing experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Add a subtle scroll animation for cards when they come into view
+            document.addEventListener('DOMContentLoaded', function () {
+                // Add hover effect to cards
+                const cards = document.querySelectorAll('.syllabus-card');
+
+                cards.forEach(card => {
+                    card.addEventListener('mouseenter', function () {
+                        this.style.zIndex = '10';
+                    });
+
+                    card.addEventListener('mouseleave', function () {
+                        this.style.zIndex = '1';
+                    });
                 });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.zIndex = '1';
-                });
-            });
 
-            // Button click animation
-            const buttons = document.querySelectorAll('.btn-download');
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Create ripple effect
-                    const ripple = document.createElement('span');
-                    const rect = this.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = event.clientX - rect.left - size/2;
-                    const y = event.clientY - rect.top - size/2;
-                    
-                    ripple.style.cssText = `
+                // Button click animation
+                const buttons = document.querySelectorAll('.btn-download');
+                buttons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        // Create ripple effect
+                        const ripple = document.createElement('span');
+                        const rect = this.getBoundingClientRect();
+                        const size = Math.max(rect.width, rect.height);
+                        const x = event.clientX - rect.left - size / 2;
+                        const y = event.clientY - rect.top - size / 2;
+
+                        ripple.style.cssText = `
                         position: absolute;
                         border-radius: 50%;
                         background: rgba(255, 255, 255, 0.7);
@@ -457,22 +503,22 @@
                         top: ${y}px;
                         left: ${x}px;
                     `;
-                    
-                    this.appendChild(ripple);
-                    
-                    // Remove ripple after animation
-                    setTimeout(() => {
-                        ripple.remove();
-                    }, 600);
-                    
-                    // In a real implementation, this would open the PDF
-                    // alert('In a real implementation, this would open the PDF for ' + this.closest('.syllabus-card').querySelector('h3').textContent);
-                });
-            });
 
-            // Add CSS for ripple animation
-            const style = document.createElement('style');
-            style.textContent = `
+                        this.appendChild(ripple);
+
+                        // Remove ripple after animation
+                        setTimeout(() => {
+                            ripple.remove();
+                        }, 600);
+
+                        // In a real implementation, this would open the PDF
+                        // alert('In a real implementation, this would open the PDF for ' + this.closest('.syllabus-card').querySelector('h3').textContent);
+                    });
+                });
+
+                // Add CSS for ripple animation
+                const style = document.createElement('style');
+                style.textContent = `
                 @keyframes ripple-animation {
                     to {
                         transform: scale(4);
@@ -485,8 +531,13 @@
                     overflow: hidden;
                 }
             `;
-            document.head.appendChild(style);
-        });
-    </script>
+                document.head.appendChild(style);
+            });
+        </script>
 
-<%- include("footer.ejs") %>
+        <%- include("footer.ejs") %>
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

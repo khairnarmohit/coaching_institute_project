@@ -1,255 +1,279 @@
-<%-include("navbar.ejs")%>
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-:root {
-  --gov-dark: #0b1c2d;
-  --gov-accent: #f59e0b; /* Yellow-orange accent */
-  --gov-bg: #f8fafc;
-  --gov-white: #ffffff;
-  --gov-text: #1e293b;
-  --gov-muted: #475569;
-  --gov-border: #e5e7eb;
-  --gov-fees: #16a34a; /* Green for fees */
-}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Details - GCA</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --gov-dark: #0b1c2d;
+      --gov-accent: #f59e0b;
+      --gov-bg: #f8fafc;
+      --gov-white: #ffffff;
+      --gov-text: #1e293b;
+      --gov-muted: #475569;
+      --gov-border: #e5e7eb;
+      --gov-green: #16a34a;
+    }
 
-body{
-  background:var(--gov-bg);
-  font-family:"Segoe UI", sans-serif;
-  margin:0;
-  padding:0;
-}
+    body {
+      background: var(--gov-bg);
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--gov-text);
+    }
 
-.container{
-  max-width:1200px;
-  margin:0 auto;
-  padding:0 20px;
-}
+    /* TOP HEADER */
+    .detail-header {
+      background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.85)),
+        url("<%= course.image %>") center/cover no-repeat;
+      padding: 100px 0;
+      color: var(--gov-white);
+      text-align: center;
+    }
 
-.page-title{
-  text-align:center;
-  font-size:32px;
-  font-weight:700;
-  padding:30px 0 20px;
-  color:var(--gov-dark);
-}
+    .detail-header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
 
-/* === GRID OF 3 CARDS PER ROW === */
-.course-row{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:24px;
-  margin-bottom:28px;
-}
+    /* CONTENT LAYOUT */
+    .detail-container {
+      margin-top: -50px;
+      position: relative;
+      z-index: 10;
+      margin-bottom: 80px;
+    }
 
-.course-card{
-  background:var(--gov-white);
-  border-radius:8px;
-  overflow:hidden;
-  border-left:6px solid var(--gov-accent);
-  box-shadow:0 4px 16px rgba(0,0,0,0.08);
-  transition:.3s ease;
-}
+    .main-info-card {
+      background: var(--gov-white);
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+      padding: 50px;
+      margin-bottom: 40px;
+    }
 
-.course-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 6px 18px rgba(0,0,0,0.10);
-}
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gov-dark);
+      margin-bottom: 25px;
+      border-left: 6px solid var(--gov-accent);
+      padding-left: 20px;
+    }
 
-.course-img{
-  width:100%;
-  height:200px;
-  object-fit:cover;
-}
+    .course-full-desc {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--gov-muted);
+      margin-bottom: 40px;
+    }
 
-.course-content{
-  padding:18px 20px;
-}
+    /* QUICK STATS */
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 50px;
+    }
 
-.course-title{
-  font-size:20px;
-  font-weight:700;
-  margin-bottom:8px;
-  color:var(--gov-text);
-}
+    .stat-box {
+      background: var(--gov-bg);
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+      border: 1px solid var(--gov-border);
+    }
 
-.course-info{
-  font-size:14px;
-  color:var(--gov-muted);
-  margin-bottom:6px;
-}
+    .stat-box i {
+      font-size: 2rem;
+      color: var(--gov-accent);
+      margin-bottom: 15px;
+    }
 
-.duration{
-  font-size:14px;
-  font-weight:500;
-  color:var(--gov-text);
-  margin-bottom:4px;
-}
+    .stat-box h5 {
+      font-weight: 700;
+      color: var(--gov-dark);
+      margin-bottom: 5px;
+    }
 
-.course-extra{
-  font-size:13px;
-  color:var(--gov-muted);
-  line-height:1.45;
-  margin-bottom:8px;
-}
+    .stat-box p {
+      margin: 0;
+      color: var(--gov-muted);
+      font-weight: 600;
+    }
 
-/* Fees green and visible */
-.fees{
-  font-size:16px;
-  font-weight:700;
-  color:var(--gov-fees);
-  margin-bottom:10px;
-}
+    /* FEATURES GRID */
+    .features-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
+    }
 
-.btn{
-  display:inline-block;
-  background:var(--gov-accent);
-  color:white;
-  padding:7px 16px;
-  border-radius:6px;
-  font-size:14px;
-  text-decoration:none;
-  font-weight:600;
-}
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+      border-left: 4px solid var(--gov-green);
+    }
 
-/* Responsive */
-@media(max-width:900px){
-  .course-row{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-@media(max-width:600px){
-  .course-row{
-    grid-template-columns:repeat(1,1fr);
-  }
-}
+    .feature-item i {
+      color: var(--gov-green);
+    }
 
-footer{
-  margin-top:0 !important;
-  padding-top:10px;
-}
-</style>
+    /* SIDEBAR CARD */
+    .apply-card {
+      background: var(--gov-dark);
+      color: var(--gov-white);
+      padding: 40px;
+      border-radius: 20px;
+      position: sticky;
+      top: 100px;
+      text-align: center;
+    }
+
+    .apply-card h3 {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .price-tag {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--gov-accent);
+      margin: 20px 0;
+    }
+
+    .btn-apply {
+      background: var(--gov-accent);
+      color: var(--gov-dark);
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .btn-apply:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+    }
+
+    @media (max-width: 992px) {
+      .detail-container {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
 
 <body>
+  <%-include("navbar.ejs")%>
 
-<div class="container">
-  <h2 class="page-title"> Courses Detailes</h2>
-
-  <!-- ROW 1 -->
-  <div class="course-row">
-    <div class="course-card">
-      <img src="https://assets.pratahkal.com/h-upload/2025/11/19/2093985-how-to-apply-for-the-talathi-recruitment-2025.webp" class="course-img">
-      <div class="course-content">
-        <div class="course-title">Talathi</div>
-        <div class="course-info">State Govt Recruitment Preparation</div>
-        <div class="duration">Duration: 3–6 Months</div>
-        <div class="course-extra">
-          Eligibility: Graduate <br>
-          Includes: Pre + Mains <br>
-          Mode: Online + Offline <br>
-          Batch: Morning / Evening <br>
-          Materials: Printed Notes <br>
-          Tests: Weekly + Full Length
-        </div>
-        <div class="fees">Fees: ₹15,000 – ₹20,000</div>
-        <a href="/admission" class="btn">Apply Now</a>
+    <div class="detail-header">
+      <div class="container">
+        <h1>
+          <%= course.title %>
+        </h1>
+        <p class="lead">
+          <%= course.shortDesc %>
+        </p>
       </div>
     </div>
 
-    <div class="course-card">
-      <img src="https://www.cgi.guru/wp-content/uploads/2022/01/police-online-test-_-thumb-1-scaled.jpg" class="course-img">
-      <div class="course-content">
-        <div class="course-title">Police Bharti</div>
-        <div class="course-info">Written + Physical + Interview</div>
-        <div class="duration">Duration: 2–5 Months</div>
-        <div class="course-extra">
-          Eligibility: 10th / 12th <br>
-          Includes: Written + Physical + Interview <br>
-          Mode: Offline Only <br>
-          Materials: Printed Notes <br>
-          Test: Weekly + Final Mock <br>
-          Physical: Ground Practice
+    <div class="container detail-container">
+      <div class="row g-5">
+        <div class="col-lg-8">
+          <div class="main-info-card">
+            <h2 class="section-title">Course Overview</h2>
+            <p class="course-full-desc">
+              <%= course.fullDesc %>
+            </p>
+
+            <div class="quick-stats">
+              <div class="stat-box">
+                <i class="fas fa-hourglass-half"></i>
+                <h5>Duration</h5>
+                <p>
+                  <%= course.duration %>
+                </p>
+              </div>
+              <div class="stat-box">
+                <i class="fas fa-user-graduate"></i>
+                <h5>Eligibility</h5>
+                <p>
+                  <%= course.eligibility %>
+                </p>
+              </div>
+            </div>
+
+            <h2 class="section-title">What You'll Get</h2>
+            <div class="features-list">
+              <% course.features.forEach(feature=> { %>
+                <div class="feature-item">
+                  <i class="fas fa-check-circle"></i>
+                  <span>
+                    <%= feature %>
+                  </span>
+                </div>
+                <% }); %>
+            </div>
+
+            <div class="mt-5 p-4 rounded-4 bg-light border">
+              <h5 class="fw-bold mb-3">Admission Notice</h5>
+              <p class="text-muted mb-0">New batches are starting from the 1st and 15th of every month. Limited seats
+                available for offline batches to ensure personalized attention. Online portal access will be granted
+                within 24 hours of enrollment.</p>
+            </div>
+          </div>
         </div>
-        <div class="fees">Fees: ₹10,000 – ₹15,000</div>
-        <a href="/admission" class="btn">Apply Now</a>
+
+        <div class="col-lg-4">
+          <div class="apply-card">
+            <h3>Start Learning Today</h3>
+            <p class="opacity-75">Invest in your future with the best mentorship in the industry.</p>
+            <div class="price-tag">
+              <%= course.fees %>
+            </div>
+            <a href="/admission" class="btn-apply">Enroll Now</a>
+            <p class="mt-4 small opacity-50">*EMI options available for comprehensive courses.</p>
+
+            <div class="mt-5 text-start border-top pt-4">
+              <h6 class="fw-bold mb-3">Got Questions?</h6>
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <i class="fas fa-phone-alt text-accent"></i>
+                <div>
+                  <div class="small opacity-50">Call Support</div>
+                  <div class="fw-bold">+91 98765 43210</div>
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-3">
+                <i class="fas fa-envelope text-accent"></i>
+                <div>
+                  <div class="small opacity-50">Email Us</div>
+                  <div class="fw-bold">info@eduinstitute.com</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="course-card">
-      <img src="https://bankedge.in/wp-content/uploads/2024/07/CBO_Web-Banner_v01.jpg" class="course-img">
-      <div class="course-content">
-        <div class="course-title">Banking Exams</div>
-        <div class="course-info">IBPS | SBI | RRB</div>
-        <div class="duration">Duration: 4–8 Months</div>
-        <div class="course-extra">
-          Includes: Pre + Mains <br>
-          Mode: Online + Offline <br>
-          Material: Printed + Digital Notes <br>
-          Tests: Sectional + Full Mock <br>
-          Batch: Morning / Evening
-        </div>
-        <div class="fees">Fees: ₹20,000 – ₹30,000</div>
-        <a href="/admission" class="btn">Apply Now</a>
-      </div>
-    </div>
-  </div>
+    <%-include("footer.ejs")%>
+      <!-- Bootstrap JS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-  <!-- ROW 2 -->
-  <div class="course-row">
-    <div class="course-card">
-      <img src="https://www.ndaclasses.in/images/mpsc.jpeg" class="course-img">
-      <div class="course-content">
-        <div class="course-title">MPSC</div>
-        <div class="course-info">Pre + Mains + Interview</div>
-        <div class="duration">Duration: 10–12 Months</div>
-        <div class="course-extra">
-          Includes: Pre + Mains + Interview + Test Series <br>
-          Mode: Offline + Online <br>
-          Materials: Printed Notes + Current Affairs <br>
-          Tests: Weekly + Full Length <br>
-          Optional: Extra Available
-        </div>
-        <div class="fees">Fees: ₹35,000 – ₹65,000</div>
-        <a href="/admission" class="btn">Apply Now</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <img src="https://blog.bihartouch.in/wp-content/uploads/2025/10/bihartouchNTPC.png" class="course-img">
-      <div class="course-content">
-        <div class="course-title">Railway Exams</div>
-        <div class="course-info">RRB – NTPC, ALP, Group-D</div>
-        <div class="duration">Duration: 3–6 Months</div>
-        <div class="course-extra">
-          Includes: Pre + Mains <br>
-          Mode: Offline + Online <br>
-          Materials: Printed Notes <br>
-          Tests: Weekly + Full Mock <br>
-          Batch: Morning / Evening
-        </div>
-        <div class="fees">Fees: ₹18,000 – ₹28,000</div>
-        <a href="/admission" class="btn">Apply Now</a>
-      </div>
-    </div>
-
-    <div class="course-card">
-      <img src="https://images.financialexpressdigital.com/2023/05/Offline-Centre-2-3.jpg?quality=100" class="course-img">
-      <div class="course-content">
-        <div class="course-title">UPSC</div>
-        <div class="course-info">Pre + Mains + Interview + Optional</div>
-        <div class="duration">Duration: 12–18 Months</div>
-        <div class="course-extra">
-          Includes: GS + CSAT + Essay + Test Series + Optional <br>
-          Mode: Offline + Online <br>
-          Materials: Printed Notes + Handwritten Notes <br>
-          Interviews: Panel Guidance <br>
-          Tests: Weekly + Full Length
-        </div>
-        <div class="fees">Fees: ₹80,000 – ₹1,20,000</div>
-        <a href="/admission" class="btn">Apply Now</a>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<%-include("footer.ejs")%>
+</html>

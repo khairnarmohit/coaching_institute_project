@@ -1,350 +1,400 @@
-<%-include("navbar.ejs")%>
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-:root {
-  --gov-dark: #0b1c2d;
-  --gov-accent: #f59e0b;
-  --gov-bg: #f8fafc;
-  --gov-white: #ffffff;
-  --gov-text: #1e293b;
-  --gov-muted: #475569;
-  --gov-border: #e5e7eb;
-}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy Info - GCA</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --gov-dark: #0b1c2d;
+      --gov-accent: #f59e0b;
+      --gov-bg: #f8fafc;
+      --gov-white: #ffffff;
+      --gov-text: #1e293b;
+      --gov-muted: #475569;
+      --gov-border: #e5e7eb;
+    }
 
-body {
-  background-color: var(--gov-bg);
-  color: var(--gov-text);
-  font-family: system-ui, -apple-system, sans-serif;
-}
 
-/* HEADER */
-.about-header {
-  background: linear-gradient(rgba(11, 28, 45, 0.85), rgba(11, 28, 45, 0.7)), 
-              url("https://tse4.mm.bing.net/th/id/OIP.eDao7xwU7dbMlKgf_EDoeAHaEv?pid=ImgDet&w=202&h=129&c=7&dpr=1.3&o=7&rm=3g") 
-              center/cover no-repeat;
-  padding: 130px 0;
-  color: var(--gov-white);
-  text-align: center;
-}
+    /* HEADER */
+    .about-header {
+      background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.75)),
+        url("https://images.unsplash.com/photo-1517673132405-a56a62b18caf?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80") center/cover no-repeat fixed;
+      padding: 150px 0;
+      color: var(--gov-white);
+      text-align: center;
+      position: relative;
+    }
 
-.about-header h1 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
+    .about-header h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+    }
 
-/* SECTION */
-.about-section {
-  padding: 80px 0;
-  background: var(--gov-white);
-}
+    .about-header p {
+      font-size: 1.25rem;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
 
-/* IMAGE */
-.about-img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  border-radius: 14px;
-  border: 3px solid var(--gov-accent);
-  box-shadow: 0px 14px 35px rgba(11, 28, 45, 0.15);
-  opacity: 0;
-  animation: fadeInLeft .65s ease-out forwards;
-  animation-delay: .45s;
-  transition: transform 0.4s ease;
-}
+    /* SECTION */
+    .about-section {
+      padding: 100px 0;
+      background: var(--gov-white);
+    }
 
-.about-img:hover {
-  transform: scale(1.02);
-}
+    /* IMAGE */
+    .about-img-container {
+      position: relative;
+    }
 
-/* TEXT */
-.about-content {
-  opacity: 0;
-  animation: slideRight .65s ease-out forwards;
-  animation-delay: .70s;
-  padding-left: 20px;
-}
+    .about-img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0px 20px 50px rgba(11, 28, 45, 0.2);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-/* TITLE */
-.section-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--gov-dark);
-  margin-bottom: 20px;
-  position: relative;
-  letter-spacing: .5px;
-}
+    .about-img:hover {
+      transform: scale(1.02);
+    }
 
-/* TITLE Accent Line */
-.section-title::after {
-  content: "";
-  width: 70px;
-  height: 4px;
-  background: var(--gov-accent);
-  border-radius: 8px;
-  position: absolute;
-  bottom: -6px;
-  left: 0;
-}
+    .vm-section {
+      background-color: #f8fafc;
+    }
 
-/* TEXT */
-.about-text {
-  font-size: 17px;
-  line-height: 1.7;
-  color: var(--gov-muted);
-  margin-bottom: 20px;
-}
+    .vm-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      padding: 30px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
 
-/* FACTS */
-.about-facts span {
-  display: block;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--gov-text);
-  border-left: 4px solid var(--gov-accent);
-  padding-left: 15px;
-  margin-bottom: 10px;
-  background-color: rgba(245, 158, 11, 0.05);
-  padding: 12px 15px;
-  border-radius: 0 8px 8px 0;
-  margin-bottom: 12px;
-}
+    .vm-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
 
-.about-facts b {
-  color: var(--gov-dark);
-  font-weight: 600;
-}
+    .vm-icon {
+      width: 70px;
+      height: 70px;
+      background-color: #0b1c2d;
+      color: #ffffff;
+      font-size: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
 
-/* ANIMATIONS */
-@keyframes fadeInLeft {
-  0% { transform: translateX(-55px); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
-}
+    .vm-card h4 {
+      font-weight: 600;
+      color: #0b1c2d;
+    }
 
-@keyframes slideRight {
-  0% { transform: translateX(55px); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
-}
+    .vm-card p {
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.7;
+      margin-top: 10px;
+    }
 
-/* Teaching Methodology Theme Design */
-.tm-section {
-  background: var(--gov-bg);
-  padding: 80px 0;
-}
 
-.tm-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  max-width: 1200px;
-  margin: auto;
-  flex-wrap: wrap;
-}
+    /* CORE VALUES */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
 
-.tm-content {
-  flex: 1;
-  min-width: 380px;
-  opacity: 0;
-  animation: fadeRight .7s ease-out forwards;
-  animation-delay: .45s;
-}
+    .value-card {
+      background: var(--gov-white);
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--gov-border);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
 
-.tm-heading {
-  font-size: 36px;
-  font-weight: 700;
-  color: var(--gov-dark);
-  margin-bottom: 12px;
-  position: relative;
-  padding-bottom: 15px;
-}
+    .value-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--gov-accent);
+      box-shadow: 0 15px 40px rgba(11, 28, 45, 0.1);
+    }
 
-.tm-heading::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100px;
-  height: 4px;
-  background-color: var(--gov-accent);
-  border-radius: 2px;
-}
+    .value-card i {
+      font-size: 2.5rem;
+      color: var(--gov-accent);
+      margin-bottom: 20px;
+    }
 
-.tm-sub {
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--gov-muted);
-  margin-bottom: 30px;
-}
+    .value-card h4 {
+      font-weight: 700;
+      color: var(--gov-dark);
+      margin-bottom: 15px;
+    }
 
-.tm-list {
-  list-style: none;
-  padding: 0;
-}
+    /* EXAM FOCUS */
+    .exam-focus {
+      padding: 100px 0;
+      background: var(--gov-dark);
+      color: var(--gov-white);
+    }
 
-.tm-list li {
-  font-size: 16px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--gov-dark);
-  background: var(--gov-white);
-  padding: 16px 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(11, 28, 45, 0.08);
-  border-left: 4px solid var(--gov-accent);
-  transition: all 0.3s ease;
-}
+    .exam-badge {
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid var(--gov-accent);
+      border-radius: 50px;
+      color: var(--gov-accent);
+      margin: 5px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
 
-.tm-list li:hover {
-  transform: translateX(10px);
-  box-shadow: 0 12px 30px rgba(245, 158, 11, 0.15);
-  border-left-color: var(--gov-dark);
-}
+    .exam-badge:hover {
+      background: var(--gov-accent);
+      color: var(--gov-dark);
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
+      cursor: pointer;
+    }
 
-.tm-list li::before {
-  content: "✓";
-  color: var(--gov-accent);
-  font-weight: bold;
-  font-size: 18px;
-}
+    /* TEACHING METHODOLOGY */
+    .tm-section {
+      background: var(--gov-bg);
+      padding: 100px 0;
+    }
 
-.tm-graphic {
-  flex: 1;
-  min-width: 380px;
-  opacity: 0;
-  animation: fadeLeft .7s ease-out forwards;
-  animation-delay: .20s;
-}
+    .tm-heading {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--gov-dark);
+      margin-bottom: 30px;
+      text-align: center;
+    }
 
-.tm-graphic img {
-  width: 100%;
-  height: 600px;
-  object-fit: contain;
-  border-radius: 12px;
-  background: var(--gov-white);
-  padding: 20px;
-  box-shadow: 0 15px 35px rgba(11, 28, 45, 0.1);
-  border: 1px solid var(--gov-border);
-}
+    .tm-heading::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 5px;
+      background: var(--gov-accent);
+      margin: 15px auto;
+      border-radius: 10px;
+    }
 
-/* Animations */
-@keyframes fadeRight {
-  0% { transform: translateX(55px); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
-}
+    .tm-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+    }
 
-@keyframes fadeLeft {
-  0% { transform: translateX(-55px); opacity: 0; }
-  100% { transform: translateX(0); opacity: 1; }
-}
+    .tm-list li {
+      background: var(--gov-white);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+      border-left: 5px solid var(--gov-accent);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: transform 0.3s ease;
+    }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .about-header {
-    padding: 80px 0;
-  }
-  
-  .about-header h1 {
-    font-size: 2.5rem;
-  }
-  
-  .about-img {
-    height: 300px;
-    margin-bottom: 30px;
-  }
-  
-  .about-content {
-    padding-left: 0;
-  }
-  
-  .tm-container {
-    flex-direction: column-reverse;
-    text-align: left;
-  }
-  
-  .tm-heading {
-    font-size: 28px;
-  }
-  
-  .tm-graphic img {
-    height: 400px;
-  }
-  
-  .tm-list li {
-    padding: 14px 16px;
-  }
-  
-  .section-title {
-    font-size: 28px;
-  }
-}
+    .tm-list li:hover {
+      transform: scale(1.03);
+    }
 
-/* Container padding */
-.container {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-</style>
+    .tm-list li i {
+      color: var(--gov-accent);
+      font-size: 1.25rem;
+    }
 
-<div class="about-header">
-    <h1 class="fw-bold">Academy Information</h1>
-</div>
+    /* Mobile */
+    @media (max-width: 768px) {
+      .about-header h1 {
+        font-size: 2.5rem;
+      }
 
-<section class="about-section">
-    <div class="container">
+      .about-img {
+        height: 350px;
+        margin-bottom: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <%-include("navbar.ejs")%>
+
+    <div class="about-header">
+      <div class="container">
+        <h1>Transforming Aspirants Into Officers</h1>
+        <p>Leading the way in Government Exam Excellence with dedicated mentorship and proven strategies. Your journey
+          to
+          a prestigious career starts here.</p>
+      </div>
+    </div>
+
+    <section class="about-section">
+      <div class="container">
         <div class="row g-5 align-items-center">
-            <div class="col-md-6">
-                <img src="https://riimacademy.com/wp-content/uploads/2022/08/riimpune-8066116-2.jpg" class="about-img">
+          <div class="col-lg-6">
+            <div class="about-img-container">
+              <img
+                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                class="about-img" alt="Academy Environment">
             </div>
-            <div class="col-md-6 about-content">
-                <h2 class="section-title">Overview</h2>
-                <p class="about-text">
-                    EduInstitute is a reputed government competitive exam academy providing structured training
-                    for Civil Services, UPSC, MPSC and State Commission examinations.
-                </p>
-                <p class="about-text">
-                    The academy focuses on discipline, analytical thinking, and leadership development with
-                    expert mentorship and result-oriented pedagogy. We provide quality and holistic education for carving efficient and socially sensitive bureaucrats for the country.
-                </p>
-                <div class="about-facts">
-                    <span><b>Established:</b> 2022</span>
-                    <span><b>Location:</b> Pune, Maharashtra</span>
-                    <span><b>Branches:</b> No other branch</span>
-                </div>
-            </div>
+          </div>
+          <div class="col-lg-6">
+            <h2 class="fw-bold mb-4" style="color: var(--gov-dark); font-size: 2.5rem;">Who We Are</h2>
+            <p class="lead" style="color: var(--gov-muted);">EduInstitute is more than just a coaching center; it's a
+              lighthouse for government job seekers across Maharashtra and India.</p>
+            <p style="color: var(--gov-muted); line-height: 1.8;">
+              Founded with the vision to bridge the gap between hard work and success, we specialize in providing
+              top-tier
+              guidance for UPSC, MPSC, and various state-level examinations. Our approach is rooted in discipline,
+              depth,
+              and dedication, ensuring that every student receives the personalized attention needed to crack the
+              toughest
+              exams in the country.
+            </p>
+
+
+          </div>
         </div>
-    </div>
-</section>
 
-<section id="teaching-methodology" class="tm-section">
-  <div class="container tm-container">
+        <div class="values-grid">
+          <div class="value-card">
+            <i class="fas fa-user-tie"></i>
+            <h4>Expert Mentorship</h4>
+            <p>Learn from experienced faculty members who have themselves cleared various stages of UPSC and MPSC exams.
+            </p>
+          </div>
+          <div class="value-card">
+            <i class="fas fa-book-open"></i>
+            <h4>Comprehensive Study Material</h4>
+            <p>Precisely curated notes and books covering every aspect of the syllabus, from NCERT basics to advanced
+              topics.</p>
+          </div>
+          <div class="value-card">
+            <i class="fas fa-chart-line"></i>
+            <h4>Strategic Test Series</h4>
+            <p>Weekly and monthly tests designed on the latest exam patterns to track progress and improve
+              answer-writing
+              skills.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <div class="tm-content">
-      <h2 class="tm-heading">Teaching Methodology</h2>
-      <p class="tm-sub">
-        Our structured and result-oriented methodology ensures that every learner progresses
-        strategically towards clearing UPSC & MPSC examinations.
-      </p>
+    <section class="vm-section py-5">
+      <div class="container">
 
-      <ul class="tm-list">
-        <li>Foundation building through NCERT & concept clarity</li>
-        <li>Topic-wise understanding + integrated approach</li>
-        <li>Regular answer writing & analytical reasoning focus</li>
-        <li>Weekly Tests + Performance Evaluation + Feedback</li>
-        <li>Prelims + Mains + Interview Structured Preparation</li>
-        <li>Current Affairs integration with static subjects</li>
-        <li>Personalized mentorship & career guidance</li>
-      </ul>
-    </div>
+        <!-- Section Heading -->
+        <div class="text-center mb-5">
+          <h2 class="fw-bold">Mission & Vision</h2>
+          <p class="text-muted">Our purpose, direction and commitment</p>
+        </div>
 
-    <div class="tm-graphic">
-      <img src="https://riimacademy.com/wp-content/uploads/2022/08/infographic-1.png" 
-           alt="Teaching Methodology Illustration">
-    </div>
+        <!-- Cards -->
+        <div class="row g-4 justify-content-center">
 
-  </div>
-</section>
+          <!-- Vision -->
+          <div class="col-md-5">
+            <div class="vm-card h-100 text-center">
+              <div class="vm-icon">
+                <i class="fas fa-eye"></i>
+              </div>
+              <h4 class="mt-3">Our Vision</h4>
+              <p>
+                To produce an eminent center of excellence in civil service coaching,
+                empowering efficient youth to become ethical and responsible future administrators.
+              </p>
+            </div>
+          </div>
 
-<%-include("footer.ejs")%>
+          <!-- Mission -->
+          <div class="col-md-5">
+            <div class="vm-card h-100 text-center">
+              <div class="vm-icon">
+                <i class="fas fa-rocket"></i>
+              </div>
+              <h4 class="mt-3">Our Mission</h4>
+              <p>
+                To become a foremost institute for PSC/UPSC training by creating a disciplined,
+                competent workforce dedicated to the service of India.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <section class="exam-focus">
+      <div class="container text-center">
+        <h2 class="fw-bold mb-5">Our Specializations</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="mb-4">
+              <span class="exam-badge">UPSC (CSE)</span>
+              <span class="exam-badge">MPSC (State Services)</span>
+              <span class="exam-badge">Staff Selection Commission (SSC)</span>
+              <span class="exam-badge">Banking (IBPS/SBI)</span>
+              <span class="exam-badge">Police Bharti</span>
+              <span class="exam-badge">Talhati / ZP Exams</span>
+              <span class="exam-badge">Defence (NDA/CDS)</span>
+            </div>
+            <p class="mt-4 opacity-75">We provide integrated batches for all administrative and clerical grade
+              examinations with a focus on core conceptual clarity and speed-solving techniques.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="teaching-methodology" class="tm-section">
+      <div class="container">
+        <h2 class="tm-heading">Teaching Methodology</h2>
+        <div class="row mt-5">
+          <div class="col-12">
+            <ul class="tm-list">
+              <li><i class="fas fa-check-circle"></i> Foundation courses for beginners (NCERT focus)</li>
+              <li><i class="fas fa-check-circle"></i> Subject-wise micro-analysis and conceptual clarity</li>
+              <li><i class="fas fa-check-circle"></i> Daily Current Affairs & News Analysis sessions</li>
+              <li><i class="fas fa-check-circle"></i> Dedicated Answer Writing Practice for Mains</li>
+              <li><i class="fas fa-check-circle"></i> Prelims CSAT & Aptitude specialized training</li>
+              <li><i class="fas fa-check-circle"></i> Personality Development & Mock Interview sessions</li>
+              <li><i class="fas fa-check-circle"></i> 24/7 Library support and peaceful study environment</li>
+              <li><i class="fas fa-check-circle"></i> One-on-one Mentorship for personalized growth</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%-include("footer.ejs")%>
+      <!-- Bootstrap JS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

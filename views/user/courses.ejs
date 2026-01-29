@@ -1,198 +1,291 @@
-<%-include("navbar.ejs")%>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Courses | Competitive Academy</title>
-
+  <title>Our Courses - GCA</title>
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-
-
-    /* Animations */
-    @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(40px); }
-      100% { opacity: 1; transform: translateY(0);}
+    :root {
+      --gov-dark: #0b1c2d;
+      --gov-accent: #f59e0b;
+      --gov-bg: #f8fafc;
+      --gov-white: #ffffff;
+      --gov-text: #1e293b;
+      --gov-muted: #475569;
+      --gov-border: #e5e7eb;
+      --gov-green: #16a34a;
     }
 
-    @keyframes fadeRight {
-      0% { opacity: 0; transform: translateX(-40px); }
-      100% { opacity: 1; transform: translateX(0);}
+    body {
+      background: var(--gov-bg);
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--gov-text);
     }
 
-    @keyframes fadeLeft {
-      0% { opacity: 0; transform: translateX(40px); }
-      100% { opacity: 1; transform: translateX(0);}
+    /* HERO SECTION */
+    .courses-hero {
+      background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.8)),
+        url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80") bottom/cover no-repeat;
+      padding: 120px 0;
+      text-align: center;
+      color: var(--gov-white);
+      margin-bottom: 60px;
     }
 
-    @keyframes zoomIn {
-      0% { opacity: 0; transform: scale(0.8); }
-      100% { opacity: 1; transform: scale(1);}
-    }
-
-    @keyframes zoomOut {
-      0% { opacity: 0; transform: scale(1.2); }
-      100% { opacity: 1; transform: scale(1);}
-    }
-
-    @keyframes slideUp {
-      0% { opacity: 0; transform: translateY(60px); }
-      100% { opacity: 1; transform: translateY(0);}
-    }
-
-    /* Attach animations per card */
-    .card-1 { animation: fadeUp .8s forwards ease; }
-    .card-2 { animation: fadeRight .9s forwards ease; }
-    .card-3 { animation: fadeLeft .9s forwards ease; }
-    .card-4 { animation: zoomIn .8s forwards ease; }
-    .card-5 { animation: slideUp .9s forwards ease; }
-    .card-6 { animation: zoomOut .9s forwards ease; }
-
-    .course-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #1b1b1b;
-    }
-
-    .course-desc {
-      font-size: 14px;
-      color: #6b6b6b;
+    .courses-hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
       margin-bottom: 15px;
     }
 
-    .btn-view {
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 8px;
-      padding: 6px 16px;
+    .courses-hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
     }
 
- 
-:root {
-  --gov-dark: #0b1c2d;
-  --gov-accent: #f59e0b;
-  --gov-bg: #f8fafc;
-  --gov-white: #ffffff;
-  --gov-text: #1e293b;
-  --gov-muted: #475569;
-  --gov-border: #e5e7eb;
-  --gov-green: #16a34a;
-}
+    /* COURSE CARDS */
+    .course-card {
+      background: var(--gov-white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--gov-border);
+    }
 
-body {
-  background: var(--gov-bg);
-  font-family: "Poppins", sans-serif;
-  color: var(--gov-text);
-}
+    .course-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 50px rgba(11, 28, 45, 0.15);
+      border-color: var(--gov-accent);
+    }
 
-.course-card {
-  background: var(--gov-white);
-  border-radius: 14px;
-  padding: 22px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  border-left: 5px solid var(--gov-green); /* One side border */
-  min-height: 160px;
-  opacity: 0;
-}
+    .course-img-box {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
 
+    .course-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
 
-.course-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--gov-dark);
-}
+    .course-card:hover .course-img {
+      transform: scale(1.1);
+    }
 
-.course-desc {
-  font-size: 14px;
-  color: var(--gov-muted);
-  margin-bottom: 15px;
-}
+    .course-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--gov-accent);
+      color: var(--gov-dark);
+      padding: 5px 15px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
 
-.btn-view {
-  background: var(--gov-accent);
-  border-color: var(--gov-accent);
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  padding: 6px 16px;
-}
+    .course-content {
+      padding: 30px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-.btn-view:hover {
-  opacity: .85;
-}
-</style>
+    .course-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gov-dark);
+      margin-bottom: 10px;
+    }
 
+    .course-short-desc {
+      font-size: 0.95rem;
+      color: var(--gov-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--gov-border);
+    }
+
+    .course-duration {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gov-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-details {
+      background: var(--gov-dark);
+      color: var(--gov-white);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-details:hover {
+      background: var(--gov-accent);
+      color: var(--gov-dark);
+    }
+
+    /* SEARCH & FILTER AREA (Placeholder for aesthetics) */
+    .filter-section {
+      background: var(--gov-white);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      margin-top: -30px;
+      position: relative;
+      z-index: 5;
+      margin-bottom: 50px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 25px;
+      border-radius: 50px;
+      border: 1px solid var(--gov-border);
+      background: transparent;
+      color: var(--gov-muted);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--gov-accent);
+      border-color: var(--gov-accent);
+      color: var(--gov-dark);
+    }
+
+    @media (max-width: 768px) {
+      .courses-hero h1 {
+        font-size: 2.5rem;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <%-include("navbar.ejs")%>
 
-<div class="container py-5">
-
-  <h2 class="text-center fw-bold mb-3">Our Courses</h2>
-  <p class="text-center text-muted mb-4">Select a course to explore</p>
-
-  <div class="row g-4">
-
-    <div class="col-md-4 col-sm-6">
-      <div class="course-card card-1">
-        <div class="course-title">Talathi Exam</div>
-        <p class="course-desc">Talathi recruitment preparation.</p>
-        <a href="#" class="btn btn-primary btn-view">View Details</a>
+    <div class="courses-hero">
+      <div class="container">
+        <h1>Excellence In Learning</h1>
+        <p>Choose your path to a prestigious government career. Our structured courses are designed to help you excel in
+          the most competitive examinations.</p>
       </div>
     </div>
 
-    <div class="col-md-4 col-sm-6">
-      <div class="course-card card-2">
-        <div class="course-title">Police Bharti</div>
-        <p class="course-desc">Written + Physical + Interview preparation.</p>
-        <a href="#" class="btn btn-primary btn-view">View Details</a>
+    <div class="container">
+      <div class="filter-section">
+        <button class="filter-btn active" data-category="all">All Courses</button>
+        <button class="filter-btn" data-category="upsc-mpsc">UPSC / MPSC</button>
+        <button class="filter-btn" data-category="banking">Banking</button>
+        <button class="filter-btn" data-category="police">Police Bharti</button>
+        <button class="filter-btn" data-category="other">Other Exams</button>
+      </div>
+
+      <div class="row g-4 mb-5">
+        <% Object.keys(courses).forEach(key=> {
+          const course = courses[key];
+          let category = 'other';
+          if (key === 'upsc' || key === 'mpsc') category = 'upsc-mpsc';
+          else if (key === 'banking') category = 'banking';
+          else if (key === 'police') category = 'police';
+          %>
+          <div class="col-lg-4 col-md-6 course-item" data-category="<%= category %>">
+            <div class="course-card">
+              <div class="course-img-box">
+                <img src="<%= course.image %>" alt="<%= course.title %>" class="course-img">
+                <span class="course-badge">Live Batch</span>
+              </div>
+              <div class="course-content">
+                <h3 class="course-title">
+                  <%= course.title %>
+                </h3>
+                <p class="course-short-desc">
+                  <%= course.shortDesc %>
+                </p>
+                <div class="course-meta">
+                  <div class="course-duration">
+                    <i class="fas fa-clock text-accent"></i>
+                    <%= course.duration %>
+                  </div>
+                  <a href="/course-details?type=<%= key %>" class="btn-details">View Details</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }); %>
       </div>
     </div>
 
-    <div class="col-md-4 col-sm-6">
-      <div class="course-card card-3">
-        <div class="course-title">Banking Exams</div>
-        <p class="course-desc">IBPS / SBI / RRB coaching.</p>
-        <a href="#" class="btn btn-primary btn-view">View Details</a>
-      </div>
-    </div>
+    <%-include("footer.ejs")%>
+      <!-- Bootstrap JS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <div class="col-md-4 col-sm-6">
-      <div class="course-card card-4">
-        <div class="course-title">MPSC</div>
-        <p class="course-desc">Pre + Mains + Interview guidance.</p>
-        <a href="#" class="btn btn-primary btn-view">View Details</a>
-      </div>
-    </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const filterButtons = document.querySelectorAll('.filter-btn');
+          const courseItems = document.querySelectorAll('.course-item');
 
-    <div class="col-md-4 col-sm-6">
-      <div class="course-card card-5">
-        <div class="course-title">Railway Exams</div>
-        <p class="course-desc">RRB recruitment preparation.</p>
-        <a href="#" class="btn btn-primary btn-view">View Details</a>
-      </div>
-    </div>
+          filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+              // Remove active class from all buttons
+              filterButtons.forEach(btn => btn.classList.remove('active'));
+              // Add active class to clicked button
+              button.classList.add('active');
 
-    <div class="col-md-4 col-sm-6">
-      <div class="course-card card-6">
-        <div class="course-title">UPSC</div>
-        <p class="course-desc">IAS / IPS full coaching.</p>
-        <a href="#" class="btn btn-primary btn-view">View Details</a>
-      </div>
-    </div>
+              const category = button.getAttribute('data-category');
 
-  </div>
-</div>
-
+              courseItems.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                  item.style.display = 'block';
+                  // Optional: adds a slight fade-in effect
+                  item.style.opacity = '0';
+                  setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transition = 'opacity 0.4s ease';
+                  }, 50);
+                } else {
+                  item.style.display = 'none';
+                }
+              });
+            });
+          });
+        });
+      </script>
 </body>
+
 </html>
-
-
-
-
-
-
-<%-include("footer.ejs")%>
