@@ -525,9 +525,9 @@
       <div class="tab-pane fade" id="aptitude" role="tabpanel">
         <section class="container my-5">
           <div class="row g-4 justify-content-center">
-            <% facultyList.filter(f=> ['Quantitative Aptitude', 'Reasoning &
-              CSAT'].includes(f.dept_badge)).forEach(faculty => { %>
-
+           <% facultyList
+  .filter(f => ['Quantitative Aptitude', 'Reasoning & CSAT'].includes(f.dept_badge))
+  .forEach(faculty => { %>
               <div class="col-lg-6">
                 <div class="card faculty-card h-100">
                   <div class="row g-0 h-100">
