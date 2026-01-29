@@ -1,0 +1,47 @@
+<%- include('navbar')%>
+
+
+  <h3 class="fw-bold mb-4">Dashboard Overview</h3>
+
+  <!-- Summary Cards -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-3">
+      <div class="summary-card">
+        <div class="card-icon students"><i class="fas fa-user-graduate"></i></div>
+        <h6>Total Students</h6>
+        <h3>1,250</h3>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="summary-card">
+        <div class="card-icon batches"><i class="fas fa-users"></i></div>
+        <h6>Total Batches</h6>
+        <h3>18</h3>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="summary-card">
+        <div class="card-icon courses"><i class="fas fa-book"></i></div>
+        <h6>Courses</h6>
+        <h3>6</h3>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="summary-card">
+        <div class="card-icon staff"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h6>Faculty</h6>
+        <h3>12</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-card">
+    <h5 class="mb-3">Admissions Growth</h5>
+    <div class="chart-container">
+      <canvas id="chart"></canvas>
+    </div>
+  </div>
+</div>
+
+<%- include('footer') %>
