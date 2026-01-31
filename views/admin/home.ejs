@@ -1,5 +1,426 @@
-<%- include('navbar')%>
+<%- include('navbar.ejs')%>
 
-<h1>Welcome home</h1>
+<h3 class="d-flex justify-content-between align-items-center">
+    Edit Home Banner
 
-<%- include('footer') %>
+    <!-- DROPDOWN / TOGGLE BUTTON -->
+    <button class="btn btn-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#editBannerForm"
+            aria-expanded="false"
+            aria-controls="editBannerForm">
+        Edit Banner
+    </button>
+</h3>
+
+<!-- COLLAPSE START -->
+<div class="collapse mt-3" id="editBannerForm">
+
+<form action="/admin/home-update" method="POST">
+
+    <input type="hidden" name="id" value="<%= banner.id %>">
+
+    <div class="mb-3">
+        <label>Badge Text</label>
+        <input type="text" name="badge_text" class="form-control"
+               value="<%= banner.badge_text %>">
+    </div>
+
+    <div class="mb-3">
+        <label>Main Heading</label>
+        <input type="text" name="heading_main" class="form-control"
+               value="<%= banner.heading_main %>">
+    </div>
+
+    <div class="mb-3">
+        <label>Highlight Heading</label>
+        <input type="text" name="heading_highlight" class="form-control"
+               value="<%= banner.heading_highlight %>">
+    </div>
+
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea name="description" class="form-control"><%= banner.description %></textarea>
+    </div>
+
+    <!-- IMAGE PATH -->
+    <div class="col-md-6 mb-3 float-start">
+        <label>Banner Image Path</label>
+        <input type="file" name="banner_image" class="form-control"
+               value="<%= banner.banner_image %>">
+        <small>Example: images/home_banner.jpg</small>
+        <input type="file" name="img" value="<%= banner.banner_image %>" hidden>
+    </div>
+
+    <div class="col-md-6 float-start">
+        <label class="form-label ms-3">Preview Image</label>
+        <div class=" ms-3 mb-4 p-0 card card-body h-25 w-25">
+            <img src="../images/<%= banner.banner_image %>" class="img-fluid ">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <input type="text" name="btn1_text" value="<%= banner.btn1_text %>" class="form-control">
+        </div>
+        <div class="col">
+            <input type="text" name="btn1_link" value="<%= banner.btn1_link %>" class="form-control">
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <input type="number" name="years_exp" value="<%= banner.years_exp %>" class="form-control">
+        </div>
+        <div class="col">
+            <input type="number" name="selections" value="<%= banner.selections %>" class="form-control">
+        </div>
+        <div class="col">
+            <input type="number" name="satisfaction" value="<%= banner.satisfaction %>" class="form-control">
+        </div>
+    </div>
+
+    <button class="btn btn-success mt-4">Update Banner</button>
+</form>
+
+</div>
+<!-- COLLAPSE END -->
+
+
+
+<% if (editCourse) { %>
+
+<h3 class="d-flex justify-content-between align-items-center mt-4">
+    Edit Featured Course
+<!-- 
+    <button class="btn btn-warning"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#editCourseForm">
+        Edit Course
+    </button> -->
+</h3>
+
+<div class="collapse show mt-3" id="editCourseForm">
+
+<form method="POST" action="/admin/featured-courses/update">
+    <input type="hidden" name="id" value="<%= editCourse.id %>">
+
+    <div class="mb-3">
+        <label>Title</label>
+        <input name="title" class="form-control"
+               value="<%= editCourse.title %>" required>
+    </div>
+
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea name="description" class="form-control" required>
+<%= editCourse.description %></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label>URL</label>
+        <input name="url" class="form-control"
+               value="<%= editCourse.url %>" required>
+    </div>
+
+    <button class="btn btn-success">Update</button>
+    <a href="/admin/home" class="btn btn-secondary">Cancel</a>
+</form>
+
+</div>
+
+<% } %>
+
+<!-- ...//....................//............................//..........................//... -->
+
+<h3 class="mt-5">Featured Courses</h3>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>URL</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% if (courses && courses.length > 0) { %>
+            <% for (let i = 0; i < courses.length; i++) { %>
+                <tr>
+                    <td><%= courses[i].id %></td>
+                    <td><%= courses[i].title %></td>
+                    <td><%= courses[i].description %></td>
+                    <td><%= courses[i].url %></td>
+                    <td>
+                        <a href="/admin/featured-courses/edit/<%= courses[i].id %>"
+                           class="btn btn-warning btn-sm">
+                           Edit
+                        </a>
+
+                        <a href="/admin/featured-courses/delete/<%= courses[i].id %>"
+                           class="btn btn-danger btn-sm">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+            <% } %>
+        <% } else { %>
+            <tr>
+                <td colspan="5" class="text-center">No Courses Found</td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+
+
+
+<!-- ...//.......................//.........................//........................//....................//... -->
+ <!-- <h3 class="mb-3">Manage Achievements</h3>
+
+<form method="POST" action="/admin/achievements/save">
+    <input type="hidden" name="id" value="<%= achievement ? achievement.id : '' %>">
+
+    <div class="mb-2">
+        <input name="title" class="form-control" placeholder="Title"
+               value="<%= achievement ? achievement.title : '' %>" required>
+    </div>
+
+    <div class="mb-2">
+        <input name="value" type="number" class="form-control" placeholder="Value"
+               value="<%= achievement ? achievement.value : '' %>" required>
+    </div>
+
+    <div class="mb-2">
+        <input name="suffix" class="form-control" placeholder="+ or %"
+               value="<%= achievement ? achievement.suffix : '+' %>">
+    </div>
+
+    <button class="btn btn-success">Save</button>
+</form>
+
+<hr>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Title</th>
+        <th>Value</th>
+        <th>Suffix</th>
+        <th>Action</th>
+    </tr>
+
+    <% achievements.forEach(a => { %>
+        <tr>
+            <td><%= a.title %></td>
+            <td><%= a.value %></td>
+            <td><%= a.suffix %></td>
+            <td>
+                <a href="/admin/achievements/edit/<%= a.id %>" class="btn btn-warning btn-sm">Edit</a>
+            </td>
+        </tr>
+    <% }) %>
+</table>
+ -->
+
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Manage Achievements
+
+    <button class="btn btn-outline-primary btn-sm"
+            type="button"
+            onclick="toggleAchievements()">
+        Edit 👇 
+    </button>
+    </h3>
+</div>
+
+<div id="achievementWrapper" style="display: none;">
+
+    <form method="POST" action="/admin/achievements/save">
+        <input type="hidden" name="id" value="<%= achievement ? achievement.id : '' %>">
+
+        <div class="mb-2">
+            <input name="title" class="form-control" placeholder="Title"
+                   value="<%= achievement ? achievement.title : '' %>" required>
+        </div>
+
+        <div class="mb-2">
+            <input name="value" type="number" class="form-control" placeholder="Value"
+                   value="<%= achievement ? achievement.value : '' %>" required>
+        </div>
+
+        <div class="mb-2">
+            <select name="suffix" class="form-control">
+                <option value="+" <%= achievement && achievement.suffix === '+' ? 'selected' : '' %>>+</option>
+                <option value="%" <%= achievement && achievement.suffix === '%' ? 'selected' : '' %>>%</option>
+            </select>
+        </div>
+
+        <button class="btn btn-success mb-3">Save</button>
+    </form>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Title</th>
+            <th>Value</th>
+            <th>Suffix</th>
+            <th>Action</th>
+        </tr>
+
+        <% achievements.forEach(a => { %>
+            <tr>
+                <td><%= a.title %></td>
+                <td><%= a.value %></td>
+                <td><%= a.suffix %></td>
+                <td>
+                    <a href="/admin/achievements/edit/<%= a.id %>"
+                       class="btn btn-warning btn-sm">Edit</a>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+
+</div>
+
+<script>
+    function toggleAchievements() {
+        const box = document.getElementById("achievementWrapper");
+        if (box.style.display === "none") {
+            box.style.display = "block";
+        } else {
+            box.style.display = "none";
+        }
+    }
+</script>
+
+
+<!-- ...//..............................////////............................./////////............................. -->
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">
+        <%= editBatch ? 'Edit Upcoming Batch' : 'Add Upcoming Batch' %>
+    
+
+    <button type="button"
+            class="btn btn-outline-primary btn-sm"
+            onclick="toggleBatchSection()">
+        Edit 👇
+    </button>
+    </h3>
+</div>
+
+<div id="batchSection" style="display:none;">
+
+    <form method="POST" action="/admin/batches/save">
+
+        <!-- Hidden ID -->
+        <input type="hidden" name="id" value="<%= editBatch ? editBatch.id : '' %>">
+
+        <div class="mb-3">
+            <label class="form-label">Batch Title</label>
+            <input type="text"
+                   name="title"
+                   class="form-control"
+                   placeholder="e.g. Foundation Batch 2025"
+                   value="<%= editBatch ? editBatch.title : '' %>"
+                   required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <input type="text"
+                   name="description"
+                   class="form-control"
+                   placeholder="e.g. For UPSC / MPSC / SSC Aspirants"
+                   value="<%= editBatch ? editBatch.description : '' %>">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Duration</label>
+            <input type="text"
+                   name="duration"
+                   class="form-control"
+                   placeholder="e.g. 12 Months"
+                   value="<%= editBatch ? editBatch.duration : '' %>">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Fees</label>
+            <input type="text"
+                   name="fees"
+                   class="form-control"
+                   placeholder="e.g. ₹45,000"
+                   value="<%= editBatch ? editBatch.fees : '' %>">
+        </div>
+
+        <button class="btn btn-success">
+            <%= editBatch ? 'Update Batch' : 'Add Batch' %>
+        </button>
+
+        <% if (editBatch) { %>
+            <a href="/admin/home" class="btn btn-secondary ms-2">Cancel</a>
+        <% } %>
+    </form>
+
+    <hr>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Duration</th>
+            <th>Fees</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        <% batches.forEach(b => { %>
+            <tr>
+                <td><%= b.title %></td>
+                <td><%= b.description %></td>
+                <td><%= b.duration %></td>
+                <td><%= b.fees %></td>
+
+                <td>
+                    <% if (b.status == 1) { %>
+                        <span class="badge bg-success">Active</span>
+                    <% } else { %>
+                        <span class="badge bg-secondary">Hidden</span>
+                    <% } %>
+                </td>
+
+                <td>
+                    <a href="/admin/batches/edit/<%= b.id %>"
+                       class="btn btn-warning btn-sm">Edit</a>
+
+                    <a href="/admin/batches/delete/<%= b.id %>"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure?')">
+                       Delete
+                    </a>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+
+</div>
+<script>
+    function toggleBatchSection() {
+        const box = document.getElementById("batchSection");
+        box.style.display = (box.style.display === "none") ? "block" : "none";
+    }
+</script>
+
+
+<!-- .../////........................./////////..........................///////////..........................///////////////........ -->
+  
+
+
+
+
+
+<%- include('footer.ejs') %>

@@ -2,33 +2,24 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const counters = document.querySelectorAll(".counter");
+  const counters = document.querySelectorAll('.counter');
 
-  counters.forEach(counter => {
-    const target = Number(counter.dataset.target);
-    const isPercent = counter.innerText.includes("%");
-    let count = 0;
+counters.forEach(counter => {
+    const updateCounter = () => {
+        const target = +counter.getAttribute('data-target');
+        const current = +counter.innerText.replace(/\D/g, '');
+        const increment = Math.ceil(target / 100);
 
-    const speed = 80; // lower = faster
-
-    function updateCounter() {
-      const increment = Math.ceil(target / speed);
-      count += increment;
-
-      if (count >= target) {
-        counter.innerText = isPercent
-          ? target + "%"
-          : target + "+";
-      } else {
-        counter.innerText = isPercent
-          ? count + "%"
-          : count + "+";
-        requestAnimationFrame(updateCounter);
-      }
-    }
-
+        if (current < target) {
+            counter.innerText = current + increment;
+            setTimeout(updateCounter, 20);
+        } else {
+            counter.innerText = target + counter.innerText.replace(/[0-9]/g, '');
+        }
+    };
     updateCounter();
-  });
+});
+
 
 });
 
@@ -85,6 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
   observer.observe(achievementSection);
 
 });
+
+
+
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('show');
+}
 
 
 

@@ -1,9 +1,43 @@
 const express = require("express");
 const router = express.Router();
+const exe = require("../config/db");
 
-router.get("/", (req, res) => {
-  res.render("user/home.ejs");
+router.get("/", async (req, res) => {
+    try {
+        // Home banner
+        const banner = await exe(
+            "SELECT * FROM home_banner ORDER BY id DESC LIMIT 1"
+        );
+
+        // Featured courses
+        const courses = await exe(
+            "SELECT * FROM featured_courses"
+        );
+
+        // Achievements
+        const achievements = await exe(
+            "SELECT * FROM achievements WHERE status = 1"
+        );
+
+        // Upcoming Batches (NEW)
+        const batches = await exe(
+            "SELECT * FROM home_upcoming_batches WHERE status = 1"
+        );
+
+        res.render("user/home", {
+            banner: banner[0] || null,
+            courses,
+            achievements,
+            batches   // 👈 VERY IMPORTANT (Upcoming Batches)
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.send(err.message);
+    }
 });
+
+
 
 router.get("/about", (req, res) => {
   res.render("user/about.ejs");

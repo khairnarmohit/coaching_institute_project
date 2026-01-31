@@ -130,6 +130,237 @@ body {
 @media(max-width: 992px){
   .main-content { margin-left: 0; }
 }
+
+/* ===== Featured Course Section ===== */
+.featured-course {
+    background: linear-gradient(180deg, #f8fafc, #eef2f7);
+}
+
+/* Card Base */
+/* .featured-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px 26px;
+    min-height: 230px;
+    border-left: 6px solid #0d6efd;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect */
+/* .featured-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 45px rgba(0,0,0,0.15);
+} */
+
+/* Decorative Circle */
+/* .featured-card::after {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 120px;
+    height: 120px;
+    background: rgba(13,110,253,0.08);
+    border-radius: 50%;
+} */ */
+
+/* Title */
+/* .featured-card h4 {
+    font-weight: 700;
+    color: #0a1d37;
+    margin-bottom: 12px;
+}
+
+/* Description */
+/* .featured-card p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+} */ 
+
+/* ===== Type Based Colors ===== */
+/* .featured-card.upsc {
+    border-left-color: #0d6efd;
+}
+.featured-card.upsc::after {
+    background: rgba(13,110,253,0.12);
+}
+
+.featured-card.mpsc {
+    border-left-color: #198754;
+}
+.featured-card.mpsc::after {
+    background: rgba(25,135,84,0.12);
+}
+
+.featured-card.ssc {
+    border-left-color: #fd7e14;
+}
+.featured-card.ssc::after {
+    background: rgba(253,126,20,0.12);
+} */
+
+
+/* ================= GLOBAL ================= */
+body {
+    background: var(--gov-bg);
+    color: var(--gov-dark);
+}
+
+h3 {
+    font-weight: 700;
+    color: var(--gov-dark);
+}
+
+label {
+    font-weight: 600;
+    color: #374151;
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--gov-dark), #122a44);
+    border: none;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #15803d, #166534);
+    border: none;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--gov-accent), #d97706);
+    border: none;
+    color: #000;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    border: none;
+}
+
+.btn-secondary {
+    background: #6b7280;
+    border: none;
+}
+
+/* ================= COLLAPSE PANELS ================= */
+#editBannerForm,
+#editCourseForm {
+    background: #ffffff;
+    border-radius: var(--gov-radius);
+    padding: 24px;
+    margin-top: 15px;
+    border: 1px solid var(--gov-border);
+    box-shadow: var(--gov-shadow);
+}
+
+/* Banner section accent */
+#editBannerForm {
+    border-left: 6px solid var(--gov-dark);
+}
+
+/* Course edit accent */
+#editCourseForm {
+    border-left: 6px solid var(--gov-accent);
+}
+
+/* ================= INPUTS ================= */
+input.form-control,
+textarea.form-control {
+    border-radius: 10px;
+    border: 1px solid var(--gov-border);
+}
+
+input.form-control:focus,
+textarea.form-control:focus {
+    border-color: var(--gov-accent);
+    box-shadow: 0 0 0 0.15rem rgba(245,158,11,0.25);
+}
+
+/* ================= IMAGE PREVIEW ================= */
+.card-body img {
+    border-radius: 12px;
+    border: 1px solid var(--gov-border);
+}
+
+/* ================= TABLE ================= */
+table {
+    background: #ffffff;
+    border-radius: var(--gov-radius);
+    overflow: hidden;
+    box-shadow: var(--gov-shadow);
+}
+
+table thead {
+    background: linear-gradient(
+        135deg,
+        var(--gov-dark),
+        #1e293b
+    );
+    color: #ffffff;
+}
+
+table thead th {
+    border: none;
+    padding: 14px;
+    font-weight: 700;
+}
+
+table tbody td {
+    padding: 14px;
+    vertical-align: middle;
+    border-color: var(--gov-border);
+}
+
+table tbody tr {
+    transition: 0.3s ease;
+}
+
+table tbody tr:hover {
+    background: #f1f5f9;
+    transform: scale(1.01);
+}
+
+/* ================= ACTION BUTTONS ================= */
+table .btn {
+    min-width: 80px;
+}
+
+/* ================= MOBILE POLISH ================= */
+@media (max-width: 768px) {
+
+    h3 {
+        font-size: 18px;
+    }
+
+    #editBannerForm,
+    #editCourseForm {
+        padding: 18px;
+    }
+
+    table th,
+    table td {
+        font-size: 14px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 6px;
+    }
+}
+
+
+
+
 </style>
 </head>
 
