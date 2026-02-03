@@ -232,10 +232,11 @@
 
             <div class="mt-5 p-4 rounded-4 bg-light border">
               <h5 class="fw-bold mb-3">Admission Notice</h5>
-              <p class="text-muted mb-0">New batches are starting from the 1st and 15th of every month. Limited seats
-                available for offline batches to ensure personalized attention. Online portal access will be granted
-                within 24 hours of enrollment.</p>
+              <p class="text-muted mb-0">
+                <%= course.admission_notice%>
+              </p>
             </div>
+
           </div>
         </div>
 
@@ -244,7 +245,11 @@
             <h3>Start Learning Today</h3>
             <p class="opacity-75">Invest in your future with the best mentorship in the industry.</p>
             <div class="price-tag">
-              <%= course.fees %>
+              <% if (course.fees_structure) { %>
+                ₹ <%= course.fees_structure.replace('-', ' - ₹' ) %>
+                  <% } else { %>
+                    <span>Fees will be announced soon</span>
+                    <% } %>
             </div>
             <a href="/admission" class="btn-apply">Enroll Now</a>
             <p class="mt-4 small opacity-50">*EMI options available for comprehensive courses.</p>

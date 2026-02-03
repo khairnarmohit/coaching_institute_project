@@ -1,0 +1,283 @@
+<%- include('./../navbar.ejs') %>
+
+<style>
+:root {
+  --gov-dark: #0b1c2d;
+  --gov-accent: #f59e0b;
+  --gov-bg: #f8fafc;
+  --gov-border: #e5e7eb;
+  --gov-shadow: 0 12px 32px -6px rgba(0,0,0,0.08);
+  --gov-radius: 18px;
+}
+
+.admin-contact-page {
+  background: var(--gov-bg);
+  padding: 30px 0;
+}
+
+.admin-card {
+  background: #fff;
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow);
+  border: 1px solid var(--gov-border);
+  padding: 25px;
+}
+
+.admin-card h4 {
+  color: var(--gov-dark);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.admin-card label {
+  font-weight: 600;
+  color: var(--gov-dark);
+}
+
+.admin-card .form-control {
+  border-radius: 12px;
+  border: 1px solid var(--gov-border);
+  padding: 12px 14px;
+}
+
+.admin-card .form-control:focus {
+  border-color: var(--gov-accent);
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.15);
+}
+
+.btn-gov {
+  background: var(--gov-accent);
+  color: var(--gov-dark);
+  font-weight: 700;
+  border-radius: 30px;
+  border: none;
+  padding: 12px;
+}
+
+.btn-gov:hover {
+  background: #ffcc3d;
+}
+
+/* ===== PREVIEW ===== */
+.preview-box {
+  max-height: 580px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.preview-divider {
+  border-top: 1px dashed var(--gov-border);
+  margin: 12px 0;
+}
+
+.preview-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.preview-note {
+  font-size: 0.85rem;
+}
+
+/* Map */
+.map-responsive {
+  position: relative;
+  width: 100%;
+  padding-bottom: 50%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--gov-border);
+}
+
+.map-responsive iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+</style>
+
+ 
+
+
+<div class="admin-contact-page">
+<div class="container">
+
+<div class="row g-4">
+
+<!-- ================= FORM (DROPDOWN) ================= -->
+<div class="col-12">
+<div class="admin-card">
+
+<button class="btn btn-gov w-100 mb-3"
+        data-bs-toggle="collapse"
+        data-bs-target="#editContactForm">
+<i class="fa fa-edit"></i> Edit Contact Details
+</button>
+
+<div class="collapse" id="editContactForm">
+
+<form method="post" action="/admin/contact">
+
+<label>Address</label>
+<textarea class="form-control mb-3" name="address" id="address" rows="3">
+<%= contact.address %>
+</textarea>
+
+<label>Phone 1</label>
+<input class="form-control mb-3" name="phone1" id="phone1" value="<%= contact.phone1 %>">
+
+<label>Phone 2</label>
+<input class="form-control mb-3" name="phone2" id="phone2" value="<%= contact.phone2 %>">
+
+<label>Email</label>
+<input class="form-control mb-3" name="email" id="email" value="<%= contact.email %>">
+
+<label>Google Map Embed Code</label>
+<textarea class="form-control mb-4" name="map_embed" id="map_embed" rows="4">
+<%- contact.map_embed %>
+</textarea>
+
+<hr>
+
+<h5 class="fw-bold mb-3">Admission Office Hours</h5>
+
+<label>Monday – Friday</label>
+<input class="form-control mb-3" name="weekday_time" id="weekday_time" value="<%= contact.weekday_time %>">
+
+<label>Saturday</label>
+<input class="form-control mb-3" name="saturday_time" id="saturday_time" value="<%= contact.saturday_time %>">
+
+<label>Sunday</label>
+<input class="form-control mb-3" name="sunday_time" id="sunday_time" value="<%= contact.sunday_time %>">
+
+<label>Footer Note</label>
+<input class="form-control mb-4" name="office_note" id="office_note" value="<%= contact.office_note %>">
+
+<button class="btn btn-gov w-100">
+<i class="fa fa-save"></i> Update Contact Details
+</button>
+
+</form>
+</div>
+
+</div>
+</div>
+
+<!-- ================= LIVE PREVIEW ================= -->
+<div class="col-12">
+<div class="admin-card preview-box">
+
+<h4>Live Preview</h4>
+
+<h5>Visit Our Campus</h5>
+<p id="previewAddress"><%- contact.address %></p>
+
+<h5>Call Us</h5>
+<p id="previewPhone">
++91 <%= contact.phone1 %><br>
++91 <%= contact.phone2 %>
+</p>
+
+<h5>Email</h5>
+<p id="previewEmail"><%= contact.email %></p>
+
+<div class="preview-divider"></div>
+
+<h5>Admission Office Hours</h5>
+
+<div class="preview-row">
+<strong>Mon – Fri</strong>
+<span id="previewWeekday"><%= contact.weekday_time %></span>
+</div>
+
+<div class="preview-row">
+<strong>Saturday</strong>
+<span id="previewSaturday"><%= contact.saturday_time %></span>
+</div>
+
+<div class="preview-row">
+<strong>Sunday</strong>
+<span id="previewSunday"><%= contact.sunday_time %></span>
+</div>
+
+<small class="text-muted preview-note" id="previewNote">
+<%= contact.office_note %>
+</small>
+
+<div class="mt-4">
+<button type="button"
+class="btn btn-outline-warning w-100"
+data-bs-toggle="modal"
+data-bs-target="#mapPreviewModal"
+onclick="openMapPreview()">
+<i class="fa fa-eye"></i> View Map Preview
+</button>
+</div>
+
+<textarea id="hiddenMapData" class="d-none">
+<%- contact.map_embed %>
+</textarea>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- ================= MAP PREVIEW MODAL ================= -->
+<div class="modal fade" id="mapPreviewModal">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content" style="border-radius:18px;">
+
+<div class="modal-header" style="background:var(--gov-dark);color:#fff;">
+<h5 class="modal-title">Google Map Preview</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+<div class="map-responsive">
+<div id="modalMapPreview"></div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<%- include('./../footer.ejs') %>
+
+<script>
+const address = document.getElementById('address');
+const phone1 = document.getElementById('phone1');
+const phone2 = document.getElementById('phone2');
+const email = document.getElementById('email');
+const mapInput = document.getElementById('map_embed');
+const hiddenMapData = document.getElementById('hiddenMapData');
+
+const weekday = document.getElementById('weekday_time');
+const saturday = document.getElementById('saturday_time');
+const sunday = document.getElementById('sunday_time');
+const note = document.getElementById('office_note');
+
+address.oninput = () => previewAddress.innerHTML = address.value;
+phone1.oninput = phone2.oninput = () =>
+previewPhone.innerHTML = `+91 ${phone1.value}<br>+91 ${phone2.value}`;
+email.oninput = () => previewEmail.innerText = email.value;
+
+weekday.oninput = () => previewWeekday.innerText = weekday.value;
+saturday.oninput = () => previewSaturday.innerText = saturday.value;
+sunday.oninput = () => previewSunday.innerText = sunday.value;
+note.oninput = () => previewNote.innerText = note.value;
+
+mapInput.oninput = () => hiddenMapData.value = mapInput.value;
+
+function openMapPreview() {
+document.getElementById('modalMapPreview').innerHTML =
+mapInput.value || hiddenMapData.value;
+}
+</script>

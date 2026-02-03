@@ -1,0 +1,292 @@
+<%- include("navbar.ejs") %>
+
+    <style>
+        .course-card {
+            border: none;
+            border-radius: 14px;
+        }
+
+        .course-card .card-header {
+            background: linear-gradient(135deg, #141e30, #243b55);
+            padding: 10px 18px;
+        }
+
+        .course-card label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: #444;
+        }
+
+        .course-card .form-control,
+        .course-card .form-select {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
+
+        .course-card textarea {
+            resize: none;
+        }
+
+        .course-card .card-body {
+            padding: 14px 18px;
+        }
+
+        .course-card .btn {
+            font-size: 12px;
+            padding: 4px 18px;
+            border-radius: 20px;
+        }
+
+        /* ===== TABLE DESIGN ===== */
+        .table-card {
+            border-radius: 14px;
+            border: none;
+            background: #f8f9fb;
+        }
+
+        .table-card .card-body {
+            background: #ffffff;
+            border-radius: 12px;
+        }
+
+        .table th {
+            font-size: 12px;
+            background: #f1f3f6;
+            text-transform: uppercase;
+        }
+
+        .table td {
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        /* ===== IMAGE SIZE SAME & SMALL ===== */
+        .table td img {
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e1e1e1;
+        }
+        .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+    </style>
+
+
+
+        <div class="container px-4 mt-3">
+
+            <!-- ================= FORM CARD ================= -->
+            <div class="card course-card shadow-sm">
+                <div class="card-header text-white">
+                    <h6 class="mb-0">
+                        <i class="fa fa-book-open me-2"></i> Add Course
+                    </h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="container-fluid p-0">
+                        <form action="/admin/add-course" method="post" enctype="multipart/form-data">
+
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <label>Course Key</label>
+                                <input type="text" name="course_key" class="form-control">
+                            </div>
+
+                            <div class="col-md-8">
+                                <label>Course Title</label>
+                                <input type="text" name="title" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="mt-2">
+                            <label>Description</label>
+                            <textarea name="shortDesc" rows="2" class="form-control"></textarea>
+                        </div>
+
+                        <div class="row g-2 mt-1">
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label>Duration</label>
+                                <input type="text" name="duration" class="form-control">
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label>Category</label>
+                                <select name="category" class="form-select">
+                                    <option value="">Select</option>
+                                    <option value="upsc-mpsc">UPSC</option>
+                                    <option value="banking">Banking</option>
+                                    <option value="police">Police</option>
+                                    <option value="talathi">Talathi</option>
+                                    <option value="railway">Railway</option>
+                                    <option value="ssc">SSC</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label>Status</label>
+                                <select name="status" class="form-select">
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label>Image</label>
+                                <input type="file" name="image" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row g-2 mt-1">
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label>Eligibility</label>
+                                <input type="text" name="eligibility" class="form-control">
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label>Features</label>
+                                <input type="text" name="features" class="form-control">
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label>Admission Notice</label>
+                                <input type="text" name="admission_notice" class="form-control">
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label>Fee Sturcture</label>
+                                <input type="text" name="fees_structure" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="mt-3 text-end">
+                            <button class="btn btn-success">
+                                <i class="fa fa-save me-1"></i> Save
+                            </button>
+                            <button type="reset" class="btn btn-outline-secondary ms-2">
+                                Clear
+                            </button>
+                        </div>
+
+                    </form>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- ================= TABLE CARD ================= -->
+            <div class="card table-card shadow-sm mt-4">
+                <div class="card-header bg-dark text-white">
+                    <h6 class="mb-0">
+                        <i class="fa fa-list me-2"></i> Course List
+                    </h6>
+                </div>
+
+                <div class="card-body p-2">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Course</th>
+                                    <th>Category</th>
+                                    <th>Duration</th>
+                                    <th>Eligibility</th>
+                                    <th>Features</th>
+                                    <th>Admission Notice</th>
+
+                                    <th>Fee Sturcture</th>
+                                    <th>Image</th>
+
+                                    <th>Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <% if(courses && courses.length> 0){ %>
+                                    <% courses.forEach((c,i)=>{ %>
+                                        <tr>
+                                            <td>
+                                                <%= i+1 %>
+                                            </td>
+                                            <td>
+                                                <strong>
+                                                    <%= c.title %>
+                                                </strong><br>
+                                                <small class="text-muted">
+                                                    <%= c.course_key %>
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <%= c.category %>
+                                            </td>
+                                            <td>
+                                                <%= c.duration %>
+                                            </td>
+                                            <td>
+                                                <%= c.eligibility %>
+                                            </td>
+                                            <td>
+                                                <%= c.features %>
+                                            </td>
+                                            <td>
+                                                <%= c.admission_notice %>
+                                            </td>
+                                            <td>
+                                                <%= c.fees_structure %>
+
+                                            </td>
+                                            <td>
+                                                <img src="/images/<%= c.image %>">
+                                            </td>
+                                            <td>
+                                                <% if(c.status==1){ %>
+                                                    <span class="badge bg-success status-badge">Active</span>
+                                                    <% } else { %>
+                                                        <span class="badge bg-danger status-badge">Inactive</span>
+                                                        <% } %>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <a href="/admin/edit_course/<%= c.id %>"
+                                                    class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a href="/admin/delete_course/<%= c.id %>"
+                                                    onclick="return confirm('Delete this course?')"
+                                                    class="btn btn-sm btn-outline-danger ms-1">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                            <% } else { %>
+                                                <tr>
+    <td colspan="11" class="text-center text-muted py-3">
+        No courses found
+    </td>
+</tr>
+
+                                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    <%- include("footer.ejs") %>
