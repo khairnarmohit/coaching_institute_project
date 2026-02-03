@@ -176,12 +176,27 @@
             transform: scale(1.02);
         }
 
-        .info-boxes {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
+    .info-boxes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* desktop: 3 */
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .info-boxes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .info-boxes {
+        grid-template-columns: 1fr;
+    }
+}
+
 
         .info-box {
             background: var(--gov-white);
@@ -261,193 +276,135 @@
 
         <header class="page-header">
             <div class="container">
-                <h1>Batch Information</h1>
-                <p>Explore our upcoming and ongoing batches for various competitive examinations. Join India's premier
-                    government competitive exam preparation academy.</p>
+                <h1><%= banner[0].heading %></h1>
+                <p><%= banner[0].sub_heading %></p>
             </div>
         </header>
 
         <main class="container">
-            <!-- Upcoming Batches Section -->
-            <section class="batches-section">
-                <h2 class="section-title">Upcoming Batches</h2>
-                <div class="batches-grid">
-                    <!-- Batch Card 1 -->
-                    <div class="batch-card">
-                        <div class="batch-header">
-                            <h3>UPSC Civil Services Foundation 2025</h3>
-                            <span class="batch-status status-upcoming">Starting Soon</span>
-                        </div>
-                        <div class="batch-content">
-                            <div class="batch-detail">
-                                <span class="detail-label">Duration:</span>
-                                <span class="detail-value">12 Months</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Fees:</span>
-                                <span class="detail-value fee">₹45,000</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Strength:</span>
-                                <span class="detail-value">50 Students</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Mode:</span>
-                                <span class="detail-value">
-                                    <span class="mode-indicator mode-offline">Offline</span>
-                                </span>
-                            </div>
-                            <a href="/admission" class="register-btn">Apply Now</a>
-                        </div>
+        <section class="batches-section">
+    <h2 class="section-title">Upcoming Batches</h2>
+
+    <div class="batches-grid">
+        <% for (var i = 0; i < batches.length; i++) { %>
+            <% if (batches[i].batch_status === 'Upcoming') { %>
+
+                <div class="batch-card">
+                    <div class="batch-header">
+                        <h3><%= batches[i].batch_title %></h3>
+                        <span class="batch-status status-upcoming">
+                            <%= batches[i].status_label %>
+                        </span>
                     </div>
 
-                    <!-- Batch Card 2 -->
-                    <div class="batch-card">
-                        <div class="batch-header">
-                            <h3>SSC CGL Tier-I + II 2024-25</h3>
-                            <span class="batch-status status-upcoming">New Batch</span>
+                    <div class="batch-content">
+                        <div class="batch-detail">
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value"><%= batches[i].duration %> Months</span>
                         </div>
-                        <div class="batch-content">
-                            <div class="batch-detail">
-                                <span class="detail-label">Duration:</span>
-                                <span class="detail-value">6 Months</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Fees:</span>
-                                <span class="detail-value fee">₹25,000</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Strength:</span>
-                                <span class="detail-value">75 Students</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Mode:</span>
-                                <span class="detail-value">
-                                    <span class="mode-indicator mode-online">Online Live</span>
-                                </span>
-                            </div>
-                            <a href="/admission" class="register-btn">Apply Now</a>
-                        </div>
-                    </div>
 
-                    <!-- Batch Card 3 -->
-                    <div class="batch-card">
-                        <div class="batch-header">
-                            <h3>Banking PO/Clerk 2024</h3>
-                            <span class="batch-status status-upcoming">Admissions Open</span>
+                        <div class="batch-detail">
+                            <span class="detail-label">Fees:</span>
+                            <span class="detail-value fee">₹<%= batches[i].fees %></span>
                         </div>
-                        <div class="batch-content">
-                            <div class="batch-detail">
-                                <span class="detail-label">Duration:</span>
-                                <span class="detail-value">4 Months</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Fees:</span>
-                                <span class="detail-value fee">₹18,000</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Strength:</span>
-                                <span class="detail-value">100 Students</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Mode:</span>
-                                <span class="detail-value">
-                                    <span class="mode-indicator mode-online">Online Recorded</span>
+
+                        <div class="batch-detail">
+                            <span class="detail-label">Strength:</span>
+                            <span class="detail-value"><%= batches[i].strength %> Students</span>
+                        </div>
+
+                        <div class="batch-detail">
+                            <span class="detail-label">Mode:</span>
+                            <span class="detail-value">
+                                <span class="mode-indicator 
+                                    <%= batches[i].mode === 'Online' ? 'mode-online' : 'mode-offline' %>">
+                                    <%= batches[i].mode %>
                                 </span>
-                            </div>
-                            <a href="/admission" class="register-btn">Apply Now</a>
+                            </span>
                         </div>
+
+                        <a href="/admission" class="register-btn">Apply Now</a>
                     </div>
                 </div>
-            </section>
 
-            <!-- Ongoing Batches Section -->
-            <section class="batches-section">
-                <h2 class="section-title">Ongoing Batches</h2>
-                <div class="batches-grid">
-                    <!-- Batch Card 1 -->
-                    <div class="batch-card">
-                        <div class="batch-header">
-                            <h3>State PCS Advanced 2024</h3>
-                            <span class="batch-status status-ongoing">Ongoing</span>
-                        </div>
-                        <div class="batch-content">
-                            <div class="batch-detail">
-                                <span class="detail-label">Duration:</span>
-                                <span class="detail-value">10 Months</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Fees:</span>
-                                <span class="detail-value fee">₹38,000</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Strength:</span>
-                                <span class="detail-value">40 Students</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Mode:</span>
-                                <span class="detail-value">
-                                    <span class="mode-indicator mode-offline">Offline</span>
-                                </span>
-                            </div>
-                            <button class="register-btn">Join Waitlist</button>
-                        </div>
+            <% } %>
+        <% } %>
+    </div>
+</section>
+
+
+      <section class="batches-section">
+    <h2 class="section-title">Ongoing Batches</h2>
+
+    <div class="batches-grid">
+        <% for (var i = 0; i < batches.length; i++) { %>
+            <% if (batches[i].batch_status === 'Ongoing') { %>
+
+                <div class="batch-card">
+                    <div class="batch-header">
+                        <h3><%= batches[i].batch_title %></h3>
+                        <span class="batch-status status-ongoing">
+                            <%= batches[i].status_label %>
+                        </span>
                     </div>
 
-                    <!-- Batch Card 2 -->
-                    <div class="batch-card">
-                        <div class="batch-header">
-                            <h3>Railway Group D 2024</h3>
-                            <span class="batch-status status-ongoing">In Progress</span>
+                    <div class="batch-content">
+                        <div class="batch-detail">
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value"><%= batches[i].duration %> Months</span>
                         </div>
-                        <div class="batch-content">
-                            <div class="batch-detail">
-                                <span class="detail-label">Duration:</span>
-                                <span class="detail-value">5 Months</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Fees:</span>
-                                <span class="detail-value fee">₹15,000</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Strength:</span>
-                                <span class="detail-value">120 Students</span>
-                            </div>
-                            <div class="batch-detail">
-                                <span class="detail-label">Mode:</span>
-                                <span class="detail-value">
-                                    <span class="mode-indicator mode-online">Online Live</span>
+
+                        <div class="batch-detail">
+                            <span class="detail-label">Fees:</span>
+                            <span class="detail-value fee">₹<%= batches[i].fees %></span>
+                        </div>
+
+                        <div class="batch-detail">
+                            <span class="detail-label">Strength:</span>
+                            <span class="detail-value"><%= batches[i].strength %> Students</span>
+                        </div>
+
+                        <div class="batch-detail">
+                            <span class="detail-label">Mode:</span>
+                            <span class="detail-value">
+                                <span class="mode-indicator 
+                                    <%= batches[i].mode === 'Online' ? 'mode-online' : 'mode-offline' %>">
+                                    <%= batches[i].mode %>
                                 </span>
-                            </div>
-                            <button class="register-btn">Contact for Next Batch</button>
+                            </span>
                         </div>
+
+                        <button class="register-btn">Join Waitlist</button>
                     </div>
                 </div>
-            </section>
+
+            <% } %>
+        <% } %>
+    </div>
+</section>
+
 
             <!-- Additional Information -->
             <section class="info-boxes mb-5">
+              <% for(let i=0;i<info_boxes.length;i++){ %>
+                
                 <div class="info-box">
-                    <h3>Batch Duration</h3>
-                    <p>Our batches range from 4 to 12 months depending on the examination pattern and syllabus coverage.
-                        Foundation courses are typically longer for comprehensive preparation.</p>
+                    <h3><%= info_boxes[i].title %></h3>
+                    <p><%= info_boxes[i].description %></p>
                 </div>
-                <div class="info-box">
-                    <h3>Batch Strength</h3>
-                    <p>We maintain optimal batch sizes (40-120 students) to ensure personalized attention while
-                        maintaining healthy peer learning environment.</p>
-                </div>
-                <div class="info-box">
-                    <h3>Learning Modes</h3>
-                    <p>Choose between offline classroom programs, live online classes, or recorded sessions based on
-                        your convenience and learning preference.</p>
-                </div>
+
+                <% } %>
+               
+                
             </section>
         </main>
 
         <%- include('footer') %>
 
             <script>
+             
+
+
                 // JavaScript for interactive elements
                 document.addEventListener('DOMContentLoaded', function () {
                     const registerButtons = document.querySelectorAll('.register-btn');
@@ -492,3 +449,28 @@
 </body>
 
 </html>
+<!-- 
+
+
+(5) [{…}, {…}, {…}, {…}, {…}]
+0
+: 
+{id: 1, batch_title: 'UPSC Civil Services Foundation 2025', status_label: 'Starting Soon', batch_status: 'Upcoming', duration: '12', …}
+1
+: 
+{id: 2, batch_title: 'SSC CGL Tier-I + II 2024-25', status_label: 'New Batch', batch_status: 'Upcoming', duration: '6', …}
+2
+: 
+{id: 3, batch_title: 'Banking PO/Clerk 2024', status_label: 'Admissions Open', batch_status: 'Upcoming', duration: '4', …}
+3
+: 
+{id: 4, batch_title: 'State PCS Advanced 2024', status_label: 'Ongoing', batch_status: 'Ongoing', duration: '10', …}
+4
+: 
+{id: 5, batch_title: 'Railway Group D 2024', status_label: 'In Progress', batch_status: 'Ongoing', duration: '5', …}
+length
+: 
+5
+[[Prototype]]
+: 
+Array(0) -->

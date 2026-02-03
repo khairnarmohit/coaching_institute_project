@@ -341,9 +341,14 @@ table .btn {
     <i class="fas fa-chalkboard-user"></i> Faculty
   </a>
 
-  <a href="/admin/batches" class="nav-link">
+  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#batchesDropdown">
     <i class="fas fa-users"></i> Batches
   </a>
+   <div class="collapse" id="batchesDropdown">
+    <a href="/admin/hero-banner" class="nav-link ps-4 "><sm>Hero Banner</sm></a>
+    <a href="/admin/upcoming" class="nav-link ps-4"><sm>Batches</sm></a>
+    <a href="/admin/information" class="nav-link ps-4">Info Box</a>
+  </div>
 
   <a href="/admin/admission" class="nav-link">
     <i class="fas fa-user-plus"></i> Admission

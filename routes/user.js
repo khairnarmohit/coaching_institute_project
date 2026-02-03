@@ -67,11 +67,11 @@ router.get('/contact', async (req, res) => {
 router.get("/admission", function (req, res) {
   res.render("user/admission.ejs")
 });
-
-router.get("/syllabus", (req, res) => {
-  res.render("user/syllabus.ejs")
+router.get("/syllabus", async (req, res) => {
+  var sql = `select * from syllabus where status=1`;
+  var syllabus= await exe(sql);
+  res.render("user/syllabus.ejs",{syllabus});
 })
-
 router.get("/gallery", (req, res) => {
   res.render("user/gallery.ejs")
 })
@@ -189,8 +189,18 @@ router.get("/faculty", async (req, res) => {
   res.render("user/faculty.ejs", { facultyList: facultyList })
 })
 
-router.get("/batches", (req, res) => {
-  res.render("user/batch.ejs")
+router.get("/batches",async (req, res) => {
+
+  var sql = `select * from batches_banner`;
+  var sql2 = `select * from upcoming_batches where is_active=1 and batch_status!='Completed'`;
+  var sql3 = `select * from info_boxes where status=1`;
+
+var banner= await exe(sql);
+var batches= await exe(sql2);
+var info_boxes= await exe(sql3);
+
+
+  res.render("user/batch.ejs",{banner,batches,info_boxes});
 })
 
 const coursesData = {

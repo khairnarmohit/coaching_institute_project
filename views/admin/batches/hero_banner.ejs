@@ -1,0 +1,62 @@
+<%- include("./../navbar.ejs") %>
+<style>
+     :root {
+            --gov-dark: #0b1c2d;
+            --gov-accent: #f59e0b;
+            --gov-bg: #f8fafc;
+            --gov-white: #ffffff;
+            --gov-text: #1e293b;
+            --gov-muted: #475569;
+            --gov-border: #e5e7eb;
+        }
+
+        /* Page Styles */
+
+        .page-header {
+            background: linear-gradient(135deg, var(--gov-dark) 0%, #1a365d 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+</style>
+ <header class="page-header">
+            <div class="container">
+                <h1><%- result[0].heading %></h1>
+                <p><%- result[0].sub_heading %></p>
+            </div>
+        </header>
+<section>
+    <div class="container">
+        <div class="row">
+            <form action="/admin/update_hero" method="post">
+            <div class="col-6 float-start">
+                <label class="form-label fw-bold" >Change Heading</label>
+                <input type="text " class="w-75 form-control mt-2" value="<%- result[0].heading %>" name="heading"><br>
+                <button class="btn btn-primary btn-sm">save</button>
+            </div>
+            <div class="col-6 float-start">
+                <label class="form-label fw-bold">Change Sub Heading</label>
+                <textarea name="sub_heading" class="w-100 form-control mt-2" ><%- result[0].sub_heading %></textarea>
+                <button class="btn btn-primary btn-sm mt-2">save</button>
+                
+            </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<%- include("./../footer.ejs") %>

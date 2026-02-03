@@ -337,6 +337,124 @@ router.post('/contact', async (req, res) => {
 });
 
 
+router.get("/hero-banner",async (req, res) => {
+   var sql = `select * from batches_banner`;
+    var result = await exe(sql);
+    res.render("admin/batches/hero_banner.ejs",{result});
+});
+
+router.post("/update_hero",async(req,res)=>{
+    var d = req.body
+    var sql = `update batches_banner set heading =? , sub_heading=? where id=1`;
+    var result = await exe(sql,[d.heading,d.sub_heading]);
+    res.redirect("/admin/hero-banner");
+})
+
+
+router.get("/upcoming",async (req, res) => {
+    var sql = `select * from upcoming_batches where is_active=1`;
+    var result = await exe(sql);
+     res.render("admin/batches/upcoming.ejs",{result});
+ });
+router.post("/add_batch",async(req,res)=>{
+    var d = req.body;
+    var sql = `insert into upcoming_batches (batch_title,status_label,batch_status,duration,fees,total_strength) values (?,?,?,?,?,?)`;
+    var result = await exe(sql,[d.title,d.statusLabel,d.batch_status,d.duration,d.fees,d.total_strength]);
+    res.redirect("/admin/upcoming");
+    
+})
+router.post("/update_batch",async(req,res)=>{
+    var d = req.body;
+    var sql = `update upcoming_batches set batch_title=?,status_label=?,batch_status=?,duration=?,fees=?,total_strength=?,mode=? where id=?`;
+    var result = await exe(sql,[d.title,d.statusLabel,d.batch_status,d.duration,d.fees,d.total_strength,d.mode,d.batch_id]);
+    res.redirect("/admin/upcoming");
+});
+router.get("/delete_batch/:id",async(req,res)=>{
+    var id = req.params.id;
+    var sql = `update upcoming_batches set is_active = 0 where id=?`;
+    var result = await exe(sql,[id]);
+    res.redirect("/admin/upcoming");
+});
+
+
+router.get("/information",async (req, res) => {
+    var sql = `select * from info_boxes where status=1`;
+    var result = await exe(sql);
+    res.render("admin/batches/batches_imformation.ejs",{result});
+});
+
+router.post("/add_info_box",async(req,res)=>{
+    var d = req.body;
+    var sql = `insert into info_boxes (title,description) values (?,?)`;
+    var result = await exe(sql,[d.title,d.description]);
+    res.redirect("/admin/information");
+});
+
+router.post("/update_info_box",async(req,res)=>{
+    var d = req.body;
+    var sql = `update info_boxes set title=?,description=? where id=? `;
+    var result = await exe(sql,[d.title,d.description,d.info_box_id]);
+    res.redirect("/admin/information");
+    
+    
+});
+
+
+router.get("/delete_info_box/:id",async(req,res)=>{
+    var id = req.params.id;
+    var sql = `update info_boxes set status=0 where id=?`;
+    var result = await exe(sql,[id]);
+    res.redirect("/admin/information");
+});
+
+router.get("/syllabus",async (req, res) => {
+   var sql = `select * from syllabus where status=1`;
+   var syllabus = await exe(sql);
+   res.render("admin/syllabus/syllabus.ejs",{syllabus});
+});
+
+
+
+router.post("/add_syllabus",async(req,res)=>{
+   
+    var d = req.body;
+    var filename = Date.now() + ".pdf";
+    
+    req.files.pdf_file.mv('public/pdf/' + filename);
+    var sql = `insert into syllabus (exam_name,description,pdf_path,icon_class) values (?,?,?,?)`;
+    var result = await exe(sql,[d.exam_name,d.description,filename,d.icon_class]);
+    res.redirect("/admin/syllabus");
+    
+    
+
+});
+
+ router.post("/update_syllabus",async(req,res)=>{
+        var d = req.body;
+        var old_path =await exe(`select pdf_path from syllabus where id=?`,[d.syllabus_id]);
+        if (req.files && req.files.pdf_file) {
+             req.files.pdf_file.mv("public/pdf/"+old_path[0].pdf_path);
+
+        }
+
+       
+        var sql = `update syllabus set exam_name=?,description=?,icon_class=? where id=?`;
+        var result = await exe(sql,[d.exam_name,d.description,d.icon_class,d.syllabus_id]);
+        res.redirect("/admin/syllabus");
+        
+        // res.send(old_path);
+
+    });
+
+  router.get("/delete_syllabus/:id",async(req,res)=>{
+      var id = req.params.id;
+      var sql = `update syllabus set status=0 where id=?`;
+      var result = await exe(sql,[id]);
+      res.redirect("/admin/syllabus");
+  });
+
+    
+
 
 
 

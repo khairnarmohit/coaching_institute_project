@@ -317,20 +317,21 @@
         <!-- Syllabus Cards Section -->
         <div class="container mt-5">
             <div class="row mt-5">
+
                 <!-- MPSC Card -->
+                 <% for(var i=0;i<syllabus.length;i++){ %>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="syllabus-card animated-card card-1">
                         <div class="updated-badge">Updated</div>
                         <div class="card-header text-center">
                             <div class="exam-icon">
-                                <i class="fas fa-landmark"></i>
+                                <i class="fas fa-book-open"></i>
                             </div>
-                            <h3>MPSC</h3>
+                            <h3><%= syllabus[i].exam_name %></h3>
                         </div>
                         <div class="card-body">
-                            <p>Complete updated syllabus for Maharashtra Public Service Commission exams. Includes
-                                detailed topics for Prelims, Mains, and Interview stages.</p>
-                            <a href="pdf/mpsc.pdf" target="_blank">
+                            <p> <%= syllabus[i].description %></p>
+                            <a href="pdf/<%= syllabus[i].pdf_path %>" target="_blank">
                                 <button class="btn btn-download">
                                     <i class="fas fa-eye"></i> View PDF
                                 </button>
@@ -338,116 +339,8 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- UPSC Card -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="syllabus-card animated-card card-2">
-                        <div class="updated-badge">Updated</div>
-                        <div class="card-header text-center">
-                            <div class="exam-icon">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
-                            <h3>UPSC</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>Comprehensive syllabus for Union Public Service Commission exams. Covering all subjects
-                                for Civil Services Preliminary and Main examinations.</p>
-                            <a href="pdf/upsc.pdf" target="_blank">
-                                <button class="btn btn-download">
-                                    <i class="fas fa-eye"></i> View PDF
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Banking Exams Card -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="syllabus-card animated-card card-3">
-                        <div class="updated-badge">Updated</div>
-                        <div class="card-header text-center">
-                            <div class="exam-icon">
-                                <i class="fas fa-university"></i>
-                            </div>
-                            <h3>Banking Exams</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>Syllabus for all major banking exams including IBPS, SBI, RBI. Covers Quantitative
-                                Aptitude, Reasoning, English, and Banking Awareness.</p>
-                            <a href="pdf/banking.pdf" target="_blank">
-                                <button class="btn btn-download">
-                                    <i class="fas fa-eye"></i> View PDF
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Police Bharti Card -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="syllabus-card animated-card card-4">
-                        <div class="updated-badge">Updated</div>
-                        <div class="card-header text-center">
-                            <div class="exam-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <h3>Police Bharti</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>Complete syllabus for Police recruitment exams. Includes physical standards, written exam
-                                pattern, and interview preparation guidelines.</p>
-                            <a href="pdf/police_bharti.pdf" target="_blank">
-                                <button class="btn btn-download">
-                                    <i class="fas fa-eye"></i> View PDF
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Talathi Card -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="syllabus-card animated-card card-5">
-                        <div class="updated-badge">Updated</div>
-                        <div class="card-header text-center">
-                            <div class="exam-icon">
-                                <i class="fas fa-file-contract"></i>
-                            </div>
-                            <h3>Talathi</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>Updated syllabus for Talathi recruitment exams. Covers Marathi, English, Mathematics,
-                                General Knowledge, and Agriculture topics.</p>
-                            <a href="pdf/talathi.pdf" target="_blank">
-                                <button class="btn btn-download">
-                                    <i class="fas fa-eye"></i> View PDF
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Railway Exams Card -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="syllabus-card animated-card card-6">
-                        <div class="updated-badge">Updated</div>
-                        <div class="card-header text-center">
-                            <div class="exam-icon">
-                                <i class="fas fa-train"></i>
-                            </div>
-                            <h3>Railway Exams</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>Syllabus for RRB NTPC, Group D, JE, and other railway exams. Includes General Awareness,
-                                Mathematics, General Intelligence, and Reasoning.</p>
-                            <a href="pdf/railway.pdf" target="_blank">
-                                <button class="btn btn-download">
-                                    <i class="fas fa-eye"></i> View PDF
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+               <% } %>
+              
             </div>
 
             <!-- Additional Info Section -->
@@ -541,3 +434,5 @@
 </body>
 
 </html>
+
+
