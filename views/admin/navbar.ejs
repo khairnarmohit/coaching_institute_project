@@ -309,108 +309,59 @@
 <body>
 
   <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="logo"><i class="fas fa-university"></i> Gov Academy</div>
-
-    <a href="/admin/dashboard" class="nav-link">
-      <i class="fas fa-gauge"></i> Dashboard
-    </a>
-
-    <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#homeDropdown">
-      <i class="fas fa-home"></i> Home
-    </a>
-    <div class="collapse" id="homeDropdown">
-      <a href="/admin/home_banner" class="nav-link ps-4">Home Banner</a>
-      <a href="/admin/featured_courses" class="nav-link ps-4">Featured Courses</a>
-      <a href="/admin/achievements" class="nav-link ps-4">Achievements</a>
-      <a href="/admin/home_upcoming_batches" class="nav-link ps-4">Upcoming Batches</a>
-      <a href="/admin/testimonials" class="nav-link ps-4">Testimonials</a>
-    </div>
-
-
-    <!-- About Us Dropdown -->
-    <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#aboutDropdown" role="button"
-      aria-expanded="false">
-      <i class="fas fa-info-circle"></i> About Us
-    </a>
-    <div class="collapse" id="aboutDropdown">
-      <a href="/admin/academy_information" class="nav-link ps-4">Academy Information</a>
-      <a href="/admin/founder_information" class="nav-link ps-4">Founder Information</a>
-    </div>
-
-    <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#coursesDropdown" role="button"
-      aria-expanded="false">
-      <i class="fas fa-book"></i> Courses
-    </a>
-    <div class="collapse" id="coursesDropdown">
-      <a href="/admin/courses_list" class="nav-link ps-4">Courses List</a>
-    </div>
-
-    <a href="/admin/faculty" class="nav-link">
-      <i class="fas fa-chalkboard-user"></i> Faculty
-    </a>
-
-    <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#batchesDropdown">
-      <i class="fas fa-users"></i> Batches
-    </a>
-    <div class="collapse" id="batchesDropdown">
-      <a href="/admin/hero-banner" class="nav-link ps-4 ">
-        <sm>Hero Banner</sm>
-      </a>
-      <a href="/admin/upcoming" class="nav-link ps-4">
-        <sm>Batches</sm>
-      </a>
-      <a href="/admin/information" class="nav-link ps-4">Info Box</a>
-    </div>
-
-    <a href="/admin/admission" class="nav-link">
-      <i class="fas fa-user-plus"></i> Admission
-    </a>
-
-    <a href="/admin/syllabus" class="nav-link">
-      <i class="fas fa-book-open"></i> Syllabus
-    </a>
-
-    <a href="/admin/gallery" class="nav-link">
-      <i class="fas fa-photo-film"></i> Gallery
-    </a>
-
-    <a href="/admin/contact" class="nav-link">
-      <i class="fas fa-phone"></i> Contact
-    </a>
+<div class="sidebar">
+  <div class="logo">
+    <i class="fas fa-university"></i> Gov Academy
   </div>
 
+  <a href="/admin/dashboard" class="nav-link">
+    <i class="fas fa-gauge"></i> Dashboard
+  </a>
 
-  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#aboutDropdown">
+  <!-- Home -->
+  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#homeMenu">
+    <i class="fas fa-home"></i> Home
+  </a>
+  <div class="collapse" id="homeMenu">
+    <a href="/admin/home_banner" class="nav-link ps-4">Home Banner</a>
+    <a href="/admin/featured_courses" class="nav-link ps-4">Featured Courses</a>
+    <a href="/admin/achievements" class="nav-link ps-4">Achievements</a>
+    <a href="/admin/home_upcoming_batches" class="nav-link ps-4">Upcoming Batches</a>
+    <a href="/admin/testimonials" class="nav-link ps-4">Testimonials</a>
+  </div>
+
+  <!-- About Us -->
+  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#aboutMenu">
     <i class="fas fa-info-circle"></i> About Us
   </a>
-  <div class="collapse" id="aboutDropdown">
-    <a href="/admin/about/academy" class="nav-link ps-4">Academy Info</a>
-    <a href="/admin/about/founder" class="nav-link ps-4">Founder Info</a>
+  <div class="collapse" id="aboutMenu">
+    <a href="/admin/academy_information" class="nav-link ps-4">Academy Information</a>
+    <a href="/admin/founder_information" class="nav-link ps-4">Founder Information</a>
   </div>
 
-  <!-- <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#coursesDropdown">
+  <!-- Courses -->
+  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#courseMenu">
     <i class="fas fa-book"></i> Courses
   </a>
-  <div class="collapse" id="coursesDropdown">
-    <a href="/admin/courses/upsc" class="nav-link ps-4">UPSC</a>
-    <a href="/admin/courses/mpsc" class="nav-link ps-4">MPSC</a>
-    <a href="/admin/courses/banking" class="nav-link ps-4">Banking</a>
-    <a href="/admin/courses/police" class="nav-link ps-4">Police</a>
-    <a href="/admin/courses/railway" class="nav-link ps-4">Railway</a>
-    <a href="/admin/courses/talathi" class="nav-link ps-4">Talathi</a>
-  </div> -->
+  <div class="collapse" id="courseMenu">
+    <a href="/admin/courses_list" class="nav-link ps-4">Courses List</a>
+  </div>
 
   <a href="/admin/faculty" class="nav-link">
     <i class="fas fa-chalkboard-user"></i> Faculty
   </a>
 
-  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#batchesDropdown">
+  <!-- Batches -->
+  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#batchMenu">
     <i class="fas fa-users"></i> Batches
   </a>
-   <div class="collapse" id="batchesDropdown">
-    <a href="/admin/hero-banner" class="nav-link ps-4 "><sm>Hero Banner</sm></a>
-    <a href="/admin/upcoming" class="nav-link ps-4"><sm>Batches</sm></a>
+  <div class="collapse" id="batchMenu">
+    <a href="/admin/hero-banner" class="nav-link ps-4">
+      <small>Hero Banner</small>
+    </a>
+    <a href="/admin/upcoming" class="nav-link ps-4">
+      <small>Batches</small>
+    </a>
     <a href="/admin/information" class="nav-link ps-4">Info Box</a>
   </div>
 
@@ -426,17 +377,22 @@
     <i class="fas fa-photo-film"></i> Gallery
   </a>
 
-   <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#contactDropdown">
-    <i class="fas fa-users"></i> Contact
+  <!-- Contact -->
+  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#contactMenu">
+    <i class="fas fa-phone"></i> Contact
   </a>
-   <div class="collapse" id="contactDropdown">
-    <a href="/admin/contact" class="nav-link ps-4"><sm>Contact Details</sm></a>
-    <a href="/admin/enquiries" class="nav-link ps-4"><sm>Enquiries</sm></a>
+  <div class="collapse" id="contactMenu">
+    <a href="/admin/contact" class="nav-link ps-4">
+      <small>Contact Details</small>
+    </a>
+    <a href="/admin/enquiries" class="nav-link ps-4">
+      <small>Enquiries</small>
+    </a>
   </div>
-
 </div>
+
 
 <!-- Main Content -->
 <div class="main-content">
   <!-- Main Content -->
-  <div class="main-content">
+  <!-- <div class="main-content"> -->
