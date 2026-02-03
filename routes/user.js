@@ -46,19 +46,19 @@ router.get("/about", (req, res) => {
 });
 
 router.get('/contact', async (req, res) => {
-    try {
-        const result = await exe(
-            "SELECT * FROM contact_details WHERE id = 1"
-        );
+  try {
+    const result = await exe(
+      "SELECT * FROM contact_details WHERE id = 1"
+    );
 
-        res.render('user/contact', {
-            contact: result[0]
-        });
+    res.render('user/contact', {
+      contact: result[0]
+    });
 
-    } catch (err) {
-        console.error(err);
-        res.send('Database Error');
-    }
+  } catch (err) {
+    console.error(err);
+    res.send('Database Error');
+  }
 });
 
 
@@ -69,8 +69,8 @@ router.get("/admission", function (req, res) {
 });
 router.get("/syllabus", async (req, res) => {
   var sql = `select * from syllabus where status=1`;
-  var syllabus= await exe(sql);
-  res.render("user/syllabus.ejs",{syllabus});
+  var syllabus = await exe(sql);
+  res.render("user/syllabus.ejs", { syllabus });
 })
 router.get("/gallery", (req, res) => {
   res.render("user/gallery.ejs")
@@ -189,18 +189,18 @@ router.get("/faculty", async (req, res) => {
   res.render("user/faculty.ejs", { facultyList: facultyList })
 })
 
-router.get("/batches",async (req, res) => {
+router.get("/batches", async (req, res) => {
 
   var sql = `select * from batches_banner`;
   var sql2 = `select * from upcoming_batches where is_active=1 and batch_status!='Completed'`;
   var sql3 = `select * from info_boxes where status=1`;
 
-var banner= await exe(sql);
-var batches= await exe(sql2);
-var info_boxes= await exe(sql3);
+  var banner = await exe(sql);
+  var batches = await exe(sql2);
+  var info_boxes = await exe(sql3);
 
 
-  res.render("user/batch.ejs",{banner,batches,info_boxes});
+  res.render("user/batch.ejs", { banner, batches, info_boxes });
 })
 
 const coursesData = {
@@ -276,25 +276,59 @@ const coursesData = {
   }
 };
 
-router.get("/courses", (req, res) => {
-  res.render("user/courses.ejs", { courses: coursesData })
-})
+router.get("/courses", async (req, res) => {
+  const sql = "SELECT * FROM courses_list WHERE status = 1";
+  const data = await exe(sql);
 
-router.get("/course-details", (req, res) => {
-  const type = req.query.type;
-  if (!type || !coursesData[type]) {
-    return res.redirect("/courses");
+  res.render("user/courses.ejs", { courses: data });
+});
+
+router.get("/course-details/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const sql = "SELECT * FROM courses_list WHERE id = ? AND status = 1";
+    const data = await exe(sql, [id]);
+
+    if (data.length === 0) {
+      return res.redirect("/courses");
+    }
+
+    const course = data[0];
+
+    if (course.features) {
+      course.features = course.features.split(",");
+    } else {
+      course.features = [];
+    }
+
+    res.render("user/course-details.ejs", { course });
+
+  } catch (err) {
+    console.log(err);
+    res.send("Error loading course details");
   }
-  const course = coursesData[type];
-  res.render("user/course-details.ejs", { course: course })
-})
+});
 
 router.get("/academy_info", (req, res) => {
-  res.render("user/academy_info.ejs")
+  var sql = `SELECT * FROM academy_info LIMIT 1`;
+  exe(sql).then(data => {
+    res.render("user/academy_info.ejs", { academyInfo: data });
+  }).catch(err => {
+    console.log(err);
+    res.send("Error loading academy information");
+  });
 })
 
 router.get("/founder_info", (req, res) => {
-  res.render("user/founder_info.ejs")
+  var sql = `SELECT * FROM founder_info LIMIT 1`;
+  exe(sql).then(data => {
+    res.render("user/founder_info.ejs", { founderInfo: data });
+  }).catch(err => {
+    console.log(err);
+    res.send("Error loading founder information");
+  });
 })
+
 
 module.exports = router;
