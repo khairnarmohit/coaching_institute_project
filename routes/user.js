@@ -77,9 +77,18 @@ router.get("/syllabus", async (req, res) => {
   var syllabus = await exe(sql);
   res.render("user/syllabus.ejs", { syllabus });
 })
-router.get("/gallery", (req, res) => {
-  res.render("user/gallery.ejs")
-})
+router.get("/gallery", async (req, res) => {
+    let gallerySql = "SELECT * FROM gallery_images";
+    let videoSql = "SELECT * FROM gallery_videos";
+
+    let gallery = await exe(gallerySql);
+    let videos = await exe(videoSql);
+
+    res.render("user/gallery.ejs", {
+      gallery: gallery,
+      videos: videos
+    });
+});
 
 const facultyList = [
   // FOUNDER & LEADERSHIP

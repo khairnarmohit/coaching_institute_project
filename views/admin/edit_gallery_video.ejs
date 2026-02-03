@@ -1,0 +1,168 @@
+<%- include("navbar.ejs") %>
+
+<style>
+  .edit-wrap {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 20px;
+  }
+
+  .edit-card {
+    width: 100%;
+    max-width: 850px;
+    border-radius: 14px;
+    border: none;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  }
+
+  .edit-card .card-header {
+    background: linear-gradient(135deg, #0d6efd, #4f8cff);
+    color: #fff;
+    border-radius: 14px 14px 0 0;
+    padding: 12px 18px;
+    font-weight: 600;
+  }
+
+  .edit-card .card-body {
+    padding: 18px;
+  }
+
+  .form-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .form-control, .form-select {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+
+  .video-preview {
+    border: 1px dashed #cfd4da;
+    border-radius: 10px;
+    padding: 8px;
+    background: #f8f9fa;
+    text-align: center;
+  }
+
+  .video-preview iframe,
+  .video-preview video {
+    max-width: 100%;
+    height: 180px;
+    border-radius: 8px;
+  }
+
+  .btn {
+    padding: 6px 14px;
+    font-size: 0.9rem;
+  }
+</style>
+
+  <div class="container edit-wrap">
+
+    <div class="card edit-card">
+      <div class="card-header">
+        <i class="fa fa-video-camera"></i> Edit Gallery Video
+      </div>
+
+      <div class="card-body">
+        <form action="/admin/edit_gallery_video/<%= video.gallery_id %>" method="POST">
+
+          <!-- TITLE & SUBTITLE -->
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Title</label>
+              <input type="text"
+                     name="title"
+                     value="<%= video.title %>"
+                     class="form-control"
+                     required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Subtitle</label>
+              <input type="text"
+                     name="subtitle"
+                     value="<%= video.subtitle %>"
+                     class="form-control">
+            </div>
+          </div>
+
+          <!-- CURRENT VIDEO PREVIEW -->
+          <% if (video.video_url) { %>
+            <%
+              let embedUrl = video.video_url;
+
+              // iframe pasted
+              if (embedUrl.includes("<iframe")) {
+                let match = embedUrl.match(/src="([^"]+)"/);
+                if (match && match[1]) embedUrl = match[1];
+              }
+
+              // youtube watch
+              if (embedUrl.includes("youtube.com/watch")) {
+                embedUrl = embedUrl.replace("watch?v=", "embed/");
+              }
+
+              // youtu.be
+              if (embedUrl.includes("youtu.be")) {
+                embedUrl = embedUrl.replace("youtu.be/", "www.youtube.com/embed/");
+              }
+
+              // vimeo
+              if (embedUrl.includes("vimeo.com")) {
+                let id = embedUrl.split("/").pop();
+                embedUrl = "https://player.vimeo.com/video/" + id;
+              }
+            %>
+
+            <div class="mt-3">
+              <label class="form-label">Current Video</label>
+              <div class="video-preview">
+                <iframe src="<%= embedUrl %>"
+                        frameborder="0"
+                        allowfullscreen></iframe>
+              </div>
+            </div>
+          <% } %>
+
+          <!-- VIDEO URL + STATUS -->
+          <div class="row g-2 mt-3">
+            <div class="col-md-8">
+              <label class="form-label">Video URL / iframe</label>
+              <input type="text"
+                     name="video_url"
+                     value="<%= video.video_url %>"
+                     class="form-control"
+                     placeholder="YouTube / Vimeo link OR iframe code">
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Status</label>
+              <select name="status" class="form-select">
+                <option value="1" <%= video.status==1 ? "selected" : "" %>>Active</option>
+                <option value="0" <%= video.status==0 ? "selected" : "" %>>Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- ACTION -->
+          <div class="d-flex justify-content-end gap-2 mt-4">
+            <button class="btn btn-success">
+              <i class="fa fa-save"></i> Update
+            </button>
+            <a href="/admin/gallery_video" class="btn btn-outline-secondary">
+              Cancel
+            </a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+<%- include("footer.ejs") %>

@@ -1,0 +1,267 @@
+<%- include("navbar.ejs") %>
+
+<div class="container-fluid mt-3">
+
+<div class="card shadow-sm border-0">
+
+<div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">Student Admissions</h6>
+
+    <select id="statusFilter" class="form-select form-select-sm w-auto">
+        <option value="All">All Status</option>
+        <option value="Pending">Pending</option>
+        <option value="Approved">Approved</option>
+        <option value="Rejected">Rejected</option>
+    </select>
+</div>
+
+<div class="card-body p-0">
+<div class="table-responsive">
+
+<table class="table table-sm table-hover table-bordered align-middle text-center mb-0 admission-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Mobile</th>
+<th>Course</th>
+<th>Mode</th>
+<th>Status</th>
+<th>Docs</th>
+<th width="190">Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+<% admissions.forEach(function(a,i){ %>
+<tr class="admission-row" data-status="<%= a.status || 'Pending' %>">
+
+<td><%= i+1 %></td>
+<td class="fw-semibold"><%= a.full_name %></td>
+<td><%= a.mobile_number %></td>
+<td><%= a.course_name %></td>
+<td><%= a.mode_of_class %></td>
+
+<td id="status-<%= a.admission_id %>">
+<% if(a.status === "Approved"){ %>
+<span class="badge bg-success">Approved</span>
+<% } else if(a.status === "Rejected"){ %>
+<span class="badge bg-danger">Rejected</span>
+<% } else { %>
+<span class="badge bg-warning text-dark">Pending</span>
+<% } %>
+</td>
+
+<td>
+<% if(a.photo){ %>
+<a href="/images/<%= a.photo %>" target="_blank">Photo</a>
+<% } %> |
+<% if(a.id_proof){ %>
+<a href="/images/<%= a.id_proof %>" target="_blank">ID</a>
+<% } %>
+</td>
+
+<td>
+<div class="d-flex gap-1 justify-content-center">
+
+<!-- VIEW -->
+<button class="btn btn-outline-info btn-sm"
+data-bs-toggle="modal"
+data-bs-target="#viewModal<%= a.admission_id %>">
+<i class="fa fa-eye"></i>
+</button>
+
+<!-- APPROVE -->
+<button class="btn btn-outline-success btn-sm btn-approve"
+data-id="<%= a.admission_id %>">
+<i class="fa fa-check"></i>
+</button>
+
+<!-- REJECT -->
+<button class="btn btn-outline-danger btn-sm btn-reject"
+data-id="<%= a.admission_id %>">
+<i class="fa fa-xmark"></i>
+</button>
+
+<!-- DELETE -->
+<a href="/admin/admission/delete/<%= a.admission_id %>"
+
+class="btn btn-outline-secondary btn-sm">
+<i class="fa fa-trash"></i>
+</a>
+
+</div>
+</td>
+</tr>
+
+<!-- ===== NORMAL ATTRACTIVE MODAL ===== -->
+<div class="modal fade" id="viewModal<%= a.admission_id %>" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content modal-clean">
+
+<div class="modal-header">
+<h6 class="modal-title fw-semibold">Student Admission Details</h6>
+<button class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+
+<div class="row g-3">
+
+<!-- IMAGES -->
+<div class="col-md-4 text-center">
+<div class="doc-box mb-3">
+<% if(a.photo){ %>
+<img src="/images/<%= a.photo %>" class="doc-img">
+<% } else { %>
+<div class="no-img">Photo</div>
+<% } %>
+<p class="img-label">Student Photo</p>
+</div>
+
+<div class="doc-box">
+<% if(a.id_proof){ %>
+<img src="/images/<%= a.id_proof %>" class="doc-img">
+<% } else { %>
+<div class="no-img">ID</div>
+<% } %>
+<p class="img-label">ID Proof</p>
+</div>
+</div>
+
+<!-- DETAILS -->
+<div class="col-md-8">
+<div class="info-box mb-2">
+<p><b>Name:</b> <%= a.full_name %></p>
+<p><b>Gender:</b> <%= a.gender %></p>
+<p><b>DOB:</b> <%= a.date_of_birth.toISOString().split("T")[0] %></p>
+<p><b>Mobile:</b> <%= a.mobile_number %></p>
+<p><b>Email:</b> <%= a.email %></p>
+</div>
+
+<div class="info-box">
+<p><b>Qualification:</b> <%= a.qualification || '-' %></p>
+<p><b>College:</b> <%= a.college_name || '-' %></p>
+<p><b>Course:</b> <%= a.course_name %></p>
+<p><b>Mode:</b> <%= a.mode_of_class %></p>
+<p><b>Status:</b> <span class="fw-semibold"><%= a.status %></span></p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="modal-footer py-2">
+<button class="btn btn-sm btn-danger" data-bs-dismiss="modal">Close</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<% }) %>
+
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- ===== STYLES ===== -->
+<style>
+.admission-table th,
+.admission-table td{
+    border:1px solid #dee2e6;
+    font-size:13px;
+}
+.admission-table th{
+    background:#f8f9fa;
+}
+
+/* MODAL */
+.modal-clean{
+    border-radius:14px;
+}
+.doc-img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid #ddd;
+}
+.no-img{
+    width:120px;
+    height:120px;
+    border:1px dashed #aaa;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    color:#888;
+}
+.img-label{
+    font-size:13px;
+    margin-top:6px;
+}
+.info-box{
+    background:#f8f9fa;
+    padding:12px;
+    border-radius:10px;
+}
+.info-box p{
+    font-size:13px;
+    margin-bottom:4px;
+}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function(){
+
+function applyStatusFilter(){
+    let selected = $("#statusFilter").val();
+    $(".admission-row").each(function(){
+        let rowStatus = $(this).data("status");
+        if(selected === "All" || rowStatus === selected){
+            $(this).show();
+        }else{
+            $(this).hide();
+        }
+    });
+}
+
+$(".btn-approve").click(function(){
+    let id = $(this).data("id");
+    $.post("/admin/admission/approve/" + id,function(res){
+        if(res.success){
+            $("#status-"+id).html('<span class="badge bg-success">Approved</span>')
+            .closest("tr").attr("data-status","Approved");
+            applyStatusFilter();
+        }
+    });
+});
+
+$(".btn-reject").click(function(){
+    let id = $(this).data("id");
+    $.post("/admin/admission/reject/" + id,function(res){
+        if(res.success){
+            $("#status-"+id).html('<span class="badge bg-danger">Rejected</span>')
+            .closest("tr").attr("data-status","Rejected");
+            applyStatusFilter();
+        }
+    });
+});
+
+$("#statusFilter").change(applyStatusFilter);
+
+});
+</script>
+
+<%- include("footer.ejs") %>
