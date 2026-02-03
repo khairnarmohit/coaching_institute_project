@@ -1,47 +1,172 @@
-<%- include('navbar')%>
+<%- include('navbar') %>
 
+<style>
+:root {
+  --gov-dark: #0b1c2d;
+  --gov-accent: #f59e0b;
+  --gov-bg: #f8fafc;
+  --gov-border: #e5e7eb;
+  --gov-shadow: 0 12px 32px -6px rgba(0,0,0,0.08);
+  --gov-radius: 18px;
+}
 
-  <h3 class="fw-bold mb-4">Dashboard Overview</h3>
+/* ===== DASHBOARD HEADER ===== */
+.dashboard-title {
+  color: var(--gov-dark);
+  font-weight: 800;
+  letter-spacing: .5px;
+}
 
-  <!-- Summary Cards -->
+/* ===== SUMMARY CARDS ===== */
+.summary-card {
+  background: #fff;
+  border: 1px solid var(--gov-border);
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow);
+  padding: 26px 22px;
+  position: relative;
+  transition: all .3s ease;
+  overflow: hidden;
+}
+
+.summary-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Accent line */
+.summary-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background: var(--gov-accent);
+}
+
+/* Icon */
+.card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--gov-dark);
+  color: var(--gov-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.summary-card h6 {
+  color: #475569;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.summary-card h3 {
+  color: var(--gov-dark);
+  font-weight: 800;
+  margin: 0;
+}
+
+/* ===== CHART CARD ===== */
+.chart-card {
+  background: #fff;
+  border: 1px solid var(--gov-border);
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow);
+  padding: 24px;
+  margin-bottom: 40px;
+}
+
+.chart-card h5 {
+  font-weight: 700;
+  color: var(--gov-dark);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chart-card h5 i {
+  color: var(--gov-accent);
+}
+
+.chart-container {
+  background: var(--gov-bg);
+  padding: 18px;
+  border-radius: 12px;
+}
+</style>
+
+<div class="container mt-2">
+
+  <!-- DASHBOARD TITLE -->
+  <div class="mb-4">
+    <h3 class="dashboard-title">
+      <i class="bi bi-speedometer2" style="color:var(--gov-accent)"></i>
+      Dashboard Overview
+    </h3>
+  </div>
+
+  <!-- SUMMARY CARDS -->
   <div class="row g-4 mb-4">
+
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon students"><i class="fas fa-user-graduate"></i></div>
+        <div class="card-icon">
+          <i class="fas fa-user-graduate"></i>
+        </div>
         <h6>Total Students</h6>
         <h3>1,250</h3>
       </div>
     </div>
+
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon batches"><i class="fas fa-users"></i></div>
+        <div class="card-icon">
+          <i class="fas fa-users"></i>
+        </div>
         <h6>Total Batches</h6>
         <h3>18</h3>
       </div>
     </div>
+
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon courses"><i class="fas fa-book"></i></div>
+        <div class="card-icon">
+          <i class="fas fa-book"></i>
+        </div>
         <h6>Courses</h6>
         <h3>6</h3>
       </div>
     </div>
+
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon staff"><i class="fas fa-chalkboard-teacher"></i></div>
+        <div class="card-icon">
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
         <h6>Faculty</h6>
         <h3>12</h3>
       </div>
     </div>
+
   </div>
 
-  <!-- Chart -->
+  <!-- CHART -->
   <div class="chart-card">
-    <h5 class="mb-3">Admissions Growth</h5>
+    <h5>
+      <i class="bi bi-graph-up"></i>
+      Admissions Growth
+    </h5>
+
     <div class="chart-container">
       <canvas id="chart"></canvas>
     </div>
   </div>
+
 </div>
 
 <%- include('footer') %>

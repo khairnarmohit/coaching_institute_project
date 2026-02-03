@@ -1,0 +1,141 @@
+<%- include('./../navbar.ejs') %>
+
+<style>
+:root {
+  --gov-dark: #0b1c2d;
+  --gov-accent: #f59e0b;
+  --gov-bg: #f8fafc;
+  --gov-border: #e5e7eb;
+  --gov-shadow: 0 12px 32px -6px rgba(0,0,0,0.08);
+  --gov-radius: 18px;
+}
+
+.gov-card {
+  background: #fff;
+  border: 1px solid var(--gov-border);
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow);
+}
+
+.gov-header {
+  background: var(--gov-dark);
+  color: #fff;
+  border-radius: var(--gov-radius) var(--gov-radius) 0 0;
+}
+
+.gov-label {
+  font-weight: 600;
+  color: var(--gov-dark);
+}
+
+.gov-btn {
+  background: var(--gov-accent);
+  color: #000;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 10px 26px;
+}
+.gov-btn:hover {
+  background: #e89b06;
+  color: #000;
+}
+</style>
+
+<div class="container">
+
+  <div class="gov-card">
+
+    <div class="gov-header px-4 py-3">
+      <h4 class="mb-0">
+        <i class="bi bi-image"></i> Edit Home Banner
+      </h4>
+    </div>
+
+    <div class="card-body p-4" style="background:var(--gov-bg)">
+
+      <form action="/admin/home-update" method="POST" enctype="multipart/form-data">
+
+        <input type="hidden" name="id" value="<%= banner.id %>">
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="gov-label">Badge Text</label>
+            <input type="text" name="badge_text" class="form-control"
+                   value="<%= banner.badge_text %>">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="gov-label">Main Heading</label>
+            <input type="text" name="heading_main" class="form-control"
+                   value="<%= banner.heading_main %>">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="gov-label">Highlight Heading</label>
+            <input type="text" name="heading_highlight" class="form-control"
+                   value="<%= banner.heading_highlight %>">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="gov-label">Description</label>
+          <textarea name="description" class="form-control" rows="3"><%= banner.description %></textarea>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="row align-items-center mb-4">
+          <div class="col-md-6">
+            <label class="gov-label">Banner Image</label>
+            <input type="file" name="banner_image" class="form-control">
+            <input type="hidden" name="img" value="<%= banner.banner_image %>">
+          </div>
+
+          <div class="col-md-6 text-center">
+            <label class="gov-label d-block mb-2">Preview</label>
+            <div class="gov-card p-2 mx-auto" style="max-width:220px">
+              <img src="../images/<%= banner.banner_image %>" class="img-fluid rounded">
+            </div>
+          </div>
+        </div>
+
+        <!-- BUTTON TEXT -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <label class="gov-label">Button Text</label>
+            <input type="text" name="btn1_text" value="<%= banner.btn1_text %>" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label class="gov-label">Button Link</label>
+            <input type="text" name="btn1_link" value="<%= banner.btn1_link %>" class="form-control">
+          </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <label class="gov-label">Years Experience</label>
+            <input type="number" name="years_exp" value="<%= banner.years_exp %>" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="gov-label">Selections</label>
+            <input type="number" name="selections" value="<%= banner.selections %>" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label class="gov-label">Satisfaction (%)</label>
+            <input type="number" name="satisfaction" value="<%= banner.satisfaction %>" class="form-control">
+          </div>
+        </div>
+
+        <div class="text-end">
+          <button class="gov-btn">
+            <i class="bi bi-check-circle"></i> Update Banner
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<%- include('./../footer.ejs') %>

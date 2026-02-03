@@ -31,32 +31,27 @@ counters.forEach(counter => {
 document.addEventListener("DOMContentLoaded", () => {
 
   const achievementSection = document.getElementById("achievementSection");
-  const achievementCounters = achievementSection.querySelectorAll(".counter");
+  const counters = achievementSection.querySelectorAll(".counter");
   let hasAnimated = false;
 
   function startAchievementCounters() {
     if (hasAnimated) return;
     hasAnimated = true;
 
-    achievementCounters.forEach(counter => {
-      const target = Number(counter.dataset.target);
-      const isPercent = counter.innerText.includes("%");
+    counters.forEach(counter => {
+      const target = parseInt(counter.dataset.target, 10);
       let count = 0;
 
-      const speed = 100; // government-style smooth speed
+      const speed = 80; // smooth government style
 
       function update() {
         const increment = Math.ceil(target / speed);
         count += increment;
 
         if (count >= target) {
-          counter.innerText = isPercent
-            ? target + "%"
-            : target + "+";
+          counter.innerText = target;
         } else {
-          counter.innerText = isPercent
-            ? count + "%"
-            : count + "+";
+          counter.innerText = count;
           requestAnimationFrame(update);
         }
       }
@@ -65,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* Scroll Trigger */
   const observer = new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) {
       startAchievementCounters();
@@ -74,8 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.3 });
 
   observer.observe(achievementSection);
-
 });
+
 
 
 
@@ -83,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('show');
 }
+
 
 
 

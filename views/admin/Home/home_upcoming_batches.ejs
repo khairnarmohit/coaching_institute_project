@@ -1,0 +1,182 @@
+<%- include('./../navbar.ejs') %>
+
+<style>
+:root {
+  --gov-dark: #0b1c2d;
+  --gov-accent: #f59e0b;
+  --gov-bg: #f8fafc;
+  --gov-border: #e5e7eb;
+  --gov-shadow: 0 12px 32px -6px rgba(0,0,0,0.08);
+  --gov-radius: 18px;
+}
+
+.gov-card {
+  background: #fff;
+  border: 1px solid var(--gov-border);
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow);
+}
+
+.gov-header {
+  background: var(--gov-dark);
+  color: #fff;
+  border-radius: var(--gov-radius) var(--gov-radius) 0 0;
+}
+
+.gov-bg {
+  background: var(--gov-bg);
+}
+
+.action-btns a {
+  margin: 0 5px;
+}
+</style>
+
+<div class="container mt-4">
+
+  <!-- PAGE HEADER + ADD BUTTON -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold" style="color:var(--gov-dark)">
+      <i class="bi bi-calendar-event" style="color:var(--gov-accent)"></i>
+      Upcoming Batches
+    </h3>
+
+    <!-- ADD BUTTON -->
+    <button class="btn"
+            style="background:var(--gov-accent);font-weight:600"
+            data-bs-toggle="collapse"
+            data-bs-target="#batchForm"
+            aria-expanded="<%= batch ? 'true' : 'false' %>">
+      <i class="bi bi-plus-circle"></i> Add Batch
+    </button>
+  </div>
+
+  <!-- ================= ADD / EDIT FORM (DROPDOWN) ================= -->
+  <div class="collapse <%= batch ? 'show' : '' %>" id="batchForm">
+
+    <div class="gov-card mb-5">
+      <div class="card-body gov-bg p-4">
+
+        <form method="POST" action="/admin/home_upcoming_batches/save">
+
+          <input type="hidden" name="id" value="<%= batch ? batch.id : '' %>">
+
+          <div class="row g-4">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Batch Title</label>
+              <input type="text"
+                     name="title"
+                     class="form-control form-control-lg"
+                     placeholder="Foundation Batch 2025"
+                     value="<%= batch ? batch.title : '' %>"
+                     required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Duration</label>
+              <input type="text"
+                     name="duration"
+                     class="form-control form-control-lg"
+                     placeholder="12 Months"
+                     value="<%= batch ? batch.duration : '' %>">
+            </div>
+          </div>
+
+          <div class="row g-4 mt-1">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Description</label>
+              <input type="text"
+                     name="description"
+                     class="form-control form-control-lg"
+                     placeholder="For UPSC / MPSC / SSC Aspirants"
+                     value="<%= batch ? batch.description : '' %>">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Fees</label>
+              <input type="text"
+                     name="fees"
+                     class="form-control form-control-lg"
+                     placeholder="₹45,000"
+                     value="<%= batch ? batch.fees : '' %>">
+            </div>
+          </div>
+
+          <div class="mt-4 text-end">
+            <button class="btn px-4"
+                    style="background:var(--gov-accent);font-weight:600">
+              <i class="bi bi-check-circle"></i>
+              <%= batch ? 'Update Batch' : 'Add Batch' %>
+            </button>
+
+            <button type="button"
+                    class="btn btn-secondary ms-2 px-4"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#batchForm">
+              <i class="bi bi-x-circle"></i> Cancel
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= TABLE ================= -->
+  <div class="gov-card">
+    <div class="gov-header px-4 py-3 fw-bold">
+      <i class="bi bi-list-ul"></i> Upcoming Batches List
+    </div>
+
+    <div class="card-body p-0 gov-bg">
+      <table class="table table-bordered table-hover mb-0 align-middle text-center">
+        <thead class="table-secondary">
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Duration</th>
+            <th>Fees</th>
+            <th width="160">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if (batches.length === 0) { %>
+            <tr>
+              <td colspan="5" class="text-muted py-4">
+                No upcoming batches found
+              </td>
+            </tr>
+          <% } %>
+
+          <% for (let i = 0; i < batches.length; i++) { const b = batches[i]; %>
+            <tr>
+              <td class="text-start"><%= b.title %></td>
+              <td class="text-start"><%= b.description %></td>
+              <td class="text-start"><%= b.duration %></td>
+              <td class="text-start"><%= b.fees %></td>
+              <td>
+                <div class="action-btns d-flex justify-content-center">
+                  <a href="/admin/home_upcoming_batches/edit/<%= b.id %>"
+                     class="btn btn-warning btn-sm">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+
+                  <a href="/admin/home_upcoming_batches/delete/<%= b.id %>"
+                     class="btn btn-danger btn-sm">
+                    <i class="bi bi-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<%- include('./../footer.ejs') %>

@@ -1,0 +1,165 @@
+<%- include('./../navbar.ejs') %>
+
+<style>
+:root {
+  --gov-dark: #0b1c2d;
+  --gov-accent: #f59e0b;
+  --gov-bg: #f8fafc;
+  --gov-border: #e5e7eb;
+  --gov-shadow: 0 12px 32px -6px rgba(0,0,0,0.08);
+  --gov-radius: 18px;
+}
+
+.gov-card {
+  border: 1px solid var(--gov-border);
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow);
+}
+
+.gov-header {
+  background: var(--gov-dark);
+  color: #fff;
+  border-radius: var(--gov-radius) var(--gov-radius) 0 0;
+}
+
+.action-btns a {
+  margin-right: 6px;
+}
+</style>
+
+<div class="container mt-4">
+
+  <!-- PAGE TITLE + ADD BUTTON -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold" style="color:var(--gov-dark)">
+      <i class="bi bi-bookmark-star"></i> Featured Courses
+    </h3>
+
+    <!-- ADD BUTTON (DROPDOWN TOGGLE) -->
+    <button class="btn"
+            style="background:var(--gov-accent);font-weight:600"
+            data-bs-toggle="collapse"
+            data-bs-target="#courseForm"
+            aria-expanded="<%= editCourse ? 'true' : 'false' %>">
+      <i class="bi bi-plus-circle"></i> Add Course
+    </button>
+  </div>
+
+  <!-- ================= ADD / EDIT FORM (DROPDOWN) ================= -->
+  <div class="collapse <%= editCourse ? 'show' : '' %>" id="courseForm">
+    <div class="gov-card mb-5">
+      <div class="card-header fw-bold px-4 py-3"
+           style="background:var(--gov-accent)">
+        <i class="bi <%= editCourse ? 'bi-pencil-square' : 'bi-plus-circle' %>"></i>
+        <%= editCourse ? 'Edit Featured Course' : 'Add Featured Course' %>
+      </div>
+
+      <div class="card-body p-4" style="background:var(--gov-bg)">
+        <form method="POST"
+              action="<%= editCourse ? '/admin/featured-courses/update' : '/admin/featured-courses/save' %>">
+
+          <% if (editCourse) { %>
+            <input type="hidden" name="id" value="<%= editCourse.id %>">
+          <% } %>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="fw-semibold">Title</label>
+              <input name="title"
+                     class="form-control"
+                     value="<%= editCourse ? editCourse.title : '' %>"
+                     required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="fw-semibold">URL</label>
+              <input name="url"
+                     class="form-control"
+                     value="<%= editCourse ? editCourse.url : '' %>"
+                     required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-semibold">Description</label>
+            <textarea name="description"
+                      class="form-control"
+                      rows="4"
+                      required><%= editCourse ? editCourse.description : '' %></textarea>
+          </div>
+
+          <div class="text-end">
+            <button class="btn btn-success px-4">
+              <i class="bi bi-check-circle"></i>
+              <%= editCourse ? 'Update' : 'Save' %>
+            </button>
+
+            <button type="button"
+                    class="btn btn-secondary ms-2 px-4"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#courseForm">
+              Cancel
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TABLE ================= -->
+  <div class="gov-card mb-5">
+    <div class="gov-header px-4 py-3 fw-bold">
+      <i class="bi bi-list-ul"></i> Featured Courses List
+    </div>
+
+    <div class="card-body p-0" style="background:var(--gov-bg)">
+      <table class="table table-bordered table-hover mb-0 align-middle">
+        <thead class="table-secondary text-center">
+          <tr>
+            <th width="70">ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>URL</th>
+            <th width="160">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if (courses && courses.length > 0) { %>
+            <% for (let i = 0; i < courses.length; i++) { %>
+              <tr>
+                <td class="text-center"><%= courses[i].id %></td>
+                <td class="fw-semibold"><%= courses[i].title %></td>
+                <td><%= courses[i].description %></td>
+                <td class="text-primary"><%= courses[i].url %></td>
+                <td class="text-center">
+                  <div class="action-btns d-flex justify-content-center">
+                    <a href="/admin/featured-courses/edit/<%= courses[i].id %>"
+                       class="btn btn-warning btn-sm">
+                      <i class="bi bi-pencil"></i>
+                    </a>
+
+                    <a href="/admin/featured-courses/delete/<%= courses[i].id %>"
+                       class="btn btn-danger btn-sm">
+                      <i class="bi bi-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            <% } %>
+          <% } else { %>
+            <tr>
+              <td colspan="5" class="text-center text-muted py-4">
+                No Courses Found
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<%- include('./../footer.ejs') %>

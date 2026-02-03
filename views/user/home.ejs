@@ -142,13 +142,12 @@
                                 <% achievements.forEach(a=> { %>
                                     <div class="col-md-3">
                                         <div class="achievement-box">
-                                            <span class="achievement-number counter" data-target="<%= a.value %>">
-                                                0<%= a.suffix %>
-                                            </span>
-                                            <p>
-                                                <%= a.title %>
-                                            </p>
-                                        </div>
+  <span class="achievement-number">
+    <span class="counter" data-target="<%= a.value %>">0</span><%= a.suffix %>
+  </span>
+  <p><%= a.title %></p>
+</div>
+
                                     </div>
                                     <% }) %>
 
@@ -247,10 +246,12 @@
 
 
                 <!-- .........................................Upcoming Batches.................................... -->
-                <section class="upcoming-batches py-5">
+                <section class="upcoming-batches py-5 mt-5">
                     <div class="container">
-                        <div class="section-header mb-4">
-                            <h2>Upcoming Batches</h2>
+
+                        <!-- Section Header -->
+                        <div class="section-header mb-4 d-flex align-items-center gap-3">
+                            <h2 class="mb-0">Upcoming Batches</h2>
                             <span class="badge-note">Official Notification</span>
                         </div>
 
@@ -258,25 +259,29 @@
 
                             <% if (batches && batches.length> 0) { %>
 
-                                <% batches.forEach(b=> { %>
+                                <% for (let i=0; i < batches.length; i++) { const b=batches[i]; %>
+
                                     <div class="batch-row">
+
+                                        <!-- LEFT : Batch Info -->
                                         <div class="batch-info">
                                             <h5>
                                                 <%= b.title %>
                                             </h5>
-                                            <p class="text-muted">
+                                            <p>
                                                 <%= b.description %>
                                             </p>
                                         </div>
 
+                                        <!-- CENTER : Meta -->
                                         <div class="batch-meta">
-                                            <div>
+                                            <div class="meta-box">
                                                 <span>Duration</span>
                                                 <strong>
                                                     <%= b.duration %>
                                                 </strong>
                                             </div>
-                                            <div>
+                                            <div class="meta-box">
                                                 <span>Fees</span>
                                                 <strong>
                                                     <%= b.fees %>
@@ -284,16 +289,19 @@
                                             </div>
                                         </div>
 
+                                        <!-- RIGHT : Action -->
                                         <div class="batch-action">
                                             <a href="/admission" class="apply-btn">
                                                 Apply Now
                                             </a>
                                         </div>
+
                                     </div>
-                                    <% }) %>
+
+                                    <% } %>
 
                                         <% } else { %>
-                                            <p class="text-center text-muted">
+                                            <p class="text-center text-muted py-4">
                                                 No upcoming batches available at the moment.
                                             </p>
                                             <% } %>
@@ -303,192 +311,154 @@
                 </section>
 
 
+
+
                 <!-- ================= TESTIMONIALS SECTION ================= -->
                 <section class="gov-testimonials py-5">
-                    <div class="container">
+  <div class="container">
 
-                        <!-- Header -->
-                        <div class="text-center mb-5">
-                            <h2 class="fw-bold text-dark position-relative d-inline-block">
-                                Testimonials
-                                <span class="title-underline bg-warning"></span>
-                            </h2>
-                            <div class="mt-2">
-                                <span class="gov-tag">Official Feedback</span>
-                            </div>
-                        </div>
+    <!-- Header -->
+    <div class="text-center mb-5">
+      <h2 class="fw-bold text-dark position-relative d-inline-block">
+        Testimonials
+        <span class="title-underline bg-warning"></span>
+      </h2>
+      <div class="mt-2">
+        <span class="gov-tag">Official Feedback</span>
+      </div>
+    </div>
 
-                        <!-- Student Reviews -->
-                        <div class="mb-5">
-                            <h4 class="section-subtitle text-center mb-4">
-                                Student Reviews
-                                <span class="subtitle-line"></span>
-                            </h4>
+    <!-- ================= STUDENT REVIEWS ================= -->
+    <div class="mb-5">
+      <h4 class="section-subtitle mb-2">
+        Student Reviews
+        
+      </h4>
 
-                            <div class="row g-4">
+      <div class="row g-4">
 
-                                <!-- Card 1 -->
-                                <div class="col-md-6">
-                                    <div class="testimonial-card h-100">
-                                        <div class="quote-icon">❝</div>
+        <% 
+          const studentReviews = testimonials.filter(t => t.type === 'student');
+        %>
 
-                                        <p class="testimonial-text">
-                                            The guidance provided here helped me clear the MPSC exam in my first
-                                            attempt.
-                                            Structured syllabus and experienced faculty made the difference.
-                                        </p>
+        <% if (studentReviews.length > 0) { %>
+          <% for (let i = 0; i < studentReviews.length; i++) { 
+               const t = studentReviews[i]; %>
 
-                                        <div class="reviewer-box">
-                                            <div class="avatar">R</div>
-                                            <div>
-                                                <strong>Rahul Patil</strong>
-                                                <small>MPSC Selected – 2024</small><br>
-                                                <span class="status-badge">Selected Candidate</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="col-md-6">
+              <div class="testimonial-card h-100">
+                <div class="quote-icon">❝</div>
 
-                                <!-- Card 2 -->
-                                <div class="col-md-6">
-                                    <div class="testimonial-card h-100">
-                                        <div class="quote-icon">❝</div>
+                <p class="testimonial-text me-2">
+                  <%= t.message %>
+                </p>
 
-                                        <p class="testimonial-text">
-                                            Regular tests, current affairs updates and doubt sessions were extremely
-                                            helpful.
-                                            I strongly recommend this academy.
-                                        </p>
+                <div class="reviewer-box">
+                  <div class="avatar">
+                    <%= t.name.charAt(0) %>
+                  </div>
+                  <div>
+                    <strong><%= t.name %></strong> <span class="status-badge">Student</span><br>
+                    <small><%= t.role %></small><br>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                                        <div class="reviewer-box">
-                                            <div class="avatar">P</div>
-                                            <div>
-                                                <strong>Pooja Deshmukh</strong>
-                                                <small>UPSC Aspirant</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+          <% } %>
+        <% } else { %>
+          <p class="text-center text-muted">No student reviews available.</p>
+        <% } %>
 
-                            </div>
-                        </div>
+      </div>
+    </div>
 
 
-                        <!-- Video Testimonials -->
-                        <div class="mb-5">
-                            <h4 class="section-subtitle text-center mb-4">
-                                Video Testimonials
-                                <span class="subtitle-line"></span>
-                            </h4>
+        <!-- ================= VIDEO TESTIMONIALS ================= -->
+    <div class="mb-5">
+      <h4 class="section-subtitle text-start mb-2">
+        Video Testimonials
+      </h4>
 
-                            <div class="row g-4">
+      <div class="row g-4">
 
-                                <!-- Video Card -->
-                                <div class="col-md-6">
-                                    <div class="video-testimonial-card">
-                                        <div class="video-frame">
-                                            <div class="ratio ratio-16x9">
-                                                <iframe width="727" height="409"
-                                                    src="https://www.youtube.com/embed/PHJVAQ6kFHM"
-                                                    title="Coaching Institute Advertisement Video | Coaching Institute Video | Video Production agency in India"
-                                                    frameborder="0"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                    referrerpolicy="strict-origin-when-cross-origin"
-                                                    allowfullscreen></iframe>
-                                                </iframe>
-                                            </div>
-                                            <!-- <div class="play-overlay">▶</div> -->
-                                        </div>
+        <% 
+          const videoReviews = testimonials.filter(t => t.type === 'video');
+        %>
 
-                                        <div class="video-info">
-                                            <div class="video-avatar">A</div>
-                                            <div>
-                                                <strong>Akshay Kulkarni</strong>
-                                                <small>SSC Selected Candidate</small>
-                                            </div>
-                                            <span class="verified-badge">Verified</span>
-                                        </div>
-                                    </div>
-                                </div>
+        <% if (videoReviews.length > 0) { %>
+          <% for (let i = 0; i < videoReviews.length; i++) { 
+               const t = videoReviews[i]; %>
 
-                                <!-- Video Card -->
-                                <div class="col-md-6">
-                                    <div class="video-testimonial-card">
-                                        <div class="video-frame">
-                                            <div class="ratio ratio-16x9">
-                                                <iframe width="727" height="409"
-                                                    src="https://www.youtube.com/embed/gjYqYg76mRc"
-                                                    title="Best Defence Academy in India | OGC-Dehradun Defence Academy |NDA, CDS, OTA, AFCAT, IMU-CET Coaching"
-                                                    frameborder="0"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                    referrerpolicy="strict-origin-when-cross-origin"
-                                                    allowfullscreen></iframe>
-                                            </div>
-                                            <!-- <div class="play-overlay">▶</div> -->
-                                        </div>
+            <div class="col-md-6">
+              <div class="video-testimonial-card">
+                <div class="video-frame">
+                  <div class="ratio ratio-16x9">
+                    <iframe
+                      src="<%= t.video_url %>"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen>
+                    </iframe>
+                  </div>
+                </div>
 
-                                        <div class="video-info">
-                                            <div class="video-avatar">N</div>
-                                            <div>
-                                                <strong>Neha Jadhav</strong>
-                                                <small>Defence Exams</small>
-                                            </div>
-                                            <span class="verified-badge">Verified</span>
-                                        </div>
-                                    </div>
-                                </div>
+              </div>
+            </div>
 
-                            </div>
-                        </div>
+          <% } %>
+        <% } else { %>
+          <p class="text-center text-muted">No video testimonials available.</p>
+        <% } %>
+
+      </div>
+    </div>
 
 
-                        <!-- Parent Reviews -->
-                        <div>
-                            <h4 class="section-subtitle">Parent Reviews</h4>
+        <!-- ================= PARENT REVIEWS ================= -->
+    <div>
+      <h4 class="section-subtitle text-start mb-2">Parent Reviews</h4>
 
-                            <div class="row g-4">
-                                <div class="col-md-6">
-                                    <div class="testimonial-card h-100">
-                                        <span class="quote-icon">❝</span>
-                                        <p>
-                                            As a parent, I am satisfied with the discipline and transparency of this
-                                            institute.
-                                            My son gained confidence and clarity.
-                                        </p>
-                                        <div class="mt-3">
-                                            <strong>Mr. Suresh Pawar</strong><br>
-                                            <small>Parent</small>
-                                        </div>
-                                    </div>
-                                </div>
+      <div class="row g-4">
 
-                                <div class="col-md-6">
-                                    <div class="testimonial-card h-100">
-                                        <span class="quote-icon">❝</span>
-                                        <p>
-                                            The academy maintains regular communication with parents.
-                                            This is a responsible and trustworthy institution.
-                                        </p>
-                                        <div class="mt-3">
-                                            <strong>Mrs. Anita Shinde</strong><br>
-                                            <small>Parent</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <% 
+          const parentReviews = testimonials.filter(t => t.type === 'parent');
+        %>
 
-                    </div>
-                </section>
+        <% if (parentReviews.length > 0) { %>
+          <% for (let i = 0; i < parentReviews.length; i++) { 
+               const t = parentReviews[i]; %>
+
+            <div class="col-md-6">
+              <div class="testimonial-card h-100 me-2">
+                <span class="quote-icon">❝</span>
+
+                <p class="testimonial-text me-3">
+                  <%= t.message %>
+                </p>
+
+                <div class="mt-3">
+                  <strong><%= t.name %></strong><br>
+                  <small><%= t.role || 'Parent' %></small>
+                </div>
+              </div>
+            </div>
+
+          <% } %>
+        <% } else { %>
+          <p class="text-center text-muted">No parent reviews available.</p>
+        <% } %>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
                 <!-- ================= END TESTIMONIALS ================= -->
 
-                <!-- ================= END TESTIMONIALS SECTION ================= -->
-
-
-
-
-
-
+                
                 <!-- FOOTER -->
                 <%- include('footer') %>
                     <!-- Bootstrap JS -->

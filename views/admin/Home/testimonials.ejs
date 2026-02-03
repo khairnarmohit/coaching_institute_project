@@ -1,0 +1,208 @@
+<%- include('./../navbar.ejs') %>
+
+<!-- ================= SUMMARY FILTER ================= -->
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h6 class="text-muted">Student Reviews</h6>
+        <h3 class="fw-bold text-primary" id="countStudent">0</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h6 class="text-muted">Parent Reviews</h6>
+        <h3 class="fw-bold text-success" id="countParent">0</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h6 class="text-muted">Video Testimonials</h6>
+        <h3 class="fw-bold text-warning" id="countVideo">0</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ADD BUTTON ================= -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="fw-bold">Testimonials</h4>
+  <button class="btn btn-primary" id="toggleFormBtn">
+    <i class="bi bi-plus-circle"></i> Add Testimonial
+  </button>
+</div>
+
+<!-- ================= FORM ================= -->
+<div class="card mb-4 <%= edit ? '' : 'd-none' %>" id="testimonialForm">
+  <div class="card-header fw-bold bg-dark text-warning">
+    <%= edit ? 'Edit Testimonial' : 'Add Testimonial' %>
+  </div>
+
+  <div class="card-body">
+    <form method="POST" action="/admin/testimonials/save">
+
+      <% if (edit) { %>
+        <input type="hidden" name="id" value="<%= edit.id %>">
+      <% } %>
+
+      <div class="row g-3">
+
+        <!-- TYPE -->
+        <div class="col-md-4">
+          <label class="fw-semibold">Type</label>
+          <select name="type" id="typeSelect" class="form-select" required>
+            <option value="">Select Type</option>
+            <option value="student" <%= edit?.type==='student'?'selected':'' %>>Student</option>
+            <option value="parent"  <%= edit?.type==='parent'?'selected':'' %>>Parent</option>
+            <option value="video"   <%= edit?.type==='video'?'selected':'' %>>Video</option>
+          </select>
+        </div>
+
+        <!-- NAME -->
+        <div class="col-md-4 d-none" id="nameBox">
+          <label class="fw-semibold">Name</label>
+          <input name="name" class="form-control" value="<%= edit?.name || '' %>">
+        </div>
+
+        <!-- ROLE -->
+        <div class="col-md-4 d-none" id="roleBox">
+          <label class="fw-semibold">Role</label>
+          <input name="role" class="form-control" value="<%= edit?.role || '' %>">
+        </div>
+
+        <!-- MESSAGE -->
+        <div class="col-12 d-none" id="messageBox">
+          <label class="fw-semibold">Message</label>
+          <textarea name="message" class="form-control" rows="4"><%= edit?.message || '' %></textarea>
+        </div>
+
+        <!-- VIDEO -->
+        <div class="col-12 d-none" id="videoBox">
+          <label class="fw-semibold">YouTube Embed URL</label>
+          <input name="video_url" class="form-control"
+                 value="<%= edit?.video_url || '' %>"
+                 placeholder="https://www.youtube.com/embed/VIDEO_ID">
+        </div>
+
+      </div>
+
+      <div class="text-end mt-4">
+        <button class="btn btn-success px-4">
+          <%= edit ? 'Update' : 'Save' %>
+        </button>
+        <button class="btn btn-secondary px-4" id="cancelBtn">
+            <i class="bi bi-x-circle"></i> Cancel </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- ================= FILTER ================= -->
+<div class="mb-3">
+  <select id="tableFilter" class="form-select w-25">
+    <option value="all">All Testimonials</option>
+    <option value="student">Student</option>
+    <option value="parent">Parent</option>
+    <option value="video">Video</option>
+  </select>
+</div>
+
+<!-- ================= TABLE ================= -->
+<table class="table table-bordered align-middle text-center" id="testimonialTable">
+  <thead class="table-dark">
+    <tr>
+      <th>Sr.No</th>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Type</th>
+      <th width="200">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% testimonials.forEach((t, index) => { %>
+      <tr data-type="<%= t.type %>">
+        <td><%= index + 1 %></td>
+        <td><%= t.name || '-' %></td>
+        <td><%= t.role || '-' %></td>
+        <td class="text-capitalize"><%= t.type %></td>
+        <td>
+          <a href="/admin/testimonials/edit/<%= t.id %>" class="btn btn-warning btn-sm">
+            <i class="bi bi-pencil"></i>
+          </a>
+          <a href="/admin/testimonials/delete/<%= t.id %>" class="btn btn-danger btn-sm">
+            <i class="bi bi-trash"></i>
+          </a>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<script>
+/* ================= COUNTS ================= */
+const rows = document.querySelectorAll("#testimonialTable tbody tr");
+let s=0,p=0,v=0;
+rows.forEach(r=>{
+  if(r.dataset.type==="student") s++;
+  if(r.dataset.type==="parent") p++;
+  if(r.dataset.type==="video") v++;
+});
+countStudent.innerText=s;
+countParent.innerText=p;
+countVideo.innerText=v;
+
+/* ================= FORM TOGGLE ================= */
+toggleFormBtn.onclick=()=>{
+  testimonialForm.classList.toggle("d-none");
+};
+
+/* ================= TYPE TOGGLE (FINAL FIX) ================= */
+const typeSelect=document.getElementById("typeSelect");
+const nameBox=document.getElementById("nameBox");
+const roleBox=document.getElementById("roleBox");
+const messageBox=document.getElementById("messageBox");
+const videoBox=document.getElementById("videoBox");
+
+function toggleFields(){
+  nameBox.classList.add("d-none");
+  roleBox.classList.add("d-none");
+  messageBox.classList.add("d-none");
+  videoBox.classList.add("d-none");
+
+  if(typeSelect.value==="student"){
+    nameBox.classList.remove("d-none");
+    roleBox.classList.remove("d-none");
+    messageBox.classList.remove("d-none");
+  }
+
+  if(typeSelect.value==="parent"){
+    nameBox.classList.remove("d-none");
+    messageBox.classList.remove("d-none");
+  }
+
+  if(typeSelect.value==="video"){
+    videoBox.classList.remove("d-none");
+  }
+}
+
+typeSelect.onchange = toggleFields;
+toggleFields(); // ✅ edit mode fix
+
+/* ================= TABLE FILTER ================= */
+tableFilter.onchange=(e)=>{
+  const val=e.target.value;
+  rows.forEach(r=>{
+    r.style.display=(val==="all"||r.dataset.type===val)?"":"none";
+  });
+};
+</script>
+
+<%- include('./../footer.ejs') %>

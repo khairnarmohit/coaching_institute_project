@@ -3,39 +3,41 @@ const router = express.Router();
 const exe = require("../config/db");
 
 router.get("/", async (req, res) => {
-    try {
-        // Home banner
-        const banner = await exe(
-            "SELECT * FROM home_banner ORDER BY id DESC LIMIT 1"
-        );
+  try {
+    const banner = await exe(
+      "SELECT * FROM home_banner ORDER BY id DESC LIMIT 1"
+    );
 
-        // Featured courses
-        const courses = await exe(
-            "SELECT * FROM featured_courses"
-        );
+    const courses = await exe(
+      "SELECT * FROM featured_courses"
+    );
 
-        // Achievements
-        const achievements = await exe(
-            "SELECT * FROM achievements WHERE status = 1"
-        );
+    const achievements = await exe(
+      "SELECT * FROM achievements WHERE status = 1"
+    );
 
-        // Upcoming Batches (NEW)
-        const batches = await exe(
-            "SELECT * FROM home_upcoming_batches WHERE status = 1"
-        );
+    const batches = await exe(
+      "SELECT * FROM home_upcoming_batches WHERE status = 1"
+    );
 
-        res.render("user/home", {
-            banner: banner[0] || null,
-            courses,
-            achievements,
-            batches   // 👈 VERY IMPORTANT (Upcoming Batches)
-        });
+    const testimonials = await exe(
+      "SELECT * FROM testimonials"
+    );
 
-    } catch (err) {
-        console.log(err);
-        res.send(err.message);
-    }
+    res.render("user/home", {
+      banner: banner[0] || null,
+      courses,
+      achievements,
+      batches,
+      testimonials
+    });
+
+  } catch (err) {
+    console.log(err);
+    res.send(err.message);
+  }
 });
+
 
 
 
@@ -43,9 +45,24 @@ router.get("/about", (req, res) => {
   res.render("user/about.ejs");
 });
 
-router.get("/contact", (req, res) => {
-  res.render("user/contact.ejs")
-})
+router.get('/contact', async (req, res) => {
+    try {
+        const result = await exe(
+            "SELECT * FROM contact_details WHERE id = 1"
+        );
+
+        res.render('user/contact', {
+            contact: result[0]
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.send('Database Error');
+    }
+});
+
+
+
 
 router.get("/admission", function (req, res) {
   res.render("user/admission.ejs")
