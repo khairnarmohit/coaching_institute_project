@@ -303,7 +303,7 @@
       data-bs-toggle="modal"
       data-bs-target="#addBatchModal"
       id="addBatchBtn">
-      ➕ Add Batch
+      <i class="fas fa-plus"></i> Add Batch
     </button>
 
     <table class="table table-bordered">
@@ -315,7 +315,7 @@
           <th>Duration</th>
           <th>Fees</th>
           <th>Mode</th>
-          <th>Action</th>
+          <th width="200px">Action</th>
         </tr>
       </thead>
 
@@ -335,7 +335,7 @@
           <td>
             <!-- EDIT BUTTON -->
             <a href="javascript:void(0)"
-              class="btn btn-sm btn-primary editBatchBtn"
+              class="btn btn-sm btn-primary ms-2 me-2 float-start editBatchBtn"
               data-id="<%= result[i].id %>"
               data-title="<%= result[i].batch_title %>"
               data-status_label="<%= result[i].status_label %>"
@@ -349,7 +349,7 @@
 
             <!-- DELETE -->
             <a href="/admin/delete_batch/<%= result[i].id %>"
-              class="btn btn-sm btn-danger"
+              class="btn btn-sm btn-danger float-start"
               onclick="return confirm('Are you sure?')">
               <i class="fa-solid fa-trash"></i>
             </a>

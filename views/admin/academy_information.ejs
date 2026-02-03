@@ -1,0 +1,251 @@
+<%- include("navbar.ejs") %>
+
+  <style>
+    /* ===== PAGE LAYOUT ===== */
+    .main-content {
+      background: #f8fafc;
+      min-height: 100vh;
+    }
+
+    /* ===== FORM CARD ===== */
+    .form-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 22px;
+      border: none;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      border-left: 4px solid #0d6efd;
+      padding-left: 10px;
+      margin: 18px 0 12px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #444;
+    }
+
+    .form-control {
+      font-size: 12px;
+      border-radius: 8px;
+      padding: 6px 10px;
+    }
+
+    .btn {
+      font-size: 12px;
+      border-radius: 20px;
+      padding: 4px 16px;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #6c757d;
+    }
+
+    /* ===== TABLE IMAGE SIZE FIX ===== */
+    .table td img {
+      width: 42px;
+      /* 👈 chhoti width */
+      height: 42px;
+      /* 👈 chhoti height */
+      object-fit: cover;
+      /* image crop ho, stretch na ho */
+      border-radius: 8px;
+      border: 1px solid #e1e1e1;
+    }
+  </style>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  
+    <div class="container-fluid px-4 mt-3">
+
+      <div class="card form-card">
+
+        <h6 class="mb-3">
+          <i class="fa fa-info-circle me-2"></i> Academy Information
+        </h6>
+
+        <form method="post" enctype="multipart/form-data">
+
+          <!-- About Image -->
+          <div class="mb-2">
+            <label>About Image</label>
+            <input type="file" name="about_image" class="form-control">
+          </div>
+
+          <!-- Short Information -->
+          <div class="mb-2">
+            <label>Short Information</label>
+            <textarea name="short_info" id="short_info" rows="4" class="form-control"></textarea>
+          </div>
+
+
+          <!-- Vision -->
+          <div class="mb-2">
+            <label>Vision</label>
+            <textarea name="vision" rows="2" class="form-control"></textarea>
+          </div>
+
+          <!-- Mission -->
+          <div class="mb-3">
+            <label>Mission</label>
+            <textarea name="mission" rows="2" class="form-control"></textarea>
+          </div>
+
+          <!-- Specializations -->
+          <div class="section-title">Our Specializations</div>
+          <div class="mb-3">
+            <input type="text" name="specializations" class="form-control" placeholder="UPSC, MPSC, Banking, SSC">
+            <div class="hint">Use comma ( , ) to add multiple specializations</div>
+          </div>
+
+          <!-- Teaching Methodology -->
+          <div class="section-title">Teaching Methodology</div>
+          <div class="mb-4">
+            <input type="text" name="methodology" class="form-control"
+              placeholder="Concept clarity, NCERT focus, Weekly tests">
+            <div class="hint">Use comma ( , ) to add multiple points</div>
+          </div>
+
+          <!-- Submit -->
+          <div class="text-end">
+            <button class="btn btn-success">
+              <i class="fa fa-save me-1"></i> Save Information
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= TABLE CARD ================= -->
+    <div class="card table-card shadow-sm mt-4">
+      <div class="card-header bg-dark text-white">
+        <h6 class="mb-0">
+          <i class="fa fa-list me-2"></i> Academy Information List
+        </h6>
+      </div>
+
+      <div class="card-body p-2">
+        <div class="table-responsive">
+          <table class="table table-sm table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>About Image</th>
+                <th>Short Info</th>
+                <th>Vision</th>
+                <th>Mission</th>
+                <th>Specializations</th>
+                <th>Methodology</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% if(academyInfo && academyInfo.length> 0){ %>
+                <% academyInfo.forEach((a,i)=>{ %>
+                  <tr>
+                    <td>
+                      <%= i+1 %>
+                    </td>
+
+                    <!-- IMAGE -->
+                    <td>
+                      <% if(a.about_image){ %>
+                        <img src="/images/<%= a.about_image %>" alt="About Image">
+                        <% } else { %>
+                          <span class="text-muted">No Image</span>
+                          <% } %>
+                    </td>
+
+                    <!-- SHORT INFO (HTML SAFE) -->
+                    <td style="max-width:260px">
+                      <div style="max-height:80px; overflow:auto;">
+                        <%- a.short_info %>
+                      </div>
+                    </td>
+
+                    <!-- VISION -->
+                    <td style="max-width:200px">
+                      <%= a.vision %>
+                    </td>
+
+                    <!-- MISSION -->
+                    <td style="max-width:200px">
+                      <%= a.mission %>
+                    </td>
+
+                    <!-- SPECIALIZATIONS -->
+                    <td>
+                      <%= a.specializations %>
+                    </td>
+
+                    <!-- METHODOLOGY -->
+                    <td style="max-width:220px">
+                      <%= a.methodology %>
+                    </td>
+
+                    <!-- ACTION -->
+                    <td class="text-center">
+                      <a href="/admin/edit_academy/<%= a.id %>" class="btn btn-sm btn-outline-primary">
+                        <i class="fa fa-edit"></i>
+                      </a>
+
+                      <a href="/admin/delete_academy/<%= a.id %>" onclick="return confirm('Delete this record?')"
+                        class="btn btn-sm btn-outline-danger ms-1">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <% }) %>
+                    <% } else { %>
+                      <tr>
+                        <td colspan="8" class="text-center text-muted py-3">
+                          No academy information found
+                        </td>
+                      </tr>
+                      <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+  <script>
+    ClassicEditor
+      .create(document.querySelector('#short_info'), {
+        toolbar: [
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          'link',
+          '|',
+          'bulletedList',
+          'numberedList',
+          '|',
+          'undo',
+          'redo'
+        ]
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  </script>
+
+
+
+
+  <%- include("footer.ejs") %>

@@ -228,6 +228,27 @@
       font-size: 1.25rem;
     }
 
+    .about-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--gov-dark);
+      font-size: 2.5rem;
+    }
+
+    .about-lead {
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: var(--gov-muted);
+    }
+
+    .about-description {
+      color: var(--gov-muted);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+
     /* Mobile */
     @media (max-width: 768px) {
       .about-header h1 {
@@ -259,27 +280,29 @@
         <div class="row g-5 align-items-center">
           <div class="col-lg-6">
             <div class="about-img-container">
-              <img
-                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                class="about-img" alt="Academy Environment">
+
+              <% if (academyInfo && academyInfo.length> 0) { %>
+
+                <% academyInfo.forEach(function(item){ %>
+                  <% if (item.about_image) { %>
+                    <img src="/images/<%= item.about_image %>" class="about-img mb-4" alt="Academy Environment">
+                    <% } %>
+                      <% }) %>
+
+                        <% } else { %>
+                          <img src="https://via.placeholder.com/1000x600?text=No+Image" class="about-img"
+                            alt="No Image Available">
+                          <% } %>
+
             </div>
+
           </div>
           <div class="col-lg-6">
-            <h2 class="fw-bold mb-4" style="color: var(--gov-dark); font-size: 2.5rem;">Who We Are</h2>
-            <p class="lead" style="color: var(--gov-muted);">EduInstitute is more than just a coaching center; it's a
-              lighthouse for government job seekers across Maharashtra and India.</p>
-            <p style="color: var(--gov-muted); line-height: 1.8;">
-              Founded with the vision to bridge the gap between hard work and success, we specialize in providing
-              top-tier
-              guidance for UPSC, MPSC, and various state-level examinations. Our approach is rooted in discipline,
-              depth,
-              and dedication, ensuring that every student receives the personalized attention needed to crack the
-              toughest
-              exams in the country.
-            </p>
-
-
+            <% if (academyInfo && academyInfo.length> 0 && academyInfo[0].short_info) { %>
+              <%- academyInfo[0].short_info %>
+                <% } %>
           </div>
+
         </div>
 
         <div class="values-grid">
@@ -326,8 +349,9 @@
               </div>
               <h4 class="mt-3">Our Vision</h4>
               <p>
-                To produce an eminent center of excellence in civil service coaching,
-                empowering efficient youth to become ethical and responsible future administrators.
+                <% if (academyInfo && academyInfo.length> 0 && academyInfo[0].vision) { %>
+                  <%- academyInfo[0].vision %>
+                    <% } %>
               </p>
             </div>
           </div>
@@ -340,8 +364,9 @@
               </div>
               <h4 class="mt-3">Our Mission</h4>
               <p>
-                To become a foremost institute for PSC/UPSC training by creating a disciplined,
-                competent workforce dedicated to the service of India.
+                <% if (academyInfo && academyInfo.length> 0 && academyInfo[0].mission) { %>
+                  <%- academyInfo[0].mission %>
+                    <% } %>
               </p>
             </div>
           </div>
@@ -357,13 +382,16 @@
         <div class="row justify-content-center">
           <div class="col-md-10">
             <div class="mb-4">
-              <span class="exam-badge">UPSC (CSE)</span>
-              <span class="exam-badge">MPSC (State Services)</span>
-              <span class="exam-badge">Staff Selection Commission (SSC)</span>
-              <span class="exam-badge">Banking (IBPS/SBI)</span>
-              <span class="exam-badge">Police Bharti</span>
-              <span class="exam-badge">Talhati / ZP Exams</span>
-              <span class="exam-badge">Defence (NDA/CDS)</span>
+              <% if (academyInfo && academyInfo.length> 0 && academyInfo[0].specializations) { %>
+                <% academyInfo[0].specializations.split(',').forEach(function(item){ %>
+                  <span class="exam-badge">
+                    <%= item.trim() %>
+                  </span>
+                  <% }) %>
+
+                    <% } %>
+
+
             </div>
             <p class="mt-4 opacity-75">We provide integrated batches for all administrative and clerical grade
               examinations with a focus on core conceptual clarity and speed-solving techniques.</p>
@@ -378,15 +406,27 @@
         <div class="row mt-5">
           <div class="col-12">
             <ul class="tm-list">
-              <li><i class="fas fa-check-circle"></i> Foundation courses for beginners (NCERT focus)</li>
-              <li><i class="fas fa-check-circle"></i> Subject-wise micro-analysis and conceptual clarity</li>
-              <li><i class="fas fa-check-circle"></i> Daily Current Affairs & News Analysis sessions</li>
-              <li><i class="fas fa-check-circle"></i> Dedicated Answer Writing Practice for Mains</li>
-              <li><i class="fas fa-check-circle"></i> Prelims CSAT & Aptitude specialized training</li>
-              <li><i class="fas fa-check-circle"></i> Personality Development & Mock Interview sessions</li>
-              <li><i class="fas fa-check-circle"></i> 24/7 Library support and peaceful study environment</li>
-              <li><i class="fas fa-check-circle"></i> One-on-one Mentorship for personalized growth</li>
+
+              <% if (academyInfo && academyInfo.length> 0 && academyInfo[0].methodology) { %>
+
+                <% academyInfo[0].methodology.split(',').forEach(function(item){ %>
+                  <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>
+                      <%= item.trim() %>
+                    </span>
+                  </li>
+                  <% }) %>
+
+                    <% } else { %>
+                      <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Teaching methodology will be updated soon</span>
+                      </li>
+                      <% } %>
+
             </ul>
+
           </div>
         </div>
       </div>
