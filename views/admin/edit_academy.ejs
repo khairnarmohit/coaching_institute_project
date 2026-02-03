@@ -1,0 +1,169 @@
+<%- include("navbar.ejs") %>
+
+    <style>
+        /* ===== PAGE LAYOUT ===== */
+        .main-content {
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+
+        /* ===== FORM CARD ===== */
+        .form-card {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 22px;
+            border: none;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            border-left: 4px solid #0d6efd;
+            padding-left: 10px;
+            margin: 18px 0 12px;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .form-control {
+            font-size: 12px;
+            border-radius: 8px;
+            padding: 6px 10px;
+        }
+
+        .btn {
+            font-size: 12px;
+            border-radius: 20px;
+            padding: 4px 16px;
+        }
+
+        .hint {
+            font-size: 11px;
+            color: #6c757d;
+        }
+
+        .preview-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-top: 8px;
+        }
+    </style>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    
+        <div class="container-fluid px-4 mt-3">
+
+            <div class="card form-card">
+
+                <h6 class="mb-3">
+                    <i class="fa fa-edit me-2"></i> Edit Academy Information
+                </h6>
+
+                <form action="/admin/edit_academy/<%= academy.id %>" method="post" enctype="multipart/form-data">
+
+                    <!-- About Image -->
+                    <div class="mb-2">
+                        <label>About Image</label>
+                        <input type="file" name="about_image" class="form-control">
+                        <input type="hidden" name="old_about_image" value="<%= academy.about_image %>">
+
+                        <% if(academy.about_image){ %>
+                            <img src="/images/<%= academy.about_image %>" class="preview-img">
+                            <% } %>
+                    </div>
+
+                    <!-- Short Information -->
+                    <div class="mb-2">
+                        <label>Short Information</label>
+                        <textarea name="short_info" id="short_info" rows="6"
+                            class="form-control"><%- academy.short_info %></textarea>
+                    </div>
+
+
+
+                    <!-- Vision -->
+                    <div class="mb-2">
+                        <label>Vision</label>
+                        <textarea name="vision" rows="2" class="form-control"><%= academy.vision %></textarea>
+                    </div>
+
+                    <!-- Mission -->
+                    <div class="mb-3">
+                        <label>Mission</label>
+                        <textarea name="mission" rows="2" class="form-control"><%= academy.mission %></textarea>
+                    </div>
+
+                    <!-- Specializations -->
+                    <div class="section-title">Our Specializations</div>
+                    <div class="mb-3">
+                        <input type="text" name="specializations" class="form-control"
+                            value="<%= academy.specializations %>" placeholder="UPSC, MPSC, Banking, SSC">
+                        <div class="hint">Use comma ( , ) to add multiple specializations</div>
+                    </div>
+
+                    <!-- Teaching Methodology -->
+                    <div class="section-title">Teaching Methodology</div>
+                    <div class="mb-4">
+                        <input type="text" name="methodology" class="form-control" value="<%= academy.methodology %>"
+                            placeholder="Concept clarity, NCERT focus, Weekly tests">
+                        <div class="hint">Use comma ( , ) to add multiple points</div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="text-end">
+                        <button class="btn btn-success">
+                            <i class="fa fa-save me-1"></i> Update Information
+                        </button>
+                        <a href="/admin/academy_information" class="btn btn-outline-secondary ms-2">
+                            Cancel
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    <!-- CKEditor CDN (FIRST) -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+    <!-- CKEditor Init (AFTER CDN) -->
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#short_info'), {
+                toolbar: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'italic',
+                    'link',
+                    '|',
+                    'alignment',          // 👈 LEFT / CENTER / RIGHT / JUSTIFY
+                    '|',
+                    'bulletedList',
+                    'numberedList',
+                    '|',
+                    'undo',
+                    'redo'
+                ],
+                alignment: {
+                    options: ['left', 'center', 'right', 'justify']
+                }
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    </script>
+
+
+
+    <%- include("footer.ejs") %>

@@ -202,6 +202,29 @@
       border-radius: 12px;
     }
 
+    .achievement-list li {
+      display: flex;
+      align-items: flex-start;
+      /* icon top align */
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    /* CKEditor ke block tags ko inline banao */
+    .achievement-list li p,
+    .achievement-list li div {
+      display: inline;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* strong ko inline hi rakho */
+    .achievement-list li strong {
+      display: inline;
+      font-weight: 600;
+    }
+
+
     .achievement-item:hover {
       background: var(--gov-white);
       transform: translateY(-5px);
@@ -252,30 +275,25 @@
         <div class="founder-card">
           <div class="row g-0">
             <div class="col-lg-5 founder-img-box text-center">
-              <img src="https://riimacademy.com/wp-content/uploads/2022/09/Rajendra-Singh-Sir1-1-1024x1024.jpg"
-                class="founder-img" alt="Hon. Rajendra Singh">
+              <img src="images/<%- founderInfo[0].founder_image %>" class="founder-img" alt="Hon. Rajendra Singh">
             </div>
             <div class="col-lg-7 founder-details">
               <span class="founder-title">Founder & Mentor</span>
-              <h2 class="founder-name">Hon. Rajendra Singh</h2>
-              <p class="mb-4 text-muted fw-bold">IPS (Retd.)</p>
+              <h2 class="founder-name"><%- founderInfo[0].founder_name %></h2>
+              <p class="mb-4 text-muted fw-bold"><%- founderInfo[0].founder_designation %></p>
 
               <div class="quote-box">
-                At EduInstitute, we don't just teach subjects; we build character and cultivate the administrative
-                mindset. Our goal is to transform every aspirant into an officer who serves the nation with integrity
-                and
-                excellence.
+                <%- founderInfo[0].quote_text %>
               </div>
 
               <div class="founder-message">
-                <p>We are committed to creating a responsible and ethical administrative workforce for the betterment of
-                  the nation. At EduInstitute, we leave no stone unturned in ensuring that every aspirant is motivated
-                  to
-                  surpass their own potential through our exhaustive teaching methodology.</p>
+                <p>
+                  <%- founderInfo[0].detailed_message %>
+                </p>
 
                 <div class="signature-box">
-                  <h5 class="fw-bold m-0" style="color: var(--gov-dark);">Hon. Rajendra Singh</h5>
-                  <small class="text-accent">Founder, EduInstitute Academy</small>
+                  <h5 class="fw-bold m-0" style="color: var(--gov-dark);"><%- founderInfo[0].founder_name %></h5>
+                  <small class="text-accent">Founder,<%- founderInfo[0].academy_name %></small>
                 </div>
               </div>
             </div>
@@ -289,30 +307,33 @@
         <div class="row g-5">
           <div class="col-lg-7 bio-content">
             <h3>The Journey of a Visionary</h3>
-            <p>Hon. Rajendra Singh, a former IPS officer, brings a wealth of on-field administrative experience to the
-              classroom. His journey from a dedicated student to a distinguished police officer has been the foundation
-              of
-              his teaching philosophy.</p>
-            <p>Having witnessed the challenges and rewards of public service first-hand, he established EduInstitute
-              with
-              a singular goal: to provide aspirants with a realistic and comprehensive roadmap to success in UPSC and
-              MPSC
-              examinations.</p>
+            <p>
+              <%- founderInfo[0].journey %>
+            </p>
 
             <h4 class="mt-5 fw-bold mb-4">Core Philosophy</h4>
             <ul class="achievement-list">
-              <li><i class="fas fa-medal"></i> <strong>Integrated Learning:</strong> Combining static theory with
-                dynamic
-                current affairs.</li>
-              <li><i class="fas fa-medal"></i> <strong>Ethical Foundation:</strong> Emphasizing integrity as much as
-                intelligence.</li>
-              <li><i class="fas fa-medal"></i> <strong>Personalized Guidance:</strong> Tailoring strategies to
-                individual
-                student strengths.</li>
-              <li><i class="fas fa-medal"></i> <strong>Continuous Mentorship:</strong> Supporting students from Prelims
-                to
-                Interviews.</li>
+              <% if(founderInfo && founderInfo.length> 0 && founderInfo[0].core_philosophy){ %>
+                <% founderInfo[0].core_philosophy.split(',').forEach(item=> {
+                  const parts = item.split(':'); %>
+                  <li>
+                    <i class="fas fa-medal"></i>
+
+                    <!-- Before : (Bold) -->
+                    <strong><%- parts[0].trim() %></strong>
+
+                    <!-- After : (Normal text) -->
+                    <% if(parts[1]){ %>
+                      : <span><%- parts.slice(1).join(':').trim() %></span>
+                      <% } %>
+                  </li>
+                  <% }) %>
+                    <% } %>
             </ul>
+
+
+
+
           </div>
           <div class="col-lg-5">
             <div class="bg-light p-5 rounded-4 border">
@@ -323,7 +344,8 @@
                 </div>
                 <div>
                   <h6 class="fw-bold mb-1">Excellent Service Medal</h6>
-                  <p class="small text-muted mb-0">For distinguished contribution to public safety and administration.
+                  <p class="small text-muted mb-0">For distinguished contribution to public safety and
+                    administration.
                   </p>
                 </div>
               </div>
@@ -333,7 +355,8 @@
                 </div>
                 <div>
                   <h6 class="fw-bold mb-1">Best Academician Award 2023</h6>
-                  <p class="small text-muted mb-0">Recognized for innovative teaching methodologies in civil services.
+                  <p class="small text-muted mb-0">Recognized for innovative teaching methodologies in
+                    civil services.
                   </p>
                 </div>
               </div>
@@ -343,7 +366,8 @@
                 </div>
                 <div>
                   <h6 class="fw-bold mb-1">Youth Icon Recognition</h6>
-                  <p class="small text-muted mb-0">Awarded for inspiring thousands of youth towards public service.</p>
+                  <p class="small text-muted mb-0">Awarded for inspiring thousands of youth towards
+                    public service.</p>
                 </div>
               </div>
             </div>
