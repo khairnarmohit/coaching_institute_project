@@ -283,7 +283,7 @@ router.get('/testimonials/delete/:id', async (req, res) => {
 router.get('/contact', async (req, res) => {
     const result = await exe("SELECT * FROM contact_details WHERE id=1");
 
-    res.render('admin/contact.ejs', {
+    res.render('admin/contact/contact.ejs', {
         contact: result[0]
     });
 });
@@ -328,13 +328,29 @@ router.post('/contact', async (req, res) => {
         );
 
         // redirect back to edit page
-        res.redirect('/admin/contact');
+        res.redirect('/admin/contact/contact.ejs');
 
     } catch (err) {
         console.error(err);
         res.send('Update Failed');
     }
 });
+
+
+
+router.get("/enquiries", async (req, res) => {
+  var sql = `select * from contact_enquiries order by id desc`;
+  var result = await exe(sql);
+  res.render("admin/contact/contact_enquiries.ejs", { result });
+});
+
+router.get("/delete_enquiry/:id", async (req, res) => {
+  var id = req.params.id;
+  var sql = `delete from contact_enquiries where id=?`;
+  var result = await exe(sql, [id]);
+  res.redirect("/admin/enquiries");
+});
+
 
 
 router.get("/hero-banner",async (req, res) => {

@@ -362,9 +362,14 @@ table .btn {
     <i class="fas fa-photo-film"></i> Gallery
   </a>
 
-  <a href="/admin/contact" class="nav-link">
-    <i class="fas fa-phone"></i> Contact
+   <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#contactDropdown">
+    <i class="fas fa-users"></i> Contact
   </a>
+   <div class="collapse" id="contactDropdown">
+    <a href="/admin/contact" class="nav-link ps-4"><sm>Contact Details</sm></a>
+    <a href="/admin/enquiries" class="nav-link ps-4"><sm>Enquiries</sm></a>
+  </div>
+
 </div>
 
 <!-- Main Content -->

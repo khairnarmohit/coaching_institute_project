@@ -61,7 +61,12 @@ router.get('/contact', async (req, res) => {
     }
 });
 
-
+router.post("/contact_enquiry",async(req,res)=>{
+    var d = req.body;
+    var sql = `insert into contact_enquiries (name,email,mo_number,message,subject) values (?,?,?,?,?)`;
+    var result = await exe(sql,[d.name,d.email,d.mo_number,d.message,d.subject]);
+    res.send("<script>alert('Enquiry Submitted Successfully');window.location= document.referrer</script>");
+});
 
 
 router.get("/admission", function (req, res) {
@@ -296,5 +301,7 @@ router.get("/academy_info", (req, res) => {
 router.get("/founder_info", (req, res) => {
   res.render("user/founder_info.ejs")
 })
+
+
 
 module.exports = router;
