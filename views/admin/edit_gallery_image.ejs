@@ -1,0 +1,155 @@
+<%- include("navbar.ejs") %>
+
+<style>
+    .edit-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.edit-card {
+  background: #fff;
+  width: 100%;
+  max-width: 850px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  padding: 24px;
+}
+
+.edit-header {
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.edit-header h5 {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-control,
+.form-select {
+  border-radius: 10px;
+}
+
+.image-preview {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+}
+
+.image-preview img {
+  max-width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+/* Buttons */
+.btn-save {
+  background: #0d6efd;
+  color: #fff;
+  border-radius: 10px;
+  padding: 6px 18px;
+}
+
+.btn-save:hover {
+  background: #0b5ed7;
+  color: #fff;
+}
+
+.btn-cancel {
+  background: #e5e7eb;
+  color: #334155;
+  border-radius: 10px;
+  padding: 6px 18px;
+}
+
+.btn-cancel:hover {
+  background: #cbd5e1;
+}
+
+</style>
+
+  <div class="edit-wrapper">
+
+  <div class="edit-card">
+    <div class="edit-header">
+      <h5><i class="fa fa-image me-2"></i> Edit Gallery Image</h5>
+    </div>
+
+    <form action="/admin/edit_gallery_image/<%= item.id %>" method="POST" enctype="multipart/form-data">
+
+      <input type="hidden" name="old_image" value="<%= item.image %>">
+
+      <div class="row g-3">
+
+        <div class="col-md-6">
+          <label class="form-label">Title</label>
+          <input type="text" name="title"
+                 class="form-control form-control-sm"
+                 value="<%= item.title %>" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Status</label>
+          <select name="status" class="form-select form-select-sm">
+            <option value="1" <%= item.status==1?'selected':'' %>>Active</option>
+            <option value="0" <%= item.status==0?'selected':'' %>>Inactive</option>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Subtitle</label>
+          <input type="text" name="subtitle"
+                 class="form-control form-control-sm"
+                 value="<%= item.subtitle %>">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Current Image</label>
+          <div class="image-preview">
+            <img src="/images/<%= item.image %>">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Change Image</label>
+          <input type="file" name="image"
+                 class="form-control form-control-sm">
+          <small class="text-muted">Leave empty to keep current image</small>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-save btn-sm">
+          <i class="fa fa-check me-1"></i> Update
+        </button>
+        <a href="/admin/gallery_image" class="btn btn-cancel btn-sm">
+          Cancel
+        </a>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+
+<%- include("footer.ejs") %>

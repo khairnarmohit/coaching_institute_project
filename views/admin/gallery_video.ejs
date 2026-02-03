@@ -1,0 +1,172 @@
+<%- include("navbar.ejs") %>
+
+
+  <div class="container-fluid gallery-container">
+
+    <!-- HEADING -->
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h3>Gallery Videos</h3>
+      <button class="btn btn-primary btn-sm"
+              data-bs-toggle="collapse"
+              data-bs-target="#videoForm">
+        Add New Video
+      </button>
+    </div>
+
+    <!-- ADD VIDEO FORM -->
+    <div class="collapse mt-3" id="videoForm">
+      <div class="card p-3">
+        <form action="/admin/gallery_video/add" method="POST">
+
+          <div class="row mb-2">
+            <div class="col-md-6">
+              <label>Title</label>
+              <input type="text" name="title" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+              <label>Status</label>
+              <select name="status" class="form-select">
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label>Subtitle</label>
+            <input type="text" name="subtitle" class="form-control">
+          </div>
+
+          <div class="mb-2">
+            <label>Video URL OR iframe</label>
+            <input type="text"
+                   name="video_url"
+                   class="form-control"
+                   placeholder="YouTube link OR full iframe code">
+          </div>
+
+          <div class="text-end mt-2">
+            <button class="btn btn-primary">Save</button>
+            <button type="button"
+                    class="btn btn-secondary"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#videoForm">
+              Cancel
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- VIDEO TABLE -->
+    <div class="card p-3 mt-3">
+      <table class="table table-bordered table-hover align-middle text-center">
+
+        <thead class="table-light">
+          <tr>
+            <th>Sr.No</th>
+            <th>Title</th>
+            <th>Subtitle</th>
+            <th>Video</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if (videos && videos.length > 0) { %>
+            <% videos.forEach((v, index) => { %>
+
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= v.title %></td>
+                <td><%= v.subtitle %></td>
+
+                <!-- VIDEO PREVIEW -->
+                <td>
+                  <% if (v.video_url) { %>
+
+                    <%
+                      let embedUrl = v.video_url;
+
+                      // ✅ If full iframe pasted
+                      if (embedUrl.includes("<iframe")) {
+                        let match = embedUrl.match(/src="([^"]+)"/);
+                        if (match && match[1]) {
+                          embedUrl = match[1];
+                        }
+                      }
+
+                      // YouTube watch link
+                      if (embedUrl.includes("youtube.com/watch")) {
+                        embedUrl = embedUrl.replace("watch?v=", "embed/");
+                      }
+
+                      // youtu.be short link
+                      if (embedUrl.includes("youtu.be")) {
+                        embedUrl = embedUrl.replace("youtu.be/", "www.youtube.com/embed/");
+                      }
+
+                      // Vimeo
+                      if (embedUrl.includes("vimeo.com")) {
+                        let vimeoId = embedUrl.split("/").pop();
+                        embedUrl = "https://player.vimeo.com/video/" + vimeoId;
+                      }
+                    %>
+
+                    <iframe
+                      width="160"
+                      height="90"
+                      src="<%= embedUrl %>"
+                      frameborder="0"
+                      allowfullscreen>
+                    </iframe>
+
+                  <% } else { %>
+                    <span class="text-muted">No Video</span>
+                  <% } %>
+                </td>
+
+                <!-- STATUS -->
+                <td>
+                  <% if (v.status == 1) { %>
+                    <span class="badge bg-success">Active</span>
+                  <% } else { %>
+                    <span class="badge bg-secondary">Inactive</span>
+                  <% } %>
+                </td>
+
+                <!-- ACTION -->
+                <td>
+                  <a href="/admin/edit_gallery_video/<%= v.gallery_id %>"
+                     class="btn btn-sm btn-outline-primary">
+                    <i class="fa fa-edit"></i>
+                  </a>
+
+                  <a href="/admin/delete_gallery_video/<%= v.gallery_id %>"
+                     onclick="return confirm('Delete this video?')"
+                     class="btn btn-sm btn-outline-danger ms-1">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="6" class="text-muted">
+                No gallery videos found
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+
+
+<%- include("footer.ejs") %>

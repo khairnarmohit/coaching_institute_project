@@ -456,8 +456,261 @@ router.post("/add_syllabus",async(req,res)=>{
     
 
 
+router.get("/gallery_image", async (req, res) => {
+    let sql = `SELECT * FROM gallery_images`;
+    let gallery = await exe(sql);
+    res.render("admin/gallery_image.ejs", { gallery });
+});
 
 
+// POST route to add gallery image
+router.post("/gallery_image/add", async (req, res) => {
+  let d = req.body;
+  let imageName = "";
+  if(req.files && req.files.image){
+    imageName = Date.now() + "_" + req.files.image.name;
+    req.files.image.mv("public/images/" + imageName);
+  }
+  let sql = `INSERT INTO gallery_images (title, subtitle, image, status) VALUES 
+             ('${d.title}', '${d.subtitle}', '${imageName}', '${d.status}')`;
+  await exe(sql);
+  res.redirect("/admin/gallery_image");
+});
+
+
+router.get("/delete_gallery_image/:id", async (req, res) => {
+    let id = req.params.id;
+    let sql = `DELETE FROM gallery_images WHERE id='${id}'`;
+    await exe(sql);
+    res.redirect("/admin/gallery_image");
+});
+
+router.get("/edit_gallery_image/:id", async (req, res) => {
+    let id = req.params.id;
+    let sql = `SELECT * FROM gallery_images WHERE id='${id}'`;
+    let result = await exe(sql);
+    if (result.length > 0) {
+      res.render("admin/edit_gallery_image.ejs", {
+        item: result[0]
+      });
+    } else {
+      res.redirect("/admin/gallery_image");
+    }
+});
+
+
+router.post("/edit_gallery_image/:id", async (req, res) => {
+    let id = req.params.id;
+    let d = req.body;
+    let imageName = d.old_image;
+    if (req.files && req.files.image) {
+      imageName = Date.now() + "_" + req.files.image.name;
+      req.files.image.mv("public/images/" + imageName);
+    }
+    let sql = `UPDATE gallery_images SET
+                title='${d.title}',
+                subtitle='${d.subtitle}',
+                image='${imageName}',
+                status='${d.status}'
+               WHERE id='${id}'`;
+
+    await exe(sql);
+    res.redirect("/admin/gallery_image");
+});
+
+// =======================
+// GET : Gallery Video List
+// =======================
+router.get("/gallery_video", async (req, res) => {
+  try {
+    let sql = "SELECT * FROM gallery_videos";
+    let results = await exe(sql);
+
+    res.render("admin/gallery_video.ejs", {
+      videos: results
+    });
+
+  } catch (err) {
+    console.log(err);
+    res.send("Error loading gallery videos");
+  }
+});
+
+
+// =======================
+// POST : Add New Video
+// =======================
+router.post("/gallery_video/add", async (req, res) => {
+  try {
+    let d = req.body;
+
+    let sql = `
+      INSERT INTO gallery_videos
+      (title, subtitle, video_url, status)
+      VALUES (?, ?, ?, ?)
+    `;
+
+    await exe(sql, [
+      d.title,
+      d.subtitle,
+      d.video_url || "",
+      d.status
+    ]);
+
+    res.redirect("/admin/gallery_video");
+
+  } catch (err) {
+    console.log(err);
+    res.send("Error adding video");
+  }
+});
+
+
+// =======================
+// GET : Delete Video
+// =======================
+router.get("/delete_gallery_video/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+
+    let sql = "DELETE FROM gallery_videos WHERE gallery_id = ?";
+    await exe(sql, [id]);
+
+    res.redirect("/admin/gallery_video");
+
+  } catch (err) {
+    console.log("Delete error:", err);
+    res.send("Error while deleting video");
+  }
+});
+// =======================
+// GET : Open Edit Page
+// =======================
+router.get("/edit_gallery_video/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+
+    let sql = "SELECT * FROM gallery_videos WHERE gallery_id = ?";
+    let result = await exe(sql, [id]);
+
+    if (result.length === 0) {
+      return res.send("Video not found");
+    }
+
+    res.render("admin/edit_gallery_video.ejs", {
+      video: result[0]
+    });
+
+  } catch (err) {
+    console.log(err);
+    res.send("Error loading edit page");
+  }
+});
+
+// =======================
+// POST : Update Video
+// =======================
+router.post("/edit_gallery_video/:id", async (req, res) => {
+  try {
+    let id = req.params.id;
+    let d = req.body;
+
+    let sql = `
+      UPDATE gallery_videos SET
+        title = ?,
+        subtitle = ?,
+        video_url = ?,
+        status = ?
+      WHERE gallery_id = ?
+    `;
+
+    await exe(sql, [
+      d.title,
+      d.subtitle,
+      d.video_url,
+      d.status,
+      id
+    ]);
+
+    res.redirect("/admin/gallery_video");
+
+  } catch (err) {
+    console.log(err);
+    res.send("Error updating video");
+  }
+});
+
+router.get("/admission",async (req, res) => {
+    let sql = `SELECT * FROM admissions`;
+    let data = await exe(sql);
+    res.render("admin/admission.ejs",{admissions: data });
+});
+
+
+router.post("/addmission_form", async function (req, res) {
+        let d = req.body;
+
+        let photoName = "";
+        let idProofName = "";
+
+        // FILE UPLOAD
+        if (req.files) {
+
+            if (req.files.photo) {
+                photoName = Date.now() + "_" + req.files.photo.name;
+                req.files.photo.mv("public/images/" + photoName);
+            }
+
+            if (req.files.id_proof) {
+                idProofName = Date.now() + "_" + req.files.id_proof.name;
+                req.files.id_proof.mv("public/images/" + idProofName);
+            }
+        }
+
+        let sql = `
+            INSERT INTO admissions
+            (
+                full_name, gender, date_of_birth, mobile_number, email, address,
+                qualification, college_name, passing_year,
+                course_name, mode_of_class,
+                parent_name, parent_contact,
+                photo, id_proof
+            )
+            VALUES
+            (
+                '${d.full_name}', '${d.gender}', '${d.date_of_birth}',
+                '${d.mobile_number}', '${d.email}', '${d.address}',
+                '${d.qualification}', '${d.college_name}', '${d.passing_year}',
+                '${d.course_name}', '${d.mode_of_class}',
+                '${d.parent_name}', '${d.parent_contact}',
+                '${photoName}', '${idProofName}'
+            )
+        `;
+
+       await exe(sql);
+
+        res.redirect("/admission");
+});
+
+
+// Delete Admission
+router.get("/admission/delete/:id", async (req, res) => {
+var id = req.params.id;
+var sql = `DELETE  FROM admissions WHERE admission_id = '${id}'`;
+var data = await exe(sql);
+res.redirect("/admin/admission")
+});
+
+
+router.post("/admission/approve/:id", async (req,res)=>{
+    await exe(`UPDATE admissions SET status='Approved' WHERE admission_id='${req.params.id}'`);
+    res.json({success:true});
+});
+
+router.post("/admission/reject/:id", async (req,res)=>{
+    await exe(`UPDATE admissions SET status='Rejected' WHERE admission_id='${req.params.id}'`);
+    res.json({success:true});
+});
 
 
 

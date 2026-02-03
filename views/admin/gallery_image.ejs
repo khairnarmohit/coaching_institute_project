@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gov Competitive Academy | Gallery Images</title>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+
+<style>
+:root {
+  --gov-dark: #0b1c2d;
+  --gov-accent: #f59e0b;
+  --gov-bg: #f8fafc;
+  --gov-white: #ffffff;
+  --gov-text: #1e293b;
+  --gov-muted: #475569;
+  --gov-border: #e5e7eb;
+  --gov-shadow: 0 12px 32px -6px rgba(0,0,0,0.08);
+  --gov-radius: 18px;
+}
+
+/* Body */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--gov-bg);
+  margin:0;
+  padding:0;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: var(--gov-dark);
+  color: #fff;
+  position: fixed;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.logo {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 25px;
+}
+
+/* Sidebar Links */
+.nav-link {
+  color: #cbd5e1;
+  font-weight: 500;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+.nav-link:hover, .nav-link.active {
+  background: rgba(245,158,11,0.2);
+  color: #fff;
+}
+
+.nav-link.active {
+  font-weight: 600;
+  border-left: 5px solid var(--gov-accent);
+}
+
+/* Dropdown Arrow */
+.dropdown-toggle::after {
+  margin-left:auto;
+  transition: transform 0.3s;
+}
+
+.dropdown-toggle.collapsed::after {
+  transform: rotate(0deg);
+}
+
+.dropdown-toggle:not(.collapsed)::after {
+  transform: rotate(90deg);
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 260px;
+  padding: 30px;
+}
+
+/* Gallery Page Scoped */
+.gallery-page .card {
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.gallery-page h3 {
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Form */
+.gallery-page .form-control,
+.gallery-page .form-select {
+  border-radius: 12px;
+}
+
+/* Table */
+.gallery-page table img {
+  max-width: 80px;
+  border-radius: 8px;
+}
+
+/* Responsive */
+@media(max-width: 992px){
+  .main-content{margin-left:0;}
+  .sidebar{width:200px;}
+}
+
+.table td,
+.table th {
+  padding: 6px 8px;   /* default पेक्षा कमी */
+  vertical-align: middle;
+}
+
+.table img {
+  height: 40px;
+  width: 60px;
+  object-fit: cover;
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar / Navbar -->
+<div class="sidebar">
+  <div class="logo"><i class="fas fa-university"></i> Gov Academy</div>
+
+  <a href="/admin" class="nav-link active"><i class="fas fa-gauge"></i> Dashboard</a>
+  <a href="#" class="nav-link"><i class="fas fa-university"></i> Home</a>
+
+  <!-- About Us Dropdown -->
+  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#aboutDropdown" role="button" aria-expanded="false">
+    <i class="fas fa-info-circle"></i> About Us
+  </a>
+  <div class="collapse" id="aboutDropdown">
+    <a href="#" class="nav-link ps-4">Academy Information</a>
+    <a href="#" class="nav-link ps-4">Founder Information</a>
+  </div>
+
+  <!-- Courses Dropdown -->
+  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#coursesDropdown" role="button" aria-expanded="false">
+    <i class="fas fa-book"></i> Courses
+  </a>
+  <div class="collapse" id="coursesDropdown">
+    <a href="/admin/courses_list" class="nav-link ps-4">Courses List</a>
+    <a href="/admin/courses_details" class="nav-link ps-4">Courses Details</a>
+  </div>
+
+  <a href="#" class="nav-link"><i class="fas fa-chalkboard-user"></i> Faculty</a>
+
+  <!-- Batches Dropdown -->
+  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#batchesDropdown" role="button" aria-expanded="false">
+    <i class="fas fa-users"></i> Batches
+  </a>
+  <div class="collapse" id="batchesDropdown">
+    <a href="#" class="nav-link ps-4">Upcoming</a>
+    <a href="#" class="nav-link ps-4">Ongoing</a>
+  </div>
+
+  <a href="/admin/admission" class="nav-link"><i class="fa-solid fa-user-plus"></i> Admission</a>
+  <a href="#" class="nav-link"><i class="fa-solid fa-book-open"></i> Syllabus</a>
+
+  <!-- Gallery Dropdown -->
+  <a class="nav-link dropdown-toggle collapsed" data-bs-toggle="collapse" href="#galleryDropdown">
+    <i class="fa-solid fa-photo-film me-2"></i> Gallery
+  </a>
+  <div class="collapse" id="galleryDropdown">
+    <a href="/admin/gallery_image" class="nav-link ps-4">Gallery Images</a>
+    <a href="/admin/gallery_video" class="nav-link ps-4">Gallery Video</a>
+  </div>
+
+  <a href="#" class="nav-link"><i class="fas fa-user"></i> Contact</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content gallery-page">
+  <div class="container-fluid">
+
+    <!-- Heading + Add Button -->
+    <div class="d-flex justify-content-between align-items-center">
+      <h3>Gallery Images</h3>
+      <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#galleryForm">Add New Image</button>
+    </div>
+
+    <!-- Collapsible Form -->
+    <div class="collapse mt-3" id="galleryForm">
+      <div class="card p-3">
+        <form action="/admin/gallery_image/add" method="POST" enctype="multipart/form-data">
+          <div class="row mb-2">
+            <div class="col-md-6 mb-2">
+              <label>Title</label>
+              <input type="text" name="title" class="form-control" placeholder="Enter title" required>
+            </div>
+            <div class="col-md-6 mb-2">
+              <label>Status</label>
+              <select name="status" class="form-select">
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label>Subtitle</label>
+            <input type="text" name="subtitle" class="form-control" placeholder="Enter subtitle">
+          </div>
+
+          <div class="mb-3">
+            <label>Upload Image</label>
+            <input type="file" name="image" class="form-control" accept="image/*" required>
+          </div>
+
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#galleryForm">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Gallery Table -->
+    <div class="card p-3">
+      <table class="table table-sm table-bordered table-hover align-middle text-center">
+
+  <thead class="table-light">
+    <tr>
+      <th>Sr.No</th>
+      <th>Title</th>
+      <th>Subtitle</th>
+      <th>Image</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if (gallery && gallery.length > 0) { %>
+      <% gallery.forEach(function(item,i){ %>
+        <tr>
+          <td><%= i+1 %></td>
+          <td><%= item.title %></td>
+          <td><%= item.subtitle %></td>
+
+          <td>
+            <img src="/images/<%= item.image %>"
+                 style="width:70px; height:50px; object-fit:cover; border-radius:6px;">
+          </td>
+
+          <td>
+            <% if(item.status == 1){ %>
+              <span class="badge bg-success">Active</span>
+            <% } else { %>
+              <span class="badge bg-secondary">Inactive</span>
+            <% } %>
+          </td>
+
+          <!-- ✅ CENTER + SMALL DELETE BUTTON -->
+          <td class="text-center">
+  <div class="action-btns">
+
+    <!-- EDIT -->
+    <a href="/admin/edit_gallery_image/<%= item.id %>"
+       class="btn btn-sm btn-outline-primary"
+       title="Edit">
+      <i class="fa fa-edit"></i>
+    </a>
+
+    <!-- DELETE -->
+    <a href="/admin/delete_gallery_image/<%= item.id %>"
+       onclick="return confirm('Are you sure you want to delete this image?')"
+       class="btn btn-sm btn-outline-danger ms-1"
+       title="Delete">
+      <i class="fa fa-trash"></i>
+    </a>
+
+  </div>
+</td>
+
+
+        </tr>
+      <% }); %>
+    <% } else { %>
+      <tr>
+        <td colspan="6" class="text-center text-muted">
+          No gallery images found
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

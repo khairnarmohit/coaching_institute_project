@@ -358,9 +358,15 @@ table .btn {
     <i class="fas fa-book-open"></i> Syllabus
   </a>
 
-  <a href="/admin/gallery" class="nav-link">
-    <i class="fas fa-photo-film"></i> Gallery
-  </a>
+   <a class="nav-link dropdown-toggle collapsed gallery-toggle"
+   data-bs-toggle="collapse"
+   href="#galleryDropdown">
+   <i class="fa-solid fa-photo-film me-2"></i> Gallery
+</a>
+<div class="collapse" id="galleryDropdown">
+    <a href="/admin/gallery_image" class="nav-link ps-4">Gallery Images</a>
+    <a href="/admin/gallery_video" class="nav-link ps-4">Gallery Video</a>
+</div>
 
   <a href="/admin/contact" class="nav-link">
     <i class="fas fa-phone"></i> Contact
