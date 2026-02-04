@@ -61,11 +61,11 @@ router.get('/contact', async (req, res) => {
   }
 });
 
-router.post("/contact_enquiry",async(req,res)=>{
-    var d = req.body;
-    var sql = `insert into contact_enquiries (name,email,mo_number,message,subject) values (?,?,?,?,?)`;
-    var result = await exe(sql,[d.name,d.email,d.mo_number,d.message,d.subject]);
-    res.send("<script>alert('Enquiry Submitted Successfully');window.location= document.referrer</script>");
+router.post("/contact_enquiry", async (req, res) => {
+  var d = req.body;
+  var sql = `insert into contact_enquiries (name,email,mo_number,message,subject) values (?,?,?,?,?)`;
+  var result = await exe(sql, [d.name, d.email, d.mo_number, d.message, d.subject]);
+  res.send("<script>alert('Enquiry Submitted Successfully');window.location= document.referrer</script>");
 });
 
 
@@ -78,130 +78,40 @@ router.get("/syllabus", async (req, res) => {
   res.render("user/syllabus.ejs", { syllabus });
 })
 router.get("/gallery", async (req, res) => {
-    let gallerySql = "SELECT * FROM gallery_images";
-    let videoSql = "SELECT * FROM gallery_videos";
+  let gallerySql = "SELECT * FROM gallery_images";
+  let videoSql = "SELECT * FROM gallery_videos";
 
-    let gallery = await exe(gallerySql);
-    let videos = await exe(videoSql);
+  let gallery = await exe(gallerySql);
+  let videos = await exe(videoSql);
 
-    res.render("user/gallery.ejs", {
-      gallery: gallery,
-      videos: videos
-    });
+  res.render("user/gallery.ejs", {
+    gallery: gallery,
+    videos: videos
+  });
 });
 
-const facultyList = [
-  // FOUNDER & LEADERSHIP
-  {
-    name: "Mr. Ramesh Patil",
-    designation: "Founder & Chairman | Ex-IRS Officer",
-    dept_badge: "Founder",
-    image_url: "/images/Mr. Ramesh Patil.jpeg",
-    linkedin_url: "#",
-    experience: "Ex-IRS Officer",
-    qualification: "M.A. Pol. Sci., NET",
-    expertise: "Polity, Ethics & Essay",
-    description: "Highly experienced mentor specializing in civil services ethics and political science."
-  },
-  {
-    name: "Dr. Sunita Deshmukh",
-    designation: "Academic Director",
-    dept_badge: "Academic Head",
-    image_url: "/images/Dr. Sunita Deshmukh.png",
-    linkedin_url: "#",
-    experience: "Senior Academician",
-    qualification: "Ph.D. History (JNU)",
-    expertise: "History, Art & Culture",
-    description: "Expert in historical research and art & culture for competitive exams."
-  },
-  // GENERAL STUDIES
-  {
-    name: "Prof. Amit Kulkarni",
-    designation: "Senior Faculty – Polity & Governance",
-    dept_badge: "Polity & Governance",
-    image_url: "/images/Prof. Amit Kulkarni.jpg",
-    experience: "10+ Years",
-    qualification: "LL.M., NET Qualified",
-    expertise: "Polity & Governance",
-    description: "Specialist in Indian Constitution and Administrative law."
-  },
-  {
-    name: "Dr. Priya Sharma",
-    designation: "Faculty – Geography & Environment",
-    dept_badge: "Geography & Environment",
-    image_url: "/images/Dr. Priya Sharma.jpg",
-    experience: "8+ Years",
-    qualification: "Ph.D. Geography, SET",
-    expertise: "Geography & Environment",
-    description: "Expert in environmental science and physical geography."
-  },
-  {
-    name: "Prof. Rajesh Verma",
-    designation: "Faculty – Indian Economy",
-    dept_badge: "Economics",
-    image_url: "/images/Prof. Rajesh Verma.jpeg",
-    experience: "9+ Years",
-    qualification: "M.A. Eco (DSE), UGC-NET",
-    expertise: "Indian Economy",
-    description: "Master of economic analysis and current fiscal trends."
-  },
-  // OPTIONAL SUBJECTS
-  {
-    name: "Dr. Anil Kumar",
-    designation: "Faculty – Public Administration",
-    dept_badge: "Optional Subject",
-    image_url: "/images/Dr. Anil Kumar.png",
-    experience: "12+ Years",
-    qualification: "Ph.D. Pub. Admin",
-    expertise: "Public Administration",
-    description: "Dedicated coach for Public Administration optional papers."
-  },
-  {
-    name: "Prof. Meena Singh",
-    designation: "Faculty – Sociology",
-    dept_badge: "Optional Subject",
-    image_url: "/images/Prof. Meena Singh.jpg",
-    experience: "8+ Years",
-    qualification: "M.A. Sociology, NET, JRF",
-    expertise: "Sociology",
-    description: "Expert in sociological theories and social issues in India."
-  },
-  {
-    name: "Prof. Arvind Joshi",
-    designation: "Faculty – Political Science",
-    dept_badge: "Optional Subject",
-    image_url: "/images/Prof. Arvind Joshi.jpg",
-    experience: "10+ Years",
-    qualification: "M.Phil. Pol. Sci.",
-    expertise: "Political Science",
-    description: "Specializing in political theory and international relations."
-  },
-  // APTITUDE & CSAT
-  {
-    name: "Prof. Rahul Sharma",
-    designation: "Faculty – Quantitative Aptitude",
-    dept_badge: "Quantitative Aptitude",
-    image_url: "/images/Prof. Rahul Sharma.jpeg",
-    experience: "11+ Years",
-    qualification: "M.Sc. Math (IITD)",
-    expertise: "Mathematics",
-    description: "Master of shortcut methods and quantitative reasoning."
-  },
-  {
-    name: "Prof. Neha Gupta",
-    designation: "Faculty – Reasoning & CSAT",
-    dept_badge: "Reasoning & CSAT",
-    image_url: "/images/Prof. Neha Gupta.jpg",
-    experience: "7+ Years",
-    qualification: "M.Sc. Psychology, MBA",
-    expertise: "Reasoning & CSAT",
-    description: "Expert in logical reasoning and psychological aptitude for CSAT."
-  }
-];
+
 
 router.get("/faculty", async (req, res) => {
-  res.render("user/faculty.ejs", { facultyList: facultyList })
-})
+  try {
+    const rows = await exe("SELECT * FROM faculty ORDER BY id DESC");
+
+    res.render("user/faculty", {
+      founder: rows.filter(f => f.category === "Founder & Leadership"),
+      gs: rows.filter(f => f.category === "General Studies"),
+      optional: rows.filter(f => f.category === "Optional Subjects"),
+      aptitude: rows.filter(f => f.category === "Aptitude & CSAT")
+    });
+
+  } catch (err) {
+    console.log(err);
+    res.send("Server Error");
+  }
+});
+
+
+
+
 
 router.get("/batches", async (req, res) => {
 

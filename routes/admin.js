@@ -5,6 +5,13 @@ const path = require("path");
 const fs = require("fs");
 
 
+router.get("/login", (req, res) => {
+  res.render("admin/login");
+});
+
+
+
+
 
 router.get("/", (req, res) => {
   res.render("admin/dashboard");
@@ -286,9 +293,9 @@ router.get('/testimonials/delete/:id', async (req, res) => {
 router.get('/contact', async (req, res) => {
   const result = await exe("SELECT * FROM contact_details WHERE id=1");
 
-    res.render('admin/contact/contact.ejs', {
-        contact: result[0]
-    });
+  res.render('admin/contact/contact.ejs', {
+    contact: result[0]
+  });
 });
 
 router.post('/contact', async (req, res) => {
@@ -307,16 +314,16 @@ router.post('/contact', async (req, res) => {
 
     await exe(
       `UPDATE contact_details SET
-                address = ?,
-                phone1 = ?,
-                phone2 = ?,
-                email = ?,
-                map_embed = ?,
-                weekday_time = ?,
-                saturday_time = ?,
-                sunday_time = ?,
-                office_note = ?
-             WHERE id = 1`,
+        address = ?,
+        phone1 = ?,
+        phone2 = ?,
+        email = ?,
+        map_embed = ?,
+        weekday_time = ?,
+        saturday_time = ?,
+        sunday_time = ?,
+        office_note = ?
+       WHERE id = 1`,
       [
         address,
         phone1,
@@ -330,8 +337,8 @@ router.post('/contact', async (req, res) => {
       ]
     );
 
-        // redirect back to edit page
-        res.redirect('/admin/contact/contact.ejs');
+    // ✅ redirect to GET route (NOT .ejs)
+    res.redirect('/admin/contact');
 
   } catch (err) {
     console.error(err);
@@ -513,44 +520,132 @@ router.get("/delete_enquiry/:id", async (req, res) => {
 
 
 
-router.get("/hero-banner",async (req, res) => {
-   var sql = `select * from batches_banner`;
-    var result = await exe(sql);
-    res.render("admin/batches/hero_banner.ejs",{result});
+
+
+router.get("/faculty_expert", async (req, res) => {
+  console.log("FACULTY EXPERT ROUTE HIT");
+  var sql = `SELECT * FROM faculty ORDER BY id DESC`;
+  var facultyList = await exe(sql);
+  res.render("admin/Faculty/faculty_expert", { facultyList });
 });
 
-router.post("/update_hero",async(req,res)=>{
-    var d = req.body
-    var sql = `update batches_banner set heading =? , sub_heading=? where id=1`;
-    var result = await exe(sql,[d.heading,d.sub_heading]);
-    res.redirect("/admin/hero-banner");
-})
+
+router.post("/faculty_expert_add", async (req, res) => {
+  try {
+    const {
+      name,
+      designation,
+      category,
+      qualification,
+      expertise,
+      experience,
+      description,
+      badge
+    } = req.body;
+
+    // image check
+    if (!req.files || !req.files.image) {
+      return res.send("Image required");
+    }
+
+    const imageFile = req.files.image;
+    const fileName = Date.now() + "_" + imageFile.name;
+    const uploadPath = path.join(__dirname, "../public/images/", fileName);
+
+    // move image
+    await imageFile.mv(uploadPath);
+
+    const image = "/images/" + fileName;
+
+    const sql = `
+      INSERT INTO faculty
+      (name, designation, category, qualification, expertise, experience, description, image, badge)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    await exe(sql, [
+      name,
+      designation,
+      category,
+      qualification,
+      expertise,
+      experience,
+      description,
+      image,
+      badge
+    ]);
 
 
-router.get("/upcoming",async (req, res) => {
-    var sql = `select * from upcoming_batches where is_active=1`;
-    var result = await exe(sql);
-     res.render("admin/batches/upcoming.ejs",{result});
- });
-router.post("/add_batch",async(req,res)=>{
-    var d = req.body;
-    var sql = `insert into upcoming_batches (batch_title,status_label,batch_status,duration,fees,total_strength) values (?,?,?,?,?,?)`;
-    var result = await exe(sql,[d.title,d.statusLabel,d.batch_status,d.duration,d.fees,d.total_strength]);
-    res.redirect("/admin/upcoming");
-    
-})
-router.post("/update_batch",async(req,res)=>{
-    var d = req.body;
-    var sql = `update upcoming_batches set batch_title=?,status_label=?,batch_status=?,duration=?,fees=?,total_strength=?,mode=? where id=?`;
-    var result = await exe(sql,[d.title,d.statusLabel,d.batch_status,d.duration,d.fees,d.total_strength,d.mode,d.batch_id]);
-    res.redirect("/admin/upcoming");
+    res.redirect("/admin/faculty_expert");
+
+  } catch (err) {
+    console.log(err);
+    res.send("Insert Error");
+  }
 });
-router.get("/delete_batch/:id",async(req,res)=>{
-    var id = req.params.id;
-    var sql = `update upcoming_batches set is_active = 0 where id=?`;
-    var result = await exe(sql,[id]);
-    res.redirect("/admin/upcoming");
-}); 
+
+
+router.get("/edit_faculty_expert/:id", async (req, res) => {
+  const facultyId = req.params.id;
+  const sql = "SELECT * FROM faculty WHERE id = ?";
+  const [faculty] = await exe(sql, [facultyId]);
+  res.render("admin/Faculty/faculty_expert_edit.ejs", { faculty });
+});
+
+router.post("/update_faculty_expert/:id", async (req, res) => {
+  const id = req.params.id;
+  const { name, designation, category, qualification,
+    expertise, experience, description, badge } = req.body;
+
+  let imageSql = "";
+  let values = [
+    name, designation, category,
+    qualification, expertise,
+    experience, description, badge
+  ];
+
+  if (req.files && req.files.image) {
+    const img = req.files.image;
+    const imgName = Date.now() + "_" + img.name;
+    await img.mv("public/images/" + imgName);
+    imageSql = ", image = ?";
+    values.push("/images/" + imgName);
+  }
+
+  values.push(id);
+
+  await exe(`
+    UPDATE faculty SET
+      name=?, designation=?, category=?,
+      qualification=?, expertise=?,
+      experience=?, description=?, badge=?
+      ${imageSql}
+    WHERE id=?
+  `, values);
+
+  res.redirect("/admin/faculty_expert");
+});
+
+
+
+router.get("/delete_faculty_expert/:id", async (req, res) => {
+  const facultyId = req.params.id;
+  const sql = "DELETE FROM faculty WHERE id = ?";
+  await exe(sql, [facultyId]);
+  res.redirect("/admin/faculty_expert");
+});
+
+
+
+
+
+
+
+
+
+
+
+
 // GET courses_list page
 router.get("/courses_list", async (req, res) => {
   const sql = "SELECT * FROM courses_list";
@@ -666,9 +761,9 @@ router.get("/academy_information", async function (req, res) {
 
 
 router.get("/gallery_image", async (req, res) => {
-    let sql = `SELECT * FROM gallery_images`;
-    let gallery = await exe(sql);
-    res.render("admin/gallery_image.ejs", { gallery });
+  let sql = `SELECT * FROM gallery_images`;
+  let gallery = await exe(sql);
+  res.render("admin/gallery_image.ejs", { gallery });
 });
 
 router.post("/academy_information", async function (req, res) {
@@ -806,7 +901,7 @@ router.get("/delete_academy/:id", async function (req, res) {
 router.post("/gallery_image/add", async (req, res) => {
   let d = req.body;
   let imageName = "";
-  if(req.files && req.files.image){
+  if (req.files && req.files.image) {
     imageName = Date.now() + "_" + req.files.image.name;
     req.files.image.mv("public/images/" + imageName);
   }
@@ -818,43 +913,43 @@ router.post("/gallery_image/add", async (req, res) => {
 
 
 router.get("/delete_gallery_image/:id", async (req, res) => {
-    let id = req.params.id;
-    let sql = `DELETE FROM gallery_images WHERE id='${id}'`;
-    await exe(sql);
-    res.redirect("/admin/gallery_image");
+  let id = req.params.id;
+  let sql = `DELETE FROM gallery_images WHERE id='${id}'`;
+  await exe(sql);
+  res.redirect("/admin/gallery_image");
 });
 
 router.get("/edit_gallery_image/:id", async (req, res) => {
-    let id = req.params.id;
-    let sql = `SELECT * FROM gallery_images WHERE id='${id}'`;
-    let result = await exe(sql);
-    if (result.length > 0) {
-      res.render("admin/edit_gallery_image.ejs", {
-        item: result[0]
-      });
-    } else {
-      res.redirect("/admin/gallery_image");
-    }
+  let id = req.params.id;
+  let sql = `SELECT * FROM gallery_images WHERE id='${id}'`;
+  let result = await exe(sql);
+  if (result.length > 0) {
+    res.render("admin/edit_gallery_image.ejs", {
+      item: result[0]
+    });
+  } else {
+    res.redirect("/admin/gallery_image");
+  }
 });
 
 
 router.post("/edit_gallery_image/:id", async (req, res) => {
-    let id = req.params.id;
-    let d = req.body;
-    let imageName = d.old_image;
-    if (req.files && req.files.image) {
-      imageName = Date.now() + "_" + req.files.image.name;
-      req.files.image.mv("public/images/" + imageName);
-    }
-    let sql = `UPDATE gallery_images SET
+  let id = req.params.id;
+  let d = req.body;
+  let imageName = d.old_image;
+  if (req.files && req.files.image) {
+    imageName = Date.now() + "_" + req.files.image.name;
+    req.files.image.mv("public/images/" + imageName);
+  }
+  let sql = `UPDATE gallery_images SET
                 title='${d.title}',
                 subtitle='${d.subtitle}',
                 image='${imageName}',
                 status='${d.status}'
                WHERE id='${id}'`;
 
-    await exe(sql);
-    res.redirect("/admin/gallery_image");
+  await exe(sql);
+  res.redirect("/admin/gallery_image");
 });
 
 // =======================
@@ -979,34 +1074,34 @@ router.post("/edit_gallery_video/:id", async (req, res) => {
   }
 });
 
-router.get("/admission",async (req, res) => {
-    let sql = `SELECT * FROM admissions`;
-    let data = await exe(sql);
-    res.render("admin/admission.ejs",{admissions: data });
+router.get("/admission", async (req, res) => {
+  let sql = `SELECT * FROM admissions`;
+  let data = await exe(sql);
+  res.render("admin/admission.ejs", { admissions: data });
 });
 
 
 router.post("/addmission_form", async function (req, res) {
-        let d = req.body;
+  let d = req.body;
 
-        let photoName = "";
-        let idProofName = "";
+  let photoName = "";
+  let idProofName = "";
 
-        // FILE UPLOAD
-        if (req.files) {
+  // FILE UPLOAD
+  if (req.files) {
 
-            if (req.files.photo) {
-                photoName = Date.now() + "_" + req.files.photo.name;
-                req.files.photo.mv("public/images/" + photoName);
-            }
+    if (req.files.photo) {
+      photoName = Date.now() + "_" + req.files.photo.name;
+      req.files.photo.mv("public/images/" + photoName);
+    }
 
-            if (req.files.id_proof) {
-                idProofName = Date.now() + "_" + req.files.id_proof.name;
-                req.files.id_proof.mv("public/images/" + idProofName);
-            }
-        }
+    if (req.files.id_proof) {
+      idProofName = Date.now() + "_" + req.files.id_proof.name;
+      req.files.id_proof.mv("public/images/" + idProofName);
+    }
+  }
 
-        let sql = `
+  let sql = `
             INSERT INTO admissions
             (
                 full_name, gender, date_of_birth, mobile_number, email, address,
@@ -1026,29 +1121,29 @@ router.post("/addmission_form", async function (req, res) {
             )
         `;
 
-       await exe(sql);
+  await exe(sql);
 
-        res.redirect("/admission");
+  res.redirect("/admission");
 });
 
 
 // Delete Admission
 router.get("/admission/delete/:id", async (req, res) => {
-var id = req.params.id;
-var sql = `DELETE  FROM admissions WHERE admission_id = '${id}'`;
-var data = await exe(sql);
-res.redirect("/admin/admission")
+  var id = req.params.id;
+  var sql = `DELETE  FROM admissions WHERE admission_id = '${id}'`;
+  var data = await exe(sql);
+  res.redirect("/admin/admission")
 });
 
 
-router.post("/admission/approve/:id", async (req,res)=>{
-    await exe(`UPDATE admissions SET status='Approved' WHERE admission_id='${req.params.id}'`);
-    res.json({success:true});
+router.post("/admission/approve/:id", async (req, res) => {
+  await exe(`UPDATE admissions SET status='Approved' WHERE admission_id='${req.params.id}'`);
+  res.json({ success: true });
 });
 
-router.post("/admission/reject/:id", async (req,res)=>{
-    await exe(`UPDATE admissions SET status='Rejected' WHERE admission_id='${req.params.id}'`);
-    res.json({success:true});
+router.post("/admission/reject/:id", async (req, res) => {
+  await exe(`UPDATE admissions SET status='Rejected' WHERE admission_id='${req.params.id}'`);
+  res.json({ success: true });
 });
 
 router.get("/academy_information", async function (req, res) {
@@ -1201,7 +1296,7 @@ router.get("/delete_academy/:id", async function (req, res) {
   } catch (err) {
     console.error("Academy Info Delete Error:", err);
     res.status(500).send("Something went wrong");
-     }
+  }
 });
 
 router.get("/founder_information", async (req, res) => {

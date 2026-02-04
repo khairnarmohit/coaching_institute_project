@@ -76,28 +76,28 @@
             border-radius: 8px;
             border: 1px solid #e1e1e1;
         }
-        .row {
-  margin-left: 0;
-  margin-right: 0;
-}
 
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
     </style>
 
 
 
-        <div class="container px-4 mt-3">
+    <div class="container px-4 mt-3">
 
-            <!-- ================= FORM CARD ================= -->
-            <div class="card course-card shadow-sm">
-                <div class="card-header text-white">
-                    <h6 class="mb-0">
-                        <i class="fa fa-book-open me-2"></i> Add Course
-                    </h6>
-                </div>
+        <!-- ================= FORM CARD ================= -->
+        <div class="card course-card shadow-sm">
+            <div class="card-header text-white">
+                <h6 class="mb-0">
+                    <i class="fa fa-book-open me-2"></i> Add Course
+                </h6>
+            </div>
 
-                <div class="card-body">
-                    <div class="container-fluid p-0">
-                        <form action="/admin/add-course" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <div class="container-fluid p-0">
+                    <form action="/admin/add-course" method="post" enctype="multipart/form-data">
 
                         <div class="row g-2">
                             <div class="col-md-4">
@@ -181,112 +181,112 @@
                         </div>
 
                     </form>
-                    </div>
-                    
                 </div>
+
             </div>
-
-            <!-- ================= TABLE CARD ================= -->
-            <div class="card table-card shadow-sm mt-4">
-                <div class="card-header bg-dark text-white">
-                    <h6 class="mb-0">
-                        <i class="fa fa-list me-2"></i> Course List
-                    </h6>
-                </div>
-
-                <div class="card-body p-2">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-hover align-middle mb-0">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Course</th>
-                                    <th>Category</th>
-                                    <th>Duration</th>
-                                    <th>Eligibility</th>
-                                    <th>Features</th>
-                                    <th>Admission Notice</th>
-
-                                    <th>Fee Sturcture</th>
-                                    <th>Image</th>
-
-                                    <th>Status</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <% if(courses && courses.length> 0){ %>
-                                    <% courses.forEach((c,i)=>{ %>
-                                        <tr>
-                                            <td>
-                                                <%= i+1 %>
-                                            </td>
-                                            <td>
-                                                <strong>
-                                                    <%= c.title %>
-                                                </strong><br>
-                                                <small class="text-muted">
-                                                    <%= c.course_key %>
-                                                </small>
-                                            </td>
-                                            <td>
-                                                <%= c.category %>
-                                            </td>
-                                            <td>
-                                                <%= c.duration %>
-                                            </td>
-                                            <td>
-                                                <%= c.eligibility %>
-                                            </td>
-                                            <td>
-                                                <%= c.features %>
-                                            </td>
-                                            <td>
-                                                <%= c.admission_notice %>
-                                            </td>
-                                            <td>
-                                                <%= c.fees_structure %>
-
-                                            </td>
-                                            <td>
-                                                <img src="/images/<%= c.image %>">
-                                            </td>
-                                            <td>
-                                                <% if(c.status==1){ %>
-                                                    <span class="badge bg-success status-badge">Active</span>
-                                                    <% } else { %>
-                                                        <span class="badge bg-danger status-badge">Inactive</span>
-                                                        <% } %>
-                                            </td>
-
-                                            <td class="text-center">
-                                                <a href="/admin/edit_course/<%= c.id %>"
-                                                    class="btn btn-sm btn-outline-primary">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <a href="/admin/delete_course/<%= c.id %>"
-                                                    onclick="return confirm('Delete this course?')"
-                                                    class="btn btn-sm btn-outline-danger ms-1">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <% }) %>
-                                            <% } else { %>
-                                                <tr>
-    <td colspan="11" class="text-center text-muted py-3">
-        No courses found
-    </td>
-</tr>
-
-                                                <% } %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <!-- ================= TABLE CARD ================= -->
+        <div class="card table-card shadow-sm mt-4">
+            <div class="card-header bg-dark text-white">
+                <h6 class="mb-0">
+                    <i class="fa fa-list me-2"></i> Course List
+                </h6>
+            </div>
+
+            <div class="card-body p-2">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Course</th>
+                                <th>Category</th>
+                                <th>Duration</th>
+                                <th>Eligibility</th>
+                                <th>Features</th>
+                                <th>Admission Notice</th>
+
+                                <th>Fee Sturcture</th>
+                                <th>Image</th>
+
+                                <th>Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% if(courses && courses.length> 0){ %>
+                                <% courses.forEach((c,i)=>{ %>
+                                    <tr>
+                                        <td>
+                                            <%= i+1 %>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <%= c.title %>
+                                            </strong><br>
+                                            <small class="text-muted">
+                                                <%= c.course_key %>
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <%= c.category %>
+                                        </td>
+                                        <td>
+                                            <%= c.duration %>
+                                        </td>
+                                        <td>
+                                            <%= c.eligibility %>
+                                        </td>
+                                        <td>
+                                            <%= c.features %>
+                                        </td>
+                                        <td>
+                                            <%= c.admission_notice %>
+                                        </td>
+                                        <td>
+                                            <%= c.fees_structure %>
+
+                                        </td>
+                                        <td>
+                                            <img src="/images/<%= c.image %>">
+                                        </td>
+                                        <td>
+                                            <% if(c.status==1){ %>
+                                                <span class="badge bg-success status-badge">Active</span>
+                                                <% } else { %>
+                                                    <span class="badge bg-danger status-badge">Inactive</span>
+                                                    <% } %>
+                                        </td>
+
+                                        <td class="text-center">
+                                            <a href="/admin/edit_course/<%= c.id %>"
+                                                class="btn btn-sm btn-outline-primary">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a href="/admin/delete_course/<%= c.id %>"
+                                                onclick="return confirm('Delete this course?')"
+                                                class="btn btn-sm btn-outline-danger ms-1">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="11" class="text-center text-muted py-3">
+                                                    No courses found
+                                                </td>
+                                            </tr>
+
+                                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <%- include("footer.ejs") %>

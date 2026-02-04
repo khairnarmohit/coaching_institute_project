@@ -10,35 +10,83 @@
   --gov-radius: 18px;
 }
 
-.gov-card {
+.gov-header {
+  background: var(--gov-dark);
+  color: #fff;
+  border-radius: var(--gov-radius) var(--gov-radius) 0 0;
+  position: relative;
+  top: 55px;
+}
+
+/* .gov-card {
   border: 1px solid var(--gov-border);
   border-radius: var(--gov-radius);
   box-shadow: var(--gov-shadow);
-}
+  background: white;
+} */
 
-.gov-header {
-  background: var(--gov-dark);
-  color: #f59e0b;
-  border-radius: var(--gov-radius) var(--gov-radius) 0 0;
-}
-
-.action-btns a {
-  margin: 0 4px;
-}
 .message-ellipsis {
-  max-width: 200px;
+  max-width: 220px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* ===== DATATABLE BUTTONS ===== */
+.dt-top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.dt-buttons .btn {
+  border-radius: 30px !important;
+  padding: 6px 16px !important;
+  font-weight: 700 !important;
+  border: none !important;
+  margin-left: 8px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* PRINT */
+button.buttons-print {
+  background: var(--gov-accent) !important;
+  color: #000 !important;
+  position: relative;
+  top: -60px;
+}
+button.buttons-print:hover {
+  background: var(--gov-dark) !important;
+  color: var(--gov-accent) !important;
+}
+
+/* CSV */
+button.buttons-csv {
+  background: #16a34a !important;
+  color: #fff !important;
+  position: relative;
+  top: -60px;
+}
+button.buttons-csv:hover {
+  background: #065f46 !important;
+}
+
+/* PDF */
+button.buttons-pdf {
+  background: #dc2626 !important;
+  color: #fff !important;
+  position: relative;
+  top: -60px;
+}
+button.buttons-pdf:hover {
+  background: #7f1d1d !important;
+}
 </style>
 
-<!-- View Enquiry Modal -->
+<!-- ===== VIEW MODAL ===== -->
 <div class="modal fade" id="viewEnquiryModal" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content rounded-4 shadow">
-
       <div class="modal-header bg-dark text-warning">
         <h5 class="modal-title fw-bold">
           <i class="bi bi-envelope-open"></i> Enquiry Details
@@ -47,122 +95,84 @@
       </div>
 
       <div class="modal-body p-4">
-        <div class="mb-3">
-          <strong>Name:</strong>
-          <span id="viewName"></span>
-        </div>
-
-        <div class="mb-3">
-          <strong>Email:</strong>
-          <span id="viewEmail"></span>
-        </div>
-
-        <div class="mb-3">
-          <strong>Mobile:</strong>
-          <span id="viewMobile"></span>
-        </div>
-
-        <div class="mb-3">
-          <strong>Message:</strong>
-          <div class="border rounded p-3 bg-light" id="viewMessage"></div>
-        </div>
+        <p><strong>Name:</strong> <span id="viewName"></span></p>
+        <p><strong>Email:</strong> <span id="viewEmail"></span></p>
+        <p><strong>Mobile:</strong> <span id="viewMobile"></span></p>
+        <p><strong>Message:</strong></p>
+        <div class="border rounded p-3 bg-light" id="viewMessage"></div>
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
-
     </div>
   </div>
 </div>
 
-
-
-
-
-
-
-
-
-
 <div class="container mt-4">
 
-  <!-- PAGE TITLE + ADD BUTTON -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
+  <!-- TITLE -->
+  <div class="d-flex justify-content-between align-items-center mb-2">
     <h3 class="fw-bold" style="color:var(--gov-dark)">
       <i class="bi bi-trophy" style="color:var(--gov-accent)"></i>
       Enquiries Section
     </h3>
-
-   
   </div>
 
+  <!-- 🔹 BUTTONS (OUTSIDE CARD) -->
+  <div class="dt-top"></div>
 
-  
-  <!-- ================= TABLE ================= -->
-<div class="gov-card">
-  <!-- <div class="gov-header px-4 py-3 fw-bold">
-    <i class="bi bi-list-ul"></i> Enquiries List
-  </div> -->
-
-  <div class="card-body p-0" style="background:var(--gov-bg)">
-    <table  id="example" class="table table-bordered table-hover rounded-0 mb-0 align-middle">
+  <!-- TABLE CARD -->
+  <div class="gov-card p-3">
+    
+    <table id="example" class="table table-bordered table-hover table-striped rounded-0 align-middle mb-0">
+      <div class="gov-header px-4 py-3 fw-bold">
+      <i class="bi bi-list-ul"></i> Enquiries List
+    </div>
       <thead class="table-secondary text-center">
         <tr>
-          <th width="80">Sr.No</th>
+          <th>Sr.No</th>
           <th>Name</th>
           <th>Email</th>
-          <th>Mo Number</th>
+          <th>Mobile</th>
           <th>Message</th>
           <th width="160">Action</th>
         </tr>
-        </thead>
-        <% for(var i=0;i<result.length;i++){ %>
+      </thead>
+
+      <tbody>
+      <% for(var i=0;i<result.length;i++){ %>
         <tr>
-            <td><%= i+1 %></td>
-            <td><%= result[i].name %></td>
-            <td><%= result[i].email %></td>
-            <td><%= result[i].mo_number %></td>
-            <td class="message-ellipsis"><%= result[i].message %></td>
-            <td class="text-center">
-  <!-- View -->
-  <a  
-     class="btn btn-sm btn-info"
-     data-bs-toggle="modal" 
-     data-bs-target="#viewEnquiryModal"
-     onclick='viewEnquiry(
-        "<%= result[i].name %>",
-        "<%= result[i].email %>",
-        "<%= result[i].mo_number %>",
-        "<%= result[i].message %>")'>
-     <i class="fa fa-eye"></i>
-  </a>
+          <td class="text-center"><%= i+1 %></td>
+          <td><%= result[i].name %></td>
+          <td><%= result[i].email %></td>
+          <td><%= result[i].mo_number %></td>
+          <td class="message-ellipsis"><%= result[i].message %></td>
+          <td class="text-center">
+            <a class="btn btn-sm btn-warning"
+               data-bs-toggle="modal"
+               data-bs-target="#viewEnquiryModal"
+               onclick='viewEnquiry(
+                 "<%= result[i].name %>",
+                 "<%= result[i].email %>",
+                 "<%= result[i].mo_number %>",
+                 "<%= result[i].message %>"
+               )'>
+              <i class="bi bi-pencil"></i>
+            </a>
 
-  
-
-  <!-- Delete -->
-  <a href="/admin/delete_enquiry/<%= result[i].id %>" 
-     class="btn btn-sm btn-danger"
-     onclick="return confirm('Delete this enquiry?')">
-     <i class="fa fa-trash"></i>
-  </a>
-</td>
-
-
+            <a href="/admin/delete_enquiry/<%= result[i].id %>"
+               class="btn btn-sm btn-danger"
+               onclick="return confirm('Delete this enquiry?')">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
         </tr>
-        <% } %>
-      
-
-     
+      <% } %>
+      </tbody>
     </table>
   </div>
 </div>
-
-
-</div>
-
 
 <script>
 function viewEnquiry(name, email, mobile, message) {
@@ -173,25 +183,13 @@ function viewEnquiry(name, email, mobile, message) {
 }
 </script>
 
-<!-- data table intigration -->
-   <!-- jQuery -->
+<!-- ===== SCRIPTS ===== -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- DataTables CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-
-
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
-<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-
-<link rel="stylesheet" href="https://cdn.datatables.net/select/1.6.2/css/select.dataTables.min.css">
-<script src="https://cdn.datatables.net/select/1.6.2/js/dataTables.select.min.js"></script>
-
-
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
@@ -200,11 +198,14 @@ function viewEnquiry(name, email, mobile, message) {
 
 <script>
 $(document).ready(function () {
-    $('#example').DataTable({
-        dom : "Bfrtip"
-        
-        
-    });
+  $('#example').DataTable({
+    dom: '<"dt-top"B>rtip',
+    buttons: [
+      { extend: 'print', text: 'Print' },
+      { extend: 'csv', text: 'CSV' },
+      { extend: 'pdf', text: 'PDF' }
+    ]
+  });
 });
 </script>
 

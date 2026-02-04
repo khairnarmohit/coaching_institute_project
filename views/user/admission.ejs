@@ -1,58 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admission Form - GCA</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   
 
 <style>
-:root {
+:root{
 --gov-dark:#0b1c2d;
 --gov-accent:#f59e0b;
 --gov-bg:#f8fafc;
---gov-white:#ffffff;
---gov-border:#e5e7eb;
 }
+
+body{
+      overflow-x: hidden;
+    }
 
 .admission-hero{
 background:linear-gradient(rgba(11,28,45,.9),rgba(11,28,45,.8)),
-url("https://images.unsplash.com/photo-152305085306e-880005f847b3") center/cover no-repeat;
-padding:100px 0;
-color:#fff;
+url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=2000&q=80")
+center/cover no-repeat;
+padding:45px 0 40px;
 text-align:center;
+color:#fff;
 }
 
 .admission-form-container{
 max-width:900px;
-margin:-50px auto 100px;
+margin:-40px auto 100px;
 background:#fff;
-padding:50px;
-border-radius:30px;
+padding:40px;
+border-radius:25px;
 box-shadow:0 20px 40px rgba(0,0,0,.1);
 }
 
-.form-section-title{
-font-weight:700;
-border-bottom:2px solid var(--gov-accent);
-display:inline-block;
-margin-bottom:25px;
+.form-step{display:none;}
+.form-step.active{display:block;}
+
+.step-indicator{
+display:flex;
+justify-content:space-between;
+margin-bottom:30px;
+}
+.step-indicator div{
+flex:1;
+text-align:center;
+font-weight:600;
+color:#9ca3af;
+}
+.step-indicator div.active{
+color:var(--gov-accent);
 }
 
 .section-card{
 background:var(--gov-bg);
 padding:30px;
 border-radius:20px;
-margin-bottom:40px;
+margin-bottom:30px;
 }
 
 .form-control{border-radius:12px;padding:12px}
+.form-label{font-weight:600}
 .required-star{color:red}
+
+.btn-nav{
+border-radius:50px;
+padding:12px 30px;
+font-weight:700;
+}
+.btn-next{background:var(--gov-accent);border:none;}
+.btn-prev{background:#e5e7eb;border:none;}
+
 .btn-submit{
-background:#ffcc00;
+background:var(--gov-accent);
 font-weight:700;
 border-radius:50px;
 border:none;
@@ -63,38 +88,42 @@ padding:15px;
 </head>
 
 <body>
-<%- include("navbar.ejs") %>
+    <%- include('navbar') %>
 
 <div class="admission-hero">
-<h1>Enrollment Form</h1>
-<p>Academic Year 2026-27</p>
+  <h1 class="fw-bold font-size-5">Enrollment Form</h1>
+  <p>Academic Year 2026-27</p>
 </div>
 
 <div class="container">
-<form class="admission-form-container"
+<form id="admissionForm" class="admission-form-container"
 action="/admin/addmission_form"
 method="post"
 enctype="multipart/form-data">
 
-<div class="mb-5 text-center">
-                    <h3 class="fw-bold" style="color: var(--gov-dark);">Registration Details</h3>
-                    <p class="text-muted">Academic Year 2026-27</p>
-                </div>
+<!-- STEP INDICATOR -->
+<div class="step-indicator">
+  <div class="active">Personal</div>
+  <div>Education</div>
+  <div>Course</div>
+  <div>Guardian</div>
+  <div>Documents</div>
+</div>
 
-<!-- PERSONAL -->
-<h5 class="form-section-title">Personal Information</h5>
-<div class="section-card">
-<div class="row g-4">
+<!-- ================= STEP 1 ================= -->
+<div class="form-step active">
+<h5 class="fw-bold mb-3">Personal Information</h5>
+<div class="section-card row g-3">
 
-<div class="col-12">
-<label class="form-label">Full Name<span class="required-star">*</span></label>
+<div class="col-md-6">
+<label class="form-label">Full Name <span class="required-star">*</span></label>
 <input type="text" class="form-control" name="full_name" required>
 </div>
 
 <div class="col-md-6">
-<label class="form-label">Gender<span class="required-star">*</span></label>
+<label class="form-label">Gender <span class="required-star">*</span></label>
 <select class="form-control" name="gender" required>
-<option value="">-- Choose --</option>
+<option value="">Select Gender</option>
 <option>Male</option>
 <option>Female</option>
 <option>Other</option>
@@ -102,42 +131,39 @@ enctype="multipart/form-data">
 </div>
 
 <div class="col-md-6">
-<label class="form-label">Date of Birth<span class="required-star">*</span></label>
+<label class="form-label">Date of Birth <span class="required-star">*</span></label>
 <input type="date" class="form-control" name="date_of_birth" required>
 </div>
 
-<!-- MOBILE -->
 <div class="col-md-6">
-<label class="form-label">Mobile Number<span class="required-star">*</span></label>
-<div class="input-group">
-<span class="input-group-text">+91</span>
-<input type="text"
-class="form-control"
+<label class="form-label">Mobile Number <span class="required-star">*</span></label>
+<input type="text" class="form-control"
 name="mobile_number"
+placeholder="10-digit Mobile Number"
 maxlength="10"
 pattern="[0-9]{10}"
+inputmode="numeric"
 oninput="this.value=this.value.replace(/[^0-9]/g,'')"
 required>
 </div>
-</div>
 
 <div class="col-md-6">
-<label class="form-label">Email Address<span class="required-star">*</span></label>
+<label class="form-label">Email Address <span class="required-star">*</span></label>
 <input type="email" class="form-control" name="email" required>
 </div>
 
-<div class="col-12">
-<label class="form-label">Permanent Address<span class="required-star">*</span></label>
-<textarea class="form-control" name="address" rows="3" required></textarea>
+<div class="col-md-6">
+<label class="form-label">Permanent Address <span class="required-star">*</span></label>
+<textarea class="form-control" name="address" required></textarea>
 </div>
 
 </div>
 </div>
 
-<!-- EDUCATION -->
-<h5 class="form-section-title">Educational Background</h5>
-<div class="section-card">
-<div class="row g-4">
+<!-- ================= STEP 2 ================= -->
+<div class="form-step">
+<h5 class="fw-bold mb-3">Educational Background</h5>
+<div class="section-card row g-3">
 
 <div class="col-md-6">
 <label class="form-label">Highest Qualification</label>
@@ -151,40 +177,35 @@ required>
 
 <div class="col-md-6">
 <label class="form-label">Year of Passing</label>
-<input type="text"
-class="form-control"
+<input type="text" class="form-control"
 name="passing_year"
 maxlength="4"
 pattern="[0-9]{4}"
-oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-placeholder="YYYY">
+inputmode="numeric"
+oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 </div>
 
 </div>
 </div>
 
-<!-- COURSE -->
-<h5 class="form-section-title">Course Selection</h5>
-<div class="section-card">
-<div class="row g-4">
+<!-- ================= STEP 3 ================= -->
+<div class="form-step">
+<h5 class="fw-bold mb-3">Course Selection</h5>
+<div class="section-card row g-3">
 
 <div class="col-md-6">
-<label class="form-label">Selected Course<span class="required-star">*</span></label>
+<label class="form-label">Selected Course <span class="required-star">*</span></label>
 <select class="form-control" name="course_name" required>
-<option value="">-- Select Course --</option>
-<option>UPSC Civil Services</option>
-<option>MPSC State Services</option>
-<option>Banking Exams</option>
-<option>Police Bharti</option>
-<option>Talathi</option>
-<option>Railway Exams</option>
+<option value="">Select Course</option>
+<option>UPSC</option>
+<option>MPSC</option>
 </select>
 </div>
 
 <div class="col-md-6">
-<label class="form-label">Mode of Study<span class="required-star">*</span></label>
+<label class="form-label">Mode of Study <span class="required-star">*</span></label>
 <select class="form-control" name="mode_of_class" required>
-<option value="">-- Choose --</option>
+<option value="">Select Mode</option>
 <option>Online</option>
 <option>Offline</option>
 </select>
@@ -193,28 +214,28 @@ placeholder="YYYY">
 </div>
 </div>
 
-<!-- GUARDIAN -->
-<h5 class="form-section-title">Guardian Information</h5>
-<div class="section-card">
-<div class="row g-4">
+<!-- ================= STEP 4 ================= -->
+<div class="form-step">
+<h5 class="fw-bold mb-3">Guardian Information</h5>
+<div class="section-card row g-3">
 
-<div class="col-md-7">
+<div class="col-md-6">
 <label class="form-label">Parent / Guardian Name</label>
 <input type="text" class="form-control" name="parent_name">
 </div>
 
-<div class="col-md-5">
+<div class="col-md-6">
 <label class="form-label">Emergency Contact Number</label>
-<input type="tel" class="form-control" name="parent_contact">
+<input type="text" class="form-control" name="parent_contact">
 </div>
 
 </div>
 </div>
 
-<!-- DOCUMENTS -->
-<h5 class="form-section-title">Required Documents</h5>
-<div class="section-card">
-<div class="row g-4">
+<!-- ================= STEP 5 ================= -->
+<div class="form-step">
+<h5 class="fw-bold mb-3">Documents Upload</h5>
+<div class="section-card row g-3">
 
 <div class="col-md-6">
 <label class="form-label">Passport Size Photo</label>
@@ -227,23 +248,68 @@ placeholder="YYYY">
 </div>
 
 </div>
-</div>
 
-<div class="form-check mt-4">
+<div class="form-check mt-3">
 <input class="form-check-input" type="checkbox" required>
 <label class="form-check-label">
-I hereby declare all information is correct
+I confirm all details are correct
 </label>
 </div>
 
 <button type="submit" class="btn btn-submit mt-4">
 Confirm & Submit Admission
 </button>
+</div>
+
+<!-- NAV BUTTONS -->
+<div class="d-flex justify-content-between mt-4">
+<button type="button" class="btn btn-prev btn-nav">Previous</button>
+<button type="button" class="btn btn-next btn-nav">Next</button>
+</div>
 
 </form>
 </div>
+<%- include('footer') %>
 
-<%- include("footer.ejs") %>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const steps=document.querySelectorAll(".form-step");
+const indicators=document.querySelectorAll(".step-indicator div");
+let current=0;
+
+function validateStep(){
+const inputs=steps[current].querySelectorAll("input, select, textarea");
+for(let input of inputs){
+if(!input.checkValidity()){
+input.reportValidity();
+return false;
+}
+}
+return true;
+}
+
+function showStep(i){
+steps.forEach(s=>s.classList.remove("active"));
+indicators.forEach(d=>d.classList.remove("active"));
+steps[i].classList.add("active");
+indicators[i].classList.add("active");
+document.querySelector(".btn-prev").style.display=i===0?"none":"inline-block";
+document.querySelector(".btn-next").style.display=i===steps.length-1?"none":"inline-block";
+}
+
+document.querySelector(".btn-next").onclick=()=>{
+if(validateStep()){
+current++;
+showStep(current);
+}
+};
+
+document.querySelector(".btn-prev").onclick=()=>{
+current--;
+showStep(current);
+};
+
+showStep(0);
+</script>
+
 </body>
 </html>

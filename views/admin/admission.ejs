@@ -7,21 +7,27 @@
 <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
     <h6 class="mb-0">Student Admissions</h6>
 
-    <select id="statusFilter" class="form-select form-select-sm w-auto">
-        <option value="All">All Status</option>
-        <option value="Pending">Pending</option>
-        <option value="Approved">Approved</option>
-        <option value="Rejected">Rejected</option>
-    </select>
+    <div class="d-flex gap-2 align-items-center">
+        <!-- EXPORT BUTTONS -->
+        <div id="exportButtons"></div>
+
+        <select id="statusFilter" class="form-select form-select-sm w-auto">
+            <option value="All">All Status</option>
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+    </div>
 </div>
 
 <div class="card-body p-0">
 <div class="table-responsive">
 
-<table class="table table-sm table-hover table-bordered align-middle text-center mb-0 admission-table">
+<table id="admissionTable"
+class="table table-sm table-hover table-bordered align-middle text-center mb-0 admission-table">
 <thead>
 <tr>
-<th>#</th>
+<th>Sr.No</th>
 <th>Name</th>
 <th>Mobile</th>
 <th>Course</th>
@@ -65,28 +71,23 @@
 <td>
 <div class="d-flex gap-1 justify-content-center">
 
-<!-- VIEW -->
 <button class="btn btn-outline-info btn-sm"
 data-bs-toggle="modal"
 data-bs-target="#viewModal<%= a.admission_id %>">
 <i class="fa fa-eye"></i>
 </button>
 
-<!-- APPROVE -->
 <button class="btn btn-outline-success btn-sm btn-approve"
 data-id="<%= a.admission_id %>">
 <i class="fa fa-check"></i>
 </button>
 
-<!-- REJECT -->
 <button class="btn btn-outline-danger btn-sm btn-reject"
 data-id="<%= a.admission_id %>">
 <i class="fa fa-xmark"></i>
 </button>
 
-<!-- DELETE -->
 <a href="/admin/admission/delete/<%= a.admission_id %>"
-
 class="btn btn-outline-secondary btn-sm">
 <i class="fa fa-trash"></i>
 </a>
@@ -95,7 +96,7 @@ class="btn btn-outline-secondary btn-sm">
 </td>
 </tr>
 
-<!-- ===== NORMAL ATTRACTIVE MODAL ===== -->
+<!-- VIEW MODAL -->
 <div class="modal fade" id="viewModal<%= a.admission_id %>" tabindex="-1">
 <div class="modal-dialog modal-lg modal-dialog-centered">
 <div class="modal-content modal-clean">
@@ -106,10 +107,8 @@ class="btn btn-outline-secondary btn-sm">
 </div>
 
 <div class="modal-body">
-
 <div class="row g-3">
 
-<!-- IMAGES -->
 <div class="col-md-4 text-center">
 <div class="doc-box mb-3">
 <% if(a.photo){ %>
@@ -130,7 +129,6 @@ class="btn btn-outline-secondary btn-sm">
 </div>
 </div>
 
-<!-- DETAILS -->
 <div class="col-md-8">
 <div class="info-box mb-2">
 <p><b>Name:</b> <%= a.full_name %></p>
@@ -150,7 +148,6 @@ class="btn btn-outline-secondary btn-sm">
 </div>
 
 </div>
-
 </div>
 
 <div class="modal-footer py-2">
@@ -171,7 +168,6 @@ class="btn btn-outline-secondary btn-sm">
 </div>
 </div>
 
-
 <!-- ===== STYLES ===== -->
 <style>
 .admission-table th,
@@ -182,49 +178,42 @@ class="btn btn-outline-secondary btn-sm">
 .admission-table th{
     background:#f8f9fa;
 }
-
-/* MODAL */
-.modal-clean{
-    border-radius:14px;
-}
-.doc-img{
-    width:120px;
-    height:120px;
-    object-fit:cover;
-    border-radius:12px;
-    border:1px solid #ddd;
-}
-.no-img{
-    width:120px;
-    height:120px;
-    border:1px dashed #aaa;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:13px;
-    color:#888;
-}
-.img-label{
-    font-size:13px;
-    margin-top:6px;
-}
-.info-box{
-    background:#f8f9fa;
-    padding:12px;
-    border-radius:10px;
-}
-.info-box p{
-    font-size:13px;
-    margin-bottom:4px;
-}
+.modal-clean{border-radius:14px;}
+.doc-img{width:120px;height:120px;object-fit:cover;border-radius:12px;border:1px solid #ddd;}
+.no-img{width:120px;height:120px;border:1px dashed #aaa;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#888;}
+.img-label{font-size:13px;margin-top:6px;}
+.info-box{background:#f8f9fa;padding:12px;border-radius:10px;}
+.info-box p{font-size:13px;margin-bottom:4px;}
 </style>
 
+<!-- SCRIPTS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
 <script>
 $(document).ready(function(){
 
+/* ===== DATATABLE EXPORT ===== */
+let table = $('#admissionTable').DataTable({
+    dom: 't',
+    buttons: [
+        { extend:'print', text:'Print' },
+        { extend:'csv', text:'CSV' },
+        { extend:'pdf', text:'PDF' }
+    ]
+});
+table.buttons().container().appendTo('#exportButtons');
+
+/* ===== STATUS FILTER ===== */
 function applyStatusFilter(){
     let selected = $("#statusFilter").val();
     $(".admission-row").each(function(){

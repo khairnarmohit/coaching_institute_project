@@ -20,46 +20,131 @@
       --gov-success: #10b981;
     }
 
-    /* Faculty Page Specific Styles */
-    .page-title {
-      background: linear-gradient(135deg, var(--gov-dark) 0%, var(--gov-primary) 100%);
-      color: var(--gov-white);
-      padding: 70px 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      border-bottom: 4px solid var(--gov-accent);
+    body{
+      overflow-x: hidden;
     }
 
-    .page-title::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,128L48,122.7C96,117,192,107,288,112C384,117,480,139,576,149.3C672,160,768,160,864,138.7C960,117,1056,75,1152,69.3C1248,64,1344,96,1392,112L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-      background-repeat: no-repeat;
-      background-position: bottom;
-      background-size: cover;
+    /* Faculty Page Specific Styles */
+    /* ================= PAGE TITLE (FACULTY) ================= */
+.page-title {
+    background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.8)),
+        url("https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=2000&q=80")
+
+        center/cover no-repeat;
+    padding: 120px 0 100px;
+    text-align: center;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    animation: heroZoom 1.6s ease-out forwards;
+}
+
+/* glow overlay */
+.page-title::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(245, 158, 11, 0.15), transparent 60%);
+    animation: glowMove 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* keep content above overlay */
+.page-title .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* heading animation */
+.page-title h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #ffffff 0%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    opacity: 0;
+    animation: titleReveal 1s ease-out forwards;
+    animation-delay: 0.4s;
+}
+
+/* paragraph animation */
+.page-title p {
+    font-size: 1.1rem;
+    max-width: 820px;
+    margin: 0 auto;
+
+    color: #f1f5f9;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 22px;
+    border-radius: 25px;
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+    opacity: 0;
+    animation: subtitleReveal 1s ease-out forwards;
+    animation-delay: 0.9s;
+}
+
+/* reuse animations */
+@keyframes heroZoom {
+    from {
+        opacity: 0;
+        transform: scale(1.08);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes glowMove {
+    0% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+    100% { opacity: 0.4; }
+}
+
+@keyframes titleReveal {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes subtitleReveal {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    .page-title {
+        padding: 32px 12px 28px;
     }
 
     .page-title h1 {
-      font-weight: 800;
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      position: relative;
-      color: var(--gov-white);
+        font-size: 2rem;
     }
 
     .page-title p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-      max-width: 700px;
-      margin: 0 auto;
-      position: relative;
-      color: var(--gov-border);
+        font-size: 1rem;
     }
+}
+
 
     .faculty-card {
       border-radius: 16px;
@@ -339,233 +424,418 @@
       </div>
     </section>
 
-    <!-- FACULTY CATEGORY TABS -->
+
+    <!-- ================= FACULTY SECTION START ================= -->
     <section class="container my-5">
-      <h2 class="section-title text-center">Meet Our Expert Faculty</h2>
+      <h2 class="section-title text-center mb-4">Meet Our Expert Faculty</h2>
 
-      <ul class="nav nav-tabs faculty-tabs justify-content-center" id="facultyTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="founder-tab" data-bs-toggle="tab" data-bs-target="#founder" type="button"
-            role="tab">Founder & Leadership</button>
+      <!-- TABS -->
+      <ul class="nav nav-tabs faculty-tabs justify-content-center mb-4" id="facultyTab" role="tablist">
+        <li class="nav-item">
+          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#founder" type="button">
+            Founder & Leadership
+          </button>
         </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="gs-tab" data-bs-toggle="tab" data-bs-target="#gs" type="button"
-            role="tab">General
-            Studies</button>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#gs" type="button">
+            General Studies
+          </button>
         </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="optional-tab" data-bs-toggle="tab" data-bs-target="#optional" type="button"
-            role="tab">Optional Subjects</button>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#optional" type="button">
+            Optional Subjects
+          </button>
         </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="aptitude-tab" data-bs-toggle="tab" data-bs-target="#aptitude" type="button"
-            role="tab">Aptitude & CSAT</button>
+        <li class="nav-item">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#aptitude" type="button">
+            Aptitude & CSAT
+          </button>
         </li>
-
       </ul>
-    </section>
 
-    <!-- TAB CONTENT -->
-    <div class="tab-content" id="facultyTabContent">
+      <!-- TAB CONTENT -->
+      <div class="tab-content">
 
-      <!-- FOUNDER & LEADERSHIP -->
-      <div class="tab-pane fade show active" id="founder" role="tabpanel">
-        <section class="container my-5">
+        <!-- ================= FOUNDER & LEADERSHIP ================= -->
+
+        <div class="tab-pane fade show active" id="founder">
           <div class="row g-4 justify-content-center">
-            <% facultyList.filter(f=> ['Founder', 'Academic Head'].includes(f.dept_badge)).forEach(faculty => { %>
-              <div class="col-lg-6">
-                <div
-                  class="card faculty-card <%= faculty.dept_badge === 'Founder' ? 'founder-card' : 'academic-card' %> h-100">
-                  <div class="row g-0 h-100">
-                    <div class="col-md-5 faculty-img-container h-100">
-                      <span class="dept-badge">
-                        <%= faculty.dept_badge %>
-                      </span>
-                      <img src="<%= faculty.image_url %>" class="img-fluid faculty-img h-100" alt="<%= faculty.name %>"
-                        style="object-fit: cover;">
-                      <div class="faculty-overlay">
-                        <div class="faculty-social">
-                          <% if(faculty.linkedin_url){ %><a href="<%= faculty.linkedin_url %>"><i
-                                class="fab fa-linkedin-in"></i></a>
-                            <% } %>
-                              <a href="#"><i class="fab fa-twitter"></i></a>
-                              <a href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-7">
-                      <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
-                        <h3 class="mb-1">
-                          <%= faculty.name %>
-                        </h3>
-                        <p class="designation mb-3">
-                          <%= faculty.designation %>
-                        </p>
-                        <div class="mb-3">
-                          <span class="achievement-badge">
-                            <%= faculty.experience %>
+
+            <% if (founder.length===0) { %>
+              <div class="col-12 text-center py-5">
+                <p class="text-muted">No faculty members found.</p>
+              </div>
+              <% } else { %>
+
+                <% founder.forEach(f=> { %>
+                  <div class="col-lg-6 mb-4">
+                    <div class="card faculty-card founder-card h-100">
+                      <div class="row g-0 h-100">
+
+                        <div class="col-md-5 faculty-img-container">
+                          <span class="dept-badge">
+                            <%= f.badge %>
                           </span>
+                          <img src="<%= f.image %>" class="faculty-img">
                         </div>
-                        <p class="small mb-2"><strong>Qualification:</strong>
-                          <%= faculty.qualification %>
-                        </p>
-                        <p class="small"><strong>Expertise:</strong>
-                          <%= faculty.expertise %>
-                        </p>
-                        <p class="mt-2 small text-muted">
-                          <%= faculty.description %>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <% }); %>
-          </div>
-        </section>
-      </div>
 
-      <!-- GENERAL STUDIES FACULTY -->
-      <div class="tab-pane fade" id="gs" role="tabpanel">
-        <section class="container my-5">
-          <div class="row g-4 justify-content-center">
-            <% facultyList.filter(f=> ['Polity & Governance', 'Geography & Environment',
-              'Economics'].includes(f.dept_badge)).forEach(faculty => { %>
-              <div class="col-lg-6">
-                <div class="card faculty-card h-100">
-                  <div class="row g-0 h-100">
-                    <div class="col-md-5 faculty-img-container h-100">
-                      <span class="dept-badge">
-                        <%= faculty.dept_badge %>
-                      </span>
-                      <img src="<%= faculty.image_url %>" class="faculty-img h-100" alt="<%= faculty.name %>"
-                        style="object-fit: cover;">
-                    </div>
-                    <div class="col-md-7">
-                      <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
-                        <h5 class="mb-1 text-dark fw-bold">
-                          <%= faculty.name %>
-                        </h5>
-                        <p class="designation mb-3">
-                          <%= faculty.designation %>
-                        </p>
-                        <p class="small mb-2 text-muted"><strong>Qualification:</strong>
-                          <%= faculty.qualification %>
-                        </p>
-                        <p class="small text-muted"><strong>Experience:</strong>
-                          <%= faculty.experience %>
-                        </p>
-                        <div class="mb-3 mt-2">
-                          <% faculty.expertise.split(',').forEach(skill=> { %>
-                            <span class="badge-subject">
-                              <%= skill.trim() %>
-                            </span>
-                            <% }); %>
+                        <div class="col-md-7">
+                          <div class="card-body p-4">
+                            <h4>
+                              <%= f.name %>
+                            </h4>
+                            <p class="designation">
+                              <%= f.designation %>
+                            </p>
+
+                            <p class="small"><strong>Qualification:</strong>
+                              <%= f.qualification %>
+                            </p>
+                            <p class="small"><strong>Expertise:</strong>
+                              <%= f.expertise %>
+                            </p>
+                            <p class="small"><strong>Experience:</strong>
+                              <%= f.experience %>
+                            </p>
+                            <p class="small text-muted">
+                              <%= f.description %>
+                            </p>
+                          </div>
                         </div>
-                        <p class="mt-2 small text-muted">
-                          <%= faculty.description %>
-                        </p>
+
                       </div>
+                    </div>
+                  </div>
+                  <% }) %>
+
+                    <% } %>
+
+          </div>
+        </div>
+
+
+
+        <!-- <div class="tab-pane fade show active" id="founder">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-lg-6">
+              <div class="card faculty-card founder-card h-100">
+
+                <div class="row g-0 h-100">
+                  <div class="col-md-5 faculty-img-container">
+                    <span class="dept-badge">Founder</span>
+                    <img src="/images/Mr. Ramesh Patil.jpeg" class="faculty-img" alt="">
+                  </div>
+                  <div class="col-md-7">
+                    <div class="card-body p-4">
+                      <h4>Mr. Ramesh Patil</h4>
+                      <p class="designation">Founder & Chairman | Ex-IRS Officer</p>
+                      <span class="achievement-badge">Ex-IRS Officer</span>
+                      <p class="small mt-2"><strong>Qualification:</strong> M.A. Pol. Sci., NET</p>
+                      <p class="small"><strong>Expertise:</strong> Polity, Ethics & Essay</p>
+                      <p class="small text-muted">
+                        Highly experienced mentor specializing in civil services ethics and political science.
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
-              <% }); %>
-          </div>
-        </section>
-      </div>
+            </div>
 
-      <!-- OPTIONAL SUBJECTS FACULTY -->
-      <div class="tab-pane fade" id="optional" role="tabpanel">
-        <section class="container my-5">
-          <div class="row g-4 justify-content-center">
-            <% facultyList.filter(f=> f.dept_badge === 'Optional Subject').forEach(faculty => { %>
-              <div class="col-lg-6">
-                <div class="card faculty-card special-card h-100">
-                  <div class="row g-0 h-100">
-                    <div class="col-md-5 faculty-img-container h-100">
-                      <span class="dept-badge">
-                        <%= faculty.dept_badge %>
-                      </span>
-                      <img src="<%= faculty.image_url %>" class="faculty-img h-100" alt="<%= faculty.name %>"
-                        style="object-fit: cover;">
+            <div class="col-lg-6">
+              <div class="card faculty-card academic-card h-100">
+                <div class="row g-0 h-100">
+                  <div class="col-md-5 faculty-img-container">
+                    <span class="dept-badge">Academic Head</span>
+                    <img src="/images/Dr. Sunita Deshmukh.png" class="faculty-img" alt="">
+                  </div>
+                  <div class="col-md-7">
+                    <div class="card-body p-4">
+                      <h4>Dr. Sunita Deshmukh</h4>
+                      <p class="designation">Academic Director</p>
+                      <p class="small"><strong>Qualification:</strong> Ph.D. History (JNU)</p>
+                      <p class="small"><strong>Expertise:</strong> History, Art & Culture</p>
+                      <p class="small text-muted">
+                        Expert in historical research and art & culture for competitive exams.
+                      </p>
                     </div>
-                    <div class="col-md-7">
-                      <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
-                        <h5 class="mb-1 text-dark fw-bold">
-                          <%= faculty.name %>
-                        </h5>
-                        <p class="designation mb-3">
-                          <%= faculty.designation %>
-                        </p>
-                        <p class="small mb-2 text-muted"><strong>Qualification:</strong>
-                          <%= faculty.qualification %>
-                        </p>
-                        <p class="small text-muted"><strong>Experience:</strong>
-                          <%= faculty.experience %>
-                        </p>
-                        <div class="mb-3 mt-2">
-                          <% faculty.expertise.split(',').forEach(skill=> { %>
-                            <span class="badge-subject">
-                              <%= skill.trim() %>
-                            </span>
-                            <% }); %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div> -->
+
+        <!-- ================= GENERAL STUDIES ================= -->
+
+        <div class="tab-pane fade" id="gs">
+          <div class="row g-4 justify-content-center">
+
+            <% if (gs.length===0) { %>
+              <div class="col-12 text-center py-5">
+                <p class="text-muted">No faculty members found.</p>
+              </div>
+              <% } else { %>
+
+                <% gs.forEach(f=> { %>
+                  <div class="col-lg-6 mb-4">
+                    <div class="card faculty-card h-100">
+                      <div class="row g-0 h-100">
+
+                        <div class="col-md-5 faculty-img-container">
+                          <span class="dept-badge">
+                            <%= f.badge %>
+                          </span>
+                          <img src="<%= f.image %>" class="faculty-img">
                         </div>
+
+                        <div class="col-md-7">
+                          <div class="card-body p-4">
+                            <h5 class="fw-bold">
+                              <%= f.name %>
+                            </h5>
+                            <p class="designation">
+                              <%= f.designation %>
+                            </p>
+
+                            <p class="small"><strong>Qualification:</strong>
+                              <%= f.qualification %>
+                            </p>
+                            <p class="small"><strong>Experience:</strong>
+                              <%= f.experience %>
+                            </p>
+
+                            <% if (f.expertise) { %>
+                              <% f.expertise.split(',').forEach(e=> { %>
+                                <span class="badge-subject">
+                                  <%= e.trim() %>
+                                </span>
+                                <% }) %>
+                                  <% } %>
+
+                                    <p class="small text-muted mt-2">
+                                      <%= f.description %>
+                                    </p>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <% }); %>
-          </div>
-        </section>
-      </div>
+                  <% }) %>
 
-      <!-- APTITUDE & CSAT FACULTY -->
-      <div class="tab-pane fade" id="aptitude" role="tabpanel">
-        <section class="container my-5">
+                    <% } %>
+
+          </div>
+        </div>
+
+
+        <!-- <div class="tab-pane fade" id="gs">
           <div class="row g-4 justify-content-center">
-           <% facultyList
-  .filter(f => ['Quantitative Aptitude', 'Reasoning & CSAT'].includes(f.dept_badge))
-  .forEach(faculty => { %>
-              <div class="col-lg-6">
-                <div class="card faculty-card h-100">
-                  <div class="row g-0 h-100">
-                    <div class="col-md-5 faculty-img-container h-100">
-                      <span class="dept-badge">
-                        <%= faculty.dept_badge %>
-                      </span>
-                      <img src="<%= faculty.image_url %>" class="faculty-img h-100" alt="<%= faculty.name %>"
-                        style="object-fit: cover;">
-                    </div>
-                    <div class="col-md-7">
-                      <div class="card-body p-4 d-flex flex-column justify-content-center h-100">
-                        <h5 class="mb-1 text-dark fw-bold">
-                          <%= faculty.name %>
-                        </h5>
-                        <p class="designation mb-3">
-                          <%= faculty.designation %>
-                        </p>
-                        <p class="small mb-2 text-muted"><strong>Qualification:</strong>
-                          <%= faculty.qualification %>
-                        </p>
-                        <p class="small text-muted"><strong>Experience:</strong>
-                          <%= faculty.experience %>
-                        </p>
-                        <p class="mt-2 small text-muted">
-                          <%= faculty.description %>
-                        </p>
-                      </div>
+
+            <div class="col-lg-6">
+              <div class="card faculty-card h-100">
+                <div class="row g-0 h-100">
+                  <div class="col-md-5 faculty-img-container">
+                    <span class="dept-badge">Polity & Governance</span>
+                    <img src="/images/Prof. Amit Kulkarni.jpg" class="faculty-img" alt="">
+                  </div>
+                  <div class="col-md-7">
+                    <div class="card-body p-4">
+                      <h5 class="fw-bold">Prof. Amit Kulkarni</h5>
+                      <p class="designation">Senior Faculty – Polity & Governance</p>
+                      <p class="small"><strong>Qualification:</strong> LL.M., NET</p>
+                      <p class="small"><strong>Experience:</strong> 10+ Years</p>
+                      <span class="badge-subject">Polity</span>
+                      <span class="badge-subject">Governance</span>
+                      <p class="small text-muted mt-2">
+                        Specialist in Indian Constitution and Administrative law.
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
-              <% }); %>
-          </div>
-        </section>
-      </div>
+            </div>
 
-    </div>
+          </div>
+        </div> -->
+
+        <!-- ================= OPTIONAL SUBJECTS ================= -->
+
+        <div class="tab-pane fade" id="optional">
+          <div class="row g-4 justify-content-center">
+
+            <% if (optional.length===0) { %>
+              <div class="col-12 text-center py-5">
+                <p class="text-muted">No faculty members found.</p>
+              </div>
+              <% } else { %>
+
+                <% optional.forEach(f=> { %>
+                  <div class="col-lg-6 mb-4">
+                    <div class="card faculty-card special-card h-100">
+                      <div class="row g-0 h-100">
+
+                        <div class="col-md-5 faculty-img-container">
+                          <span class="dept-badge">
+                            <%= f.badge %>
+                          </span>
+                          <img src="<%= f.image %>" class="faculty-img">
+                        </div>
+
+                        <div class="col-md-7">
+                          <div class="card-body p-4">
+                            <h5 class="fw-bold">
+                              <%= f.name %>
+                            </h5>
+                            <p class="designation">
+                              <%= f.designation %>
+                            </p>
+
+                            <p class="small"><strong>Qualification:</strong>
+                              <%= f.qualification %>
+                            </p>
+                            <p class="small"><strong>Experience:</strong>
+                              <%= f.experience %>
+                            </p>
+
+                            <p class="small text-muted">
+                              <%= f.description %>
+                            </p>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <% }) %>
+
+                    <% } %>
+
+          </div>
+        </div>
+
+
+
+        <!-- <div class="tab-pane fade" id="optional">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-lg-6">
+              <div class="card faculty-card special-card h-100">
+                <div class="row g-0 h-100">
+                  <div class="col-md-5 faculty-img-container">
+                    <span class="dept-badge">Optional Subject</span>
+                    <img src="/images/Dr. Anil Kumar.png" class="faculty-img" alt="">
+                  </div>
+                  <div class="col-md-7">
+                    <div class="card-body p-4">
+                      <h5 class="fw-bold">Dr. Anil Kumar</h5>
+                      <p class="designation">Faculty – Public Administration</p>
+                      <p class="small"><strong>Qualification:</strong> Ph.D. Pub. Admin</p>
+                      <p class="small"><strong>Experience:</strong> 12+ Years</p>
+                      <span class="badge-subject">Public Administration</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div> -->
+
+        <!-- ================= APTITUDE & CSAT ================= -->
+
+        <div class="tab-pane fade" id="aptitude">
+          <div class="row g-4 justify-content-center">
+
+            <% if (aptitude.length===0) { %>
+              <div class="col-12 text-center py-5">
+                <p class="text-muted">No faculty members found.</p>
+              </div>
+              <% } else { %>
+
+                <% aptitude.forEach(f=> { %>
+                  <div class="col-lg-6 mb-4">
+                    <div class="card faculty-card h-100">
+                      <div class="row g-0 h-100">
+
+                        <div class="col-md-5 faculty-img-container">
+                          <span class="dept-badge ">
+                            <%= f.badge %>
+                          </span>
+                          <img src="<%= f.image %>" class="faculty-img">
+                        </div>
+
+                        <div class="col-md-7">
+                          <div class="card-body p-4">
+                            <h5 class="fw-bold">
+                              <%= f.name %>
+                            </h5>
+                            <p class="designation">
+                              <%= f.designation %>
+                            </p>
+
+
+                            <p class="small"><strong>Qualification:</strong>
+                              <%= f.qualification %>
+                            </p>
+                            <p class="small"><strong>Experience:</strong>
+                              <%= f.experience %>
+                            </p>
+
+                            <p class="small text-muted">
+                              <%= f.description %>
+                            </p>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <% }) %>
+
+                    <% } %>
+
+          </div>
+        </div>
+
+
+
+        <!-- <div class="tab-pane fade" id="aptitude">
+          <div class="row g-4 justify-content-center">
+
+            <div class="col-lg-6">
+              <div class="card faculty-card h-100">
+                <div class="row g-0 h-100">
+                  <div class="col-md-5 faculty-img-container">
+                    <span class="dept-badge">Quantitative Aptitude</span>
+                    <img src="/images/Prof. Rahul Sharma.jpeg" class="faculty-img" alt="">
+                  </div>
+                  <div class="col-md-7">
+                    <div class="card-body p-4">
+                      <h5 class="fw-bold">Prof. Rahul Sharma</h5>
+                      <p class="designation">Faculty – Quantitative Aptitude</p>
+                      <p class="small"><strong>Qualification:</strong> M.Sc. Math (IITD)</p>
+                      <p class="small"><strong>Experience:</strong> 11+ Years</p>
+                      <p class="small text-muted">
+                        Master of shortcut methods and quantitative reasoning.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div> -->
+
+      </div>
+    </section>
+    <!-- ================= FACULTY SECTION END ================= -->
+
+
+
 
     <!-- FACULTY ACHIEVEMENTS SECTION -->
     <section class="container my-5 py-5">
@@ -615,8 +885,8 @@
         </button>
 
         <div class="mt-4">
-          <p><i class="fas fa-phone-alt me-2"></i> Call for counseling: <a href="tel:9689255216"
-              style="color: inherit; text-decoration: none;">9689255216</a></p>
+          <p><i class="fa-solid fa-phone"></i> Call for counseling: <a href="tel:9689255216"
+              style="color: inherit; text-decoration: none;">9689255216 </a></p>
         </div>
       </div>
     </section>
@@ -667,8 +937,9 @@
           const tableData = [];
 
           cards.forEach(card => {
-            const nameElement = card.querySelector('h3, h5');
-            const name = nameElement ? nameElement.innerText.trim() : "Unknown";
+            const nameElement = card.querySelector('h3, h4, h5');
+
+            const name = nameElement ? nameElement.innerText.trim() : ".name";
 
             const designationElement = card.querySelector('.designation');
             const designation = designationElement ? designationElement.innerText.trim() : "Faculty";

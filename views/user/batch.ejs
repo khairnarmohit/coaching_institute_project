@@ -20,27 +20,142 @@
             --gov-border: #e5e7eb;
         }
 
+        body {
+            overflow-x: hidden;
+        }
+
         /* Page Styles */
 
+        /* ================= PAGE HEADER ANIMATION ================= */
         .page-header {
-            background: linear-gradient(135deg, var(--gov-dark) 0%, #1a365d 100%);
-            color: white;
-            padding: 3rem 0;
+            background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.8)),
+                url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
+            padding: 100px 0 100px;
+            /* compact height */
             text-align: center;
-            margin-bottom: 3rem;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            animation: heroZoom 1.8s ease-out forwards;
         }
 
+        /* glow overlay */
+        .page-header::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(245, 158, 11, 0.15), transparent 60%);
+            animation: glowMove 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        /* keep content above overlay */
+        .page-header .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* heading animation */
         .page-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, #ffffff 0%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            opacity: 0;
+            animation: titleReveal 1s ease-out forwards;
+            animation-delay: 0.4s;
         }
 
+        /* paragraph animation */
         .page-header p {
             font-size: 1.1rem;
-            opacity: 0.9;
-            max-width: 700px;
+            max-width: 780px;
             margin: 0 auto;
+
+            color: #f1f5f9;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 22px;
+            border-radius: 25px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+            opacity: 0;
+            animation: subtitleReveal 1s ease-out forwards;
+            animation-delay: 0.9s;
         }
+
+        /* animations (already same as gallery hero) */
+        @keyframes heroZoom {
+            from {
+                opacity: 0;
+                transform: scale(1.08);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glowMove {
+            0% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+
+            100% {
+                opacity: 0.4;
+            }
+        }
+
+        @keyframes titleReveal {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+                filter: blur(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes subtitleReveal {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* responsive */
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 28px 12px 24px;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
+
 
         .section-title {
             color: var(--gov-dark);
@@ -176,26 +291,27 @@
             transform: scale(1.02);
         }
 
-    .info-boxes {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* desktop: 3 */
-    gap: 1.5rem;
-    margin-top: 3rem;
-}
+        .info-boxes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* desktop: 3 */
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
 
-/* Tablet */
-@media (max-width: 992px) {
-    .info-boxes {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+        /* Tablet */
+        @media (max-width: 992px) {
+            .info-boxes {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
 
-/* Mobile */
-@media (max-width: 576px) {
-    .info-boxes {
-        grid-template-columns: 1fr;
-    }
-}
+        /* Mobile */
+        @media (max-width: 576px) {
+            .info-boxes {
+                grid-template-columns: 1fr;
+            }
+        }
 
 
         .info-box {
@@ -276,133 +392,153 @@
 
         <header class="page-header">
             <div class="container">
-                <h1><%= banner[0].heading %></h1>
-                <p><%= banner[0].sub_heading %></p>
+                <h1>
+                    <%= banner[0].heading %>
+                </h1>
+                <p>
+                    <%= banner[0].sub_heading %>
+                </p>
             </div>
         </header>
 
-        <main class="container">
-        <section class="batches-section">
-    <h2 class="section-title">Upcoming Batches</h2>
+        <main class="container mt-5">
+            <section class="batches-section">
+                <h2 class="section-title fw-bold text-center">Upcoming Batches</h2>
 
-    <div class="batches-grid">
-        <% for (var i = 0; i < batches.length; i++) { %>
-            <% if (batches[i].batch_status === 'Upcoming') { %>
+                <div class="batches-grid">
+                    <% for (var i=0; i < batches.length; i++) { %>
+                        <% if (batches[i].batch_status==='Upcoming' ) { %>
 
-                <div class="batch-card">
-                    <div class="batch-header">
-                        <h3><%= batches[i].batch_title %></h3>
-                        <span class="batch-status status-upcoming">
-                            <%= batches[i].status_label %>
-                        </span>
-                    </div>
+                            <div class="batch-card">
+                                <div class="batch-header">
+                                    <h3>
+                                        <%= batches[i].batch_title %>
+                                    </h3>
+                                    <span class="batch-status status-upcoming">
+                                        <%= batches[i].status_label %>
+                                    </span>
+                                </div>
 
-                    <div class="batch-content">
-                        <div class="batch-detail">
-                            <span class="detail-label">Duration:</span>
-                            <span class="detail-value"><%= batches[i].duration %> Months</span>
-                        </div>
+                                <div class="batch-content">
+                                    <div class="batch-detail">
+                                        <span class="detail-label">Duration:</span>
+                                        <span class="detail-value">
+                                            <%= batches[i].duration %> Months
+                                        </span>
+                                    </div>
 
-                        <div class="batch-detail">
-                            <span class="detail-label">Fees:</span>
-                            <span class="detail-value fee">₹<%= batches[i].fees %></span>
-                        </div>
+                                    <div class="batch-detail">
+                                        <span class="detail-label">Fees:</span>
+                                        <span class="detail-value fee">₹<%= batches[i].fees %></span>
+                                    </div>
 
-                        <div class="batch-detail">
-                            <span class="detail-label">Strength:</span>
-                            <span class="detail-value"><%= batches[i].strength %> Students</span>
-                        </div>
+                                    <div class="batch-detail">
+                                        <span class="detail-label">Strength:</span>
+                                        <span class="detail-value">
+                                            <%= batches[i].strength %> Students
+                                        </span>
+                                    </div>
 
-                        <div class="batch-detail">
-                            <span class="detail-label">Mode:</span>
-                            <span class="detail-value">
-                                <span class="mode-indicator 
+                                    <div class="batch-detail">
+                                        <span class="detail-label">Mode:</span>
+                                        <span class="detail-value">
+                                            <span class="mode-indicator 
                                     <%= batches[i].mode === 'Online' ? 'mode-online' : 'mode-offline' %>">
-                                    <%= batches[i].mode %>
-                                </span>
-                            </span>
-                        </div>
+                                                <%= batches[i].mode %>
+                                            </span>
+                                        </span>
+                                    </div>
 
-                        <a href="/admission" class="register-btn">Apply Now</a>
-                    </div>
+                                    <a href="/admission" class="register-btn">Apply Now</a>
+                                </div>
+                            </div>
+
+                            <% } %>
+                                <% } %>
                 </div>
-
-            <% } %>
-        <% } %>
-    </div>
-</section>
+            </section>
 
 
-      <section class="batches-section">
-    <h2 class="section-title">Ongoing Batches</h2>
+            <section class="batches-section">
+                <h2 class="section-title fw-bold text-center">Ongoing Batches</h2>
 
-    <div class="batches-grid">
-        <% for (var i = 0; i < batches.length; i++) { %>
-            <% if (batches[i].batch_status === 'Ongoing') { %>
+                <div class="batches-grid">
+                    <% for (var i=0; i < batches.length; i++) { %>
+                        <% if (batches[i].batch_status==='Ongoing' ) { %>
 
-                <div class="batch-card">
-                    <div class="batch-header">
-                        <h3><%= batches[i].batch_title %></h3>
-                        <span class="batch-status status-ongoing">
-                            <%= batches[i].status_label %>
-                        </span>
-                    </div>
+                            <div class="batch-card">
+                                <div class="batch-header">
+                                    <h3>
+                                        <%= batches[i].batch_title %>
+                                    </h3>
+                                    <span class="batch-status status-ongoing">
+                                        <%= batches[i].status_label %>
+                                    </span>
+                                </div>
 
-                    <div class="batch-content">
-                        <div class="batch-detail">
-                            <span class="detail-label">Duration:</span>
-                            <span class="detail-value"><%= batches[i].duration %> Months</span>
-                        </div>
+                                <div class="batch-content">
+                                    <div class="batch-detail">
+                                        <span class="detail-label">Duration:</span>
+                                        <span class="detail-value">
+                                            <%= batches[i].duration %> Months
+                                        </span>
+                                    </div>
 
-                        <div class="batch-detail">
-                            <span class="detail-label">Fees:</span>
-                            <span class="detail-value fee">₹<%= batches[i].fees %></span>
-                        </div>
+                                    <div class="batch-detail">
+                                        <span class="detail-label">Fees:</span>
+                                        <span class="detail-value fee">₹<%= batches[i].fees %></span>
+                                    </div>
 
-                        <div class="batch-detail">
-                            <span class="detail-label">Strength:</span>
-                            <span class="detail-value"><%= batches[i].strength %> Students</span>
-                        </div>
+                                    <div class="batch-detail">
+                                        <span class="detail-label">Strength:</span>
+                                        <span class="detail-value">
+                                            <%= batches[i].strength %> Students
+                                        </span>
+                                    </div>
 
-                        <div class="batch-detail">
-                            <span class="detail-label">Mode:</span>
-                            <span class="detail-value">
-                                <span class="mode-indicator 
+                                    <div class="batch-detail">
+                                        <span class="detail-label">Mode:</span>
+                                        <span class="detail-value">
+                                            <span class="mode-indicator 
                                     <%= batches[i].mode === 'Online' ? 'mode-online' : 'mode-offline' %>">
-                                    <%= batches[i].mode %>
-                                </span>
-                            </span>
-                        </div>
+                                                <%= batches[i].mode %>
+                                            </span>
+                                        </span>
+                                    </div>
 
-                        <button class="register-btn">Join Waitlist</button>
-                    </div>
+                                    <button class="register-btn">Join Waitlist</button>
+                                </div>
+                            </div>
+
+                            <% } %>
+                                <% } %>
                 </div>
-
-            <% } %>
-        <% } %>
-    </div>
-</section>
+            </section>
 
 
             <!-- Additional Information -->
             <section class="info-boxes mb-5">
-              <% for(let i=0;i<info_boxes.length;i++){ %>
-                
-                <div class="info-box">
-                    <h3><%= info_boxes[i].title %></h3>
-                    <p><%= info_boxes[i].description %></p>
-                </div>
+                <% for(let i=0;i<info_boxes.length;i++){ %>
 
-                <% } %>
-               
-                
+                    <div class="info-box">
+                        <h3>
+                            <%= info_boxes[i].title %>
+                        </h3>
+                        <p>
+                            <%= info_boxes[i].description %>
+                        </p>
+                    </div>
+
+                    <% } %>
+
+
             </section>
         </main>
 
         <%- include('footer') %>
 
             <script>
-             
+
 
 
                 // JavaScript for interactive elements

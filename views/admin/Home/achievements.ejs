@@ -1,189 +1,179 @@
 <%- include('./../navbar.ejs') %>
 
-<style>
-:root {
-  --gov-dark: #0b1c2d;
-  --gov-accent: #f59e0b;
-  --gov-bg: #f8fafc;
-  --gov-border: #e5e7eb;
-  --gov-shadow: 0 12px 32px -6px rgba(0,0,0,0.08);
-  --gov-radius: 18px;
-}
+  <style>
+    :root {
+      --gov-dark: #0b1c2d;
+      --gov-accent: #f59e0b;
+      --gov-bg: #f8fafc;
+      --gov-border: #e5e7eb;
+      --gov-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.08);
+      --gov-radius: 18px;
+    }
 
-.gov-card {
-  border: 1px solid var(--gov-border);
-  border-radius: var(--gov-radius);
-  box-shadow: var(--gov-shadow);
-}
+    .gov-card {
+      border: 1px solid var(--gov-border);
+      border-radius: var(--gov-radius);
+      box-shadow: var(--gov-shadow);
+    }
 
-.gov-header {
-  background: var(--gov-dark);
-  color: #f59e0b;
-  border-radius: var(--gov-radius) var(--gov-radius) 0 0;
-}
+    .gov-header {
+      background: var(--gov-dark);
+      color: #f59e0b;
+      border-radius: var(--gov-radius) var(--gov-radius) 0 0;
+    }
 
-.action-btns a {
-  margin: 0 4px;
-}
-</style>
+    .action-btns a {
+      margin: 0 4px;
+    }
+  </style>
 
-<div class="container mt-4">
+  <div class="container mt-4">
 
-  <!-- PAGE TITLE + ADD BUTTON -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-bold" style="color:var(--gov-dark)">
-      <i class="bi bi-trophy" style="color:var(--gov-accent)"></i>
-      Achievements Section
-    </h3>
+    <!-- PAGE TITLE + ADD BUTTON -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold" style="color:var(--gov-dark)">
+        <i class="bi bi-trophy" style="color:var(--gov-accent)"></i>
+        Achievements Section
+      </h3>
 
-    <!-- ADD BUTTON (OPENS DROPDOWN) -->
-    <button class="btn"
-            style="background:var(--gov-accent);font-weight:600"
-            data-bs-toggle="collapse"
-            data-bs-target="#achievementForm"
-            aria-expanded="<%= achievement ? 'true' : 'false' %>">
-      <i class="bi bi-plus-circle"></i> Add Achievement
-    </button>
-  </div>
+      <!-- ADD BUTTON (OPENS DROPDOWN) -->
+      <button class="btn" style="background:var(--gov-accent);font-weight:600" data-bs-toggle="collapse"
+        data-bs-target="#achievementForm" aria-expanded="<%= achievement ? 'true' : 'false' %>">
+        <i class="bi bi-plus-circle"></i> Add Achievement
+      </button>
+    </div>
 
-  <!-- ================= ADD / EDIT FORM (DROPDOWN) ================= -->
-  <div class="collapse <%= achievement ? 'show' : '' %>" id="achievementForm">
+    <!-- ================= ADD / EDIT FORM (DROPDOWN) ================= -->
+    <div class="collapse <%= achievement ? 'show' : '' %>" id="achievementForm">
 
-    <div class="gov-card mb-5">
+      <div class="gov-card mb-5">
 
-      <!-- Form Header -->
-      <div class="card-header d-flex align-items-center gap-2 p-3"
-           style="background: var(--gov-dark)">
-        <span class="badge rounded-pill"
-              style="background:var(--gov-accent);color:#000">
-          <i class="bi <%= achievement ? 'bi-pencil-square' : 'bi-plus-circle' %>"></i>
-        </span>
-        <span class="fw-bold" style="color:var(--gov-accent)">
-          <%= achievement ? 'Edit Achievement' : 'Add Achievement' %>
-        </span>
-      </div>
+        <!-- Form Header -->
+        <div class="card-header d-flex align-items-center gap-2 p-3" style="background: var(--gov-dark)">
+          <span class="badge rounded-pill" style="background:var(--gov-accent);color:#000">
+            <i class="bi <%= achievement ? 'bi-pencil-square' : 'bi-plus-circle' %>"></i>
+          </span>
+          <span class="fw-bold" style="color:var(--gov-accent)">
+            <%= achievement ? 'Edit Achievement' : 'Add Achievement' %>
+          </span>
+        </div>
 
-      <!-- Form Body -->
-      <div class="card-body p-4" style="background:var(--gov-bg)">
-        <form method="POST" action="/admin/achievements/save">
+        <!-- Form Body -->
+        <div class="card-body p-4" style="background:var(--gov-bg)">
+          <form method="POST" action="/admin/achievements/save">
 
-          <% if (achievement) { %>
-            <input type="hidden" name="id" value="<%= achievement.id %>">
-          <% } %>
+            <% if (achievement) { %>
+              <input type="hidden" name="id" value="<%= achievement.id %>">
+              <% } %>
 
-          <div class="row g-4">
+                <div class="row g-4">
 
-            <div class="col-md-4">
-              <label class="form-label fw-semibold">Achievement Title</label>
-              <input name="title"
-                     class="form-control form-control-lg"
-                     placeholder="Students Selected"
-                     value="<%= achievement ? achievement.title : '' %>"
-                     required>
-            </div>
+                  <div class="col-md-4">
+                    <label class="form-label fw-semibold">Achievement Title</label>
+                    <input name="title" class="form-control form-control-lg" placeholder="Students Selected"
+                      value="<%= achievement ? achievement.title : '' %>" required>
+                  </div>
 
-            <div class="col-md-4">
-              <label class="form-label fw-semibold">Value</label>
-              <input name="value"
-                     class="form-control form-control-lg text-center"
-                     placeholder="500"
-                     value="<%= achievement ? achievement.value : '' %>"
-                     required>
-            </div>
+                  <div class="col-md-4">
+                    <label class="form-label fw-semibold">Value</label>
+                    <input name="value" class="form-control form-control-lg text-center" placeholder="500"
+                      value="<%= achievement ? achievement.value : '' %>" required>
+                  </div>
 
-            <div class="col-md-4">
-              <label class="form-label fw-semibold">Suffix</label>
-              <input name="suffix"
-                     class="form-control form-control-lg"
-                     placeholder="+ / % / Years"
-                     value="<%= achievement ? achievement.suffix : '' %>">
-            </div>
+                  <div class="col-md-4">
+                    <label class="form-label fw-semibold">Suffix</label>
+                    <input name="suffix" class="form-control form-control-lg" placeholder="+ / % / Years"
+                      value="<%= achievement ? achievement.suffix : '' %>">
+                  </div>
 
-          </div>
+                </div>
 
-          <!-- Actions -->
-          <div class="d-flex justify-content-end mt-4">
-            <button class="btn btn-success px-4 me-2">
-              <i class="bi bi-check-circle"></i>
-              <%= achievement ? 'Update' : 'Save' %>
-            </button>
+                <!-- Actions -->
+                <div class="d-flex justify-content-end mt-4">
+                  <button class="btn btn-success px-4 me-2">
+                    <i class="bi bi-check-circle"></i>
+                    <%= achievement ? 'Update' : 'Save' %>
+                  </button>
 
-            <button type="button"
-                    class="btn btn-outline-secondary px-4"
-                    data-bs-toggle="collapse"
+                  <button type="button" class="btn btn-outline-secondary px-4" data-bs-toggle="collapse"
                     data-bs-target="#achievementForm">
-              <i class="bi bi-x-circle"></i> Cancel
-            </button>
-          </div>
+                    <i class="bi bi-x-circle"></i> Cancel
+                  </button>
+                </div>
 
-        </form>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
 
-  
-  <!-- ================= TABLE ================= -->
-<div class="gov-card">
-  <div class="gov-header px-4 py-3 fw-bold">
-    <i class="bi bi-list-ul"></i> Achievements List
-  </div>
 
-  <div class="card-body p-0" style="background:var(--gov-bg)">
-    <table class="table table-bordered table-hover rounded-0 mb-0 align-middle">
-      <thead class="table-secondary text-center">
-        <tr>
-          <th width="80">Sr.No</th>
-          <th>Title</th>
-          <th>Value</th>
-          <th>Suffix</th>
-          <th width="160">Action</th>
-        </tr>
-      </thead>
+    <!-- ================= TABLE ================= -->
+    <div class="gov-card">
+      <div class="gov-header px-4 py-3 fw-bold">
+        <i class="bi bi-list-ul"></i> Achievements List
+      </div>
 
-      <tbody>
-        <% if (achievements.length > 0) { %>
-
-          <% for (let i = 0; i < achievements.length; i++) { 
-               const a = achievements[i]; %>
-
+      <div class="card-body p-0" style="background:var(--gov-bg)">
+        <table class="table table-bordered table-hover rounded-0 mb-0 align-middle">
+          <thead class="table-secondary text-center">
             <tr>
-              <!-- ✅ SERIAL NUMBER -->
-              <td class="text-center"><%= i + 1 %></td>
-
-              <td><%= a.title %></td>
-              <td><%= a.value %></td>
-              <td><%= a.suffix %></td>
-
-              <td class="text-center">
-                <div class="action-btns d-flex justify-content-center">
-                  <a href="/admin/achievements/edit/<%= a.id %>"
-                     class="btn btn-warning btn-sm">
-                    <i class="bi bi-pencil"></i>
-                  </a>
-
-                  <a href="/admin/achievements/delete/<%= a.id %>"
-                     class="btn btn-danger btn-sm">
-                    <i class="bi bi-trash"></i>
-                  </a>
-                </div>
-              </td>
+              <th width="80">Sr.No</th>
+              <th>Title</th>
+              <th>Value</th>
+              <th>Suffix</th>
+              <th width="160">Action</th>
             </tr>
+          </thead>
 
-          <% } %>
+          <tbody>
+            <% if (achievements.length> 0) { %>
 
-        <% } else { %>
-          <tr>
-            <td colspan="5" class="text-center text-muted py-4">
-              No Achievements Found
-            </td>
-          </tr>
-        <% } %>
-      </tbody>
-    </table>
+              <% for (let i=0; i < achievements.length; i++) { const a=achievements[i]; %>
+
+                <tr>
+                  <!-- ✅ SERIAL NUMBER -->
+                  <td class="text-center">
+                    <%= i + 1 %>
+                  </td>
+
+                  <td>
+                    <%= a.title %>
+                  </td>
+                  <td>
+                    <%= a.value %>
+                  </td>
+                  <td>
+                    <%= a.suffix %>
+                  </td>
+
+                  <td class="text-center">
+                    <div class="action-btns d-flex justify-content-center">
+                      <a href="/admin/achievements/edit/<%= a.id %>" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i>
+                      </a>
+
+                      <a href="/admin/achievements/delete/<%= a.id %>" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+
+                <% } %>
+
+                  <% } else { %>
+                    <tr>
+                      <td colspan="5" class="text-center text-muted py-4">
+                        No Achievements Found
+                      </td>
+                    </tr>
+                    <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
   </div>
-</div>
 
-
-</div>
-
-<%- include('./../footer.ejs') %>
+  <%- include('./../footer.ejs') %>

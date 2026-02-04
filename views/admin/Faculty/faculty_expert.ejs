@@ -1,0 +1,199 @@
+<%- include('./../navbar.ejs') %>
+
+<div class="container mt-4">
+
+  <!-- ADD BUTTON -->
+  <button class="btn btn-success mb-3"
+          data-bs-toggle="collapse"
+          data-bs-target="#facultyFormBox"
+          onclick="resetForm()">
+    <i class="fa fa-plus me-1"></i> Add Faculty
+  </button>
+
+  <!-- COLLAPSE FORM -->
+  <div class="collapse" id="facultyFormBox">
+    <div class="card card-body shadow-sm">
+
+      <h4 id="formTitle" class="mb-3">Add Faculty</h4>
+
+      <form id="facultyForm"
+            action="/admin/faculty_expert_add"
+            method="POST"
+            enctype="multipart/form-data">
+
+        <input type="hidden" name="id" id="faculty_id">
+
+        <label class="form-label">Faculty Name</label>
+        <input type="text" name="name" id="name" class="form-control mb-2" required>
+
+        <label class="form-label">Designation</label>
+        <input type="text" name="designation" id="designation" class="form-control mb-2" required>
+
+        <label class="form-label">Category</label>
+        <select name="category" id="category" class="form-select mb-2" required>
+          <option value="">Select Category</option>
+          <option value="Founder & Leadership">Founder & Leadership</option>
+          <option value="General Studies">General Studies</option>
+          <option value="Optional Subjects">Optional Subjects</option>
+          <option value="Aptitude & CSAT">Aptitude & CSAT</option>
+        </select>
+
+        <label class="form-label">Qualification</label>
+        <input type="text" name="qualification" id="qualification" class="form-control mb-2">
+
+        <label class="form-label">Expertise</label>
+        <input type="text" name="expertise" id="expertise" class="form-control mb-2">
+
+        <label class="form-label">Experience</label>
+        <input type="text" name="experience" id="experience" class="form-control mb-2">
+
+        <label class="form-label">Badge</label>
+        <input type="text" name="badge" id="badge" class="form-control mb-2">
+
+        <label class="form-label">Description</label>
+        <textarea name="description" id="description" class="form-control mb-2"></textarea>
+
+        <label class="form-label">Faculty Image</label>
+        <input type="file" name="image" class="form-control mb-3">
+
+        <button type="submit" id="submitBtn" class="btn btn-primary">
+          Save Faculty
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= FACULTY LIST ================= -->
+<div class="container mt-5">
+
+  <h4 class="mb-3">Faculty List</h4>
+
+  <!-- CATEGORY FILTER -->
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <label class="form-label">Filter by Category</label>
+      <select class="form-select" id="categoryFilter" onchange="filterCategory()">
+        <option value="all">All Categories</option>
+        <option value="Founder & Leadership">Founder & Leadership</option>
+        <option value="General Studies">General Studies</option>
+        <option value="Optional Subjects">Optional Subjects</option>
+        <option value="Aptitude & CSAT">Aptitude & CSAT</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle">
+
+      <thead class="table-dark">
+        <tr>
+          <th>Sr.No</th>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Designation</th>
+          <th>Experience</th>
+          <th>Badge</th>
+          <th width="200">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <% if (!facultyList || facultyList.length === 0) { %>
+          <tr>
+            <td colspan="8" class="text-center text-muted">
+              No faculty records found
+            </td>
+          </tr>
+        <% } else { %>
+
+          <% for (let i = 0; i < facultyList.length; i++) { %>
+            <tr data-category="<%= facultyList[i].category %>">
+              <td><%= i + 1 %></td>
+
+              <td>
+                <img src="<%= facultyList[i].image %>"
+                     width="60" height="60"
+                     style="object-fit:cover;border-radius:6px;">
+              </td>
+
+              <td><%= facultyList[i].name %></td>
+              <td><%= facultyList[i].category %></td>
+              <td><%= facultyList[i].designation %></td>
+              <td><%= facultyList[i].experience %></td>
+              <td><%= facultyList[i].badge %></td>
+
+              <td>
+                <button class="btn btn-warning btn-sm"
+                  onclick='editFaculty(<%- JSON.stringify(facultyList[i]) %>)'>
+                  Edit
+                </button>
+
+                <a href="/admin/delete_faculty_expert/<%= facultyList[i].id %>"
+                   onclick="return confirm('Are you sure?')"
+                   class="btn btn-danger btn-sm">
+                  Delete
+                </a>
+              </td>
+            </tr>
+          <% } %>
+
+        <% } %>
+
+      </tbody>
+
+    </table>
+  </div>
+
+</div>
+
+<script>
+  function resetForm() {
+    document.getElementById("formTitle").innerText = "Add Faculty";
+    document.getElementById("submitBtn").innerText = "Save Faculty";
+    document.getElementById("facultyForm").action = "/admin/faculty_expert_add";
+    document.getElementById("facultyForm").reset();
+  }
+
+  function editFaculty(f) {
+    bootstrap.Collapse.getOrCreateInstance(
+      document.getElementById('facultyFormBox')
+    ).show();
+
+    document.getElementById("formTitle").innerText = "Edit Faculty";
+    document.getElementById("submitBtn").innerText = "Update Faculty";
+    document.getElementById("facultyForm").action =
+      "/admin/update_faculty_expert/" + f.id;
+
+    document.getElementById("faculty_id").value = f.id;
+    document.getElementById("name").value = f.name;
+    document.getElementById("designation").value = f.designation;
+    document.getElementById("category").value = f.category;
+    document.getElementById("qualification").value = f.qualification;
+    document.getElementById("expertise").value = f.expertise;
+    document.getElementById("experience").value = f.experience;
+    document.getElementById("badge").value = f.badge;
+    document.getElementById("description").value = f.description;
+  }
+
+  function filterCategory() {
+    const selected = document.getElementById("categoryFilter").value;
+    const rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+      const rowCategory = row.getAttribute("data-category");
+      if (selected === "all" || rowCategory === selected) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
+</script>
+
+<%- include('./../footer.ejs') %>

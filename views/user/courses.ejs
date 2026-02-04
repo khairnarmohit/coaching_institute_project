@@ -27,16 +27,141 @@
       background: var(--gov-bg);
       font-family: system-ui, -apple-system, sans-serif;
       color: var(--gov-text);
+      overflow-x: hidden;
     }
 
+    /* ================= COURSES HERO ================= */
     .courses-hero {
       background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.8)),
-        url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f") center/cover no-repeat;
-      padding: 120px 0;
+        url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
+      padding: 120px 0 100px;
+      /* compact hero */
       text-align: center;
-      color: white;
-      margin-bottom: 60px;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      animation: heroZoom 1.6s ease-out forwards;
     }
+
+    /* glow overlay */
+    .courses-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(245, 158, 11, 0.15), transparent 60%);
+      animation: glowMove 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    /* keep content above overlay */
+    .courses-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* heading animation */
+    .courses-hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      opacity: 0;
+      animation: titleReveal 1s ease-out forwards;
+      animation-delay: 0.4s;
+    }
+
+    /* paragraph animation */
+    .courses-hero p {
+      font-size: 1.1rem;
+      max-width: 760px;
+      margin: 0 auto;
+
+      color: #f1f5f9;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 22px;
+      border-radius: 25px;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+      opacity: 0;
+      animation: subtitleReveal 1s ease-out forwards;
+      animation-delay: 0.9s;
+    }
+
+    /* reuse animations (already used elsewhere) */
+    @keyframes heroZoom {
+      from {
+        opacity: 0;
+        transform: scale(1.08);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes glowMove {
+      0% {
+        opacity: 0.4;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+
+      100% {
+        opacity: 0.4;
+      }
+    }
+
+    @keyframes titleReveal {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes subtitleReveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* mobile */
+    @media (max-width: 768px) {
+      .courses-hero {
+        padding: 32px 12px 28px;
+      }
+
+      .courses-hero h1 {
+        font-size: 2rem;
+      }
+
+      .courses-hero p {
+        font-size: 1rem;
+      }
+    }
+
+
+
 
     .course-card {
       background: white;
@@ -139,89 +264,93 @@
 
   <%- include("navbar.ejs") %>
 
-  <!-- HERO -->
-  <div class="courses-hero">
-    <div class="container">
-      <h1>Excellence In Learning</h1>
-      <p>Choose your path to a prestigious government career.</p>
+    <!-- HERO -->
+    <div class="courses-hero mb-5">
+      <div class="container fw-bold">
+        <h1>Excellence in Education</h1>
+        <p>Choose your path to a prestigious government career.</p>
+      </div>
     </div>
-  </div>
 
-  <div class="container">
+    <div class="container mt-5">
 
-    <!-- FILTER BUTTONS -->
-    <div class="filter-section">
-      <button class="filter-btn active" data-key="all">All Courses</button>
-      <button class="filter-btn" data-key="upsc">UPSC</button>
+      <!-- FILTER BUTTONS -->
+      <!-- <div class="filter-section"> -->
+      <!-- <button class="filter-btn active" data-key="all">All Courses</button> -->
+      <!-- <button class="filter-btn" data-key="upsc">UPSC</button>
       <button class="filter-btn" data-key="mpsc">MPSC</button>
       <button class="filter-btn" data-key="banking">Banking</button>
       <button class="filter-btn" data-key="police">Police Bharti</button>
-      <button class="filter-btn" data-key="other">Other</button>
-    </div>
+      <button class="filter-btn" data-key="other">Other</button> -->
+      <!-- </div> -->
 
-    <!-- COURSES -->
-    <div class="row g-4 mb-5">
-      <% courses.forEach(course => { %>
-        <div class="col-lg-4 col-md-6 course-item" data-key="<%= course.course_key.toLowerCase().trim() %>"
->
-          <div class="course-card">
-            <div class="course-img-box">
-              <img src="/images/<%= course.image %>" class="course-img">
-              <span class="course-badge">Live Batch</span>
-            </div>
-            <!-- <small>/images/<%= course.image %></small> -->
+      <!-- COURSES -->
+      <div class="row g-4 mb-5">
+        <% courses.forEach(course=> { %>
+          <div class="col-lg-4 col-md-6 course-item" data-key="<%= course.course_key.toLowerCase().trim() %>">
+            <div class="course-card">
+              <div class="course-img-box">
+                <img src="/images/<%= course.image %>" class="course-img">
+                <span class="course-badge">Live Batch</span>
+              </div>
+              <!-- <small>/images/<%= course.image %></small> -->
 
-            <div class="course-content">
-              <h3 class="course-title"><%= course.title %></h3>
-              <p class="course-short-desc"><%= course.shortDesc %></p>
-              <div class="course-meta">
-                <div>
-                  <i class="fas fa-clock"></i>
-                  <%= course.duration %>
+              <div class="course-content">
+                <h3 class="course-title">
+                  <%= course.title %>
+                </h3>
+                <p class="course-short-desc">
+                  <%= course.shortDesc %>
+                </p>
+                <div class="course-meta">
+                  <div>
+                    <i class="fas fa-clock"></i>
+                    <%= course.duration %>
+                  </div>
+                  <a href="/course-details/<%= course.id %>" class="btn-details">View Details</a>
                 </div>
-                <a href="/course-details/<%= course.id %>" class="btn-details">View Details</a>
               </div>
             </div>
           </div>
-        </div>
-      <% }) %>
+          <% }) %>
+      </div>
     </div>
-  </div>
 
-  <%- include("footer.ejs") %>
+    <%- include("footer.ejs") %>
 
-  <!-- JS -->
-  <script>
-document.addEventListener("DOMContentLoaded", function () {
+      <!-- JS -->
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
 
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  const courseItems = document.querySelectorAll(".course-item");
+          const filterButtons = document.querySelectorAll(".filter-btn");
+          const courseItems = document.querySelectorAll(".course-item");
 
-  filterButtons.forEach(btn => {
-    btn.addEventListener("click", function () {
+          filterButtons.forEach(btn => {
+            btn.addEventListener("click", function () {
 
-      filterButtons.forEach(b => b.classList.remove("active"));
-      this.classList.add("active");
+              filterButtons.forEach(b => b.classList.remove("active"));
+              this.classList.add("active");
 
-      const key = this.dataset.key;
+              const key = this.dataset.key;
 
-      courseItems.forEach(item => {
-        if (key === "all" || item.dataset.key === key) {
-          item.style.display = "";    
-        } else {
-          item.style.display = "none";
-        }
-      });
+              courseItems.forEach(item => {
+                if (key === "all" || item.dataset.key === key) {
+                  item.style.display = "";
+                } else {
+                  item.style.display = "none";
+                }
+              });
 
-    });
-  });
+            });
+          });
 
-});
-</script>
-
+        });
+      </script>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

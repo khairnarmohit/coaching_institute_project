@@ -306,41 +306,48 @@
 <body>
     <%- include("navbar.ejs") %>
         <!-- Page Header -->
-        <div class="page-header">
-            <div class="container">
-                <h1>Syllabus</h1>
-                <p>Download or view complete updated syllabus PDFs for all major competitive exams. Get comprehensive
-                    study material curated by our expert faculty.</p>
+        <div class="page-header gallery-hero">
+            <div class="container hero-content">
+                <h1 class="hero-title">Syllabus</h1>
+                <p class="hero-subtitle">
+                    Download or view complete updated syllabus PDFs for all major competitive exams.
+                    Get comprehensive study material curated by our expert faculty.
+                </p>
             </div>
         </div>
+
 
         <!-- Syllabus Cards Section -->
         <div class="container mt-5">
             <div class="row mt-5">
 
                 <!-- MPSC Card -->
-                 <% for(var i=0;i<syllabus.length;i++){ %>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="syllabus-card animated-card card-1">
-                        <div class="updated-badge">Updated</div>
-                        <div class="card-header text-center">
-                            <div class="exam-icon">
-                                <i class="fas fa-book-open"></i>
+                <% for(var i=0;i<syllabus.length;i++){ %>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="syllabus-card animated-card card-1">
+                            <div class="updated-badge">Updated</div>
+                            <div class="card-header text-center">
+                                <div class="exam-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <h3>
+                                    <%= syllabus[i].exam_name %>
+                                </h3>
                             </div>
-                            <h3><%= syllabus[i].exam_name %></h3>
-                        </div>
-                        <div class="card-body">
-                            <p> <%= syllabus[i].description %></p>
-                            <a href="pdf/<%= syllabus[i].pdf_path %>" target="_blank">
-                                <button class="btn btn-download">
-                                    <i class="fas fa-eye"></i> View PDF
-                                </button>
-                            </a>
+                            <div class="card-body">
+                                <p>
+                                    <%= syllabus[i].description %>
+                                </p>
+                                <a href="pdf/<%= syllabus[i].pdf_path %>" target="_blank">
+                                    <button class="btn btn-download">
+                                        <i class="fas fa-eye"></i> View PDF
+                                    </button>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-               <% } %>
-              
+                    <% } %>
+
             </div>
 
             <!-- Additional Info Section -->
@@ -434,5 +441,3 @@
 </body>
 
 </html>
-
-
