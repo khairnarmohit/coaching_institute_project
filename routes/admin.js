@@ -37,6 +37,72 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+router.post("/addmission_form", async function (req, res) {
+  let d = req.body;
+
+  let photoName = "";
+  let idProofName = "";
+
+  // FILE UPLOAD
+  if (req.files) {
+
+    if (req.files.photo) {
+      photoName = Date.now() + "_" + req.files.photo.name;
+      req.files.photo.mv("public/images/" + photoName);
+    }
+
+    if (req.files.id_proof) {
+      idProofName = Date.now() + "_" + req.files.id_proof.name;
+      req.files.id_proof.mv("public/images/" + idProofName);
+    }
+  }
+
+  let sql = `
+            INSERT INTO admissions
+            (
+                full_name, gender, date_of_birth, mobile_number, email, address,
+                qualification, college_name, passing_year,
+                course_name, mode_of_class,
+                parent_name, parent_contact,
+                photo, id_proof
+            )
+            VALUES
+            (
+                '${d.full_name}', '${d.gender}', '${d.date_of_birth}',
+                '${d.mobile_number}', '${d.email}', '${d.address}',
+                '${d.qualification}', '${d.college_name}', '${d.passing_year}',
+                '${d.course_name}', '${d.mode_of_class}',
+                '${d.parent_name}', '${d.parent_contact}',
+                '${photoName}', '${idProofName}'
+            )
+        `;
+
+  await exe(sql);
+
+  res.redirect("/admission");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 router.use(veryfyLogin);
 
 router.get("/dashboard", async (req, res) => {
@@ -1132,51 +1198,6 @@ router.get("/admission", async (req, res) => {
   res.render("admin/admission.ejs", { admissions: data });
 });
 
-
-router.post("/addmission_form", async function (req, res) {
-  let d = req.body;
-
-  let photoName = "";
-  let idProofName = "";
-
-  // FILE UPLOAD
-  if (req.files) {
-
-    if (req.files.photo) {
-      photoName = Date.now() + "_" + req.files.photo.name;
-      req.files.photo.mv("public/images/" + photoName);
-    }
-
-    if (req.files.id_proof) {
-      idProofName = Date.now() + "_" + req.files.id_proof.name;
-      req.files.id_proof.mv("public/images/" + idProofName);
-    }
-  }
-
-  let sql = `
-            INSERT INTO admissions
-            (
-                full_name, gender, date_of_birth, mobile_number, email, address,
-                qualification, college_name, passing_year,
-                course_name, mode_of_class,
-                parent_name, parent_contact,
-                photo, id_proof
-            )
-            VALUES
-            (
-                '${d.full_name}', '${d.gender}', '${d.date_of_birth}',
-                '${d.mobile_number}', '${d.email}', '${d.address}',
-                '${d.qualification}', '${d.college_name}', '${d.passing_year}',
-                '${d.course_name}', '${d.mode_of_class}',
-                '${d.parent_name}', '${d.parent_contact}',
-                '${photoName}', '${idProofName}'
-            )
-        `;
-
-  await exe(sql);
-
-  res.redirect("/admission");
-});
 
 
 // Delete Admission
