@@ -5,19 +5,46 @@ const path = require("path");
 const fs = require("fs");
 
 
-router.get("/login", (req, res) => {
-  res.render("admin/login");
-});
+function veryfyLogin(req, res, next) {
+  if (req.session.admin_id) {
+    next();
+  } else {
+    res.redirect("/admin");
+  }
+}
 
 
 
 
 
 router.get("/", (req, res) => {
-  res.render("admin/dashboard");
+  res.render('admin/login.ejs');
+  
+});
+router.post("/login", async (req, res) => {
+  try {
+
+    var sql = `SELECT email,password FROM admin WHERE email = ? AND password = ?`;
+    var result = await exe(sql, [req.body.email, req.body.password]);
+    if (result.length > 0) {
+      req.session.admin_id=1;
+      // res.send("Login Successfull");
+      res.redirect("/admin/dashboard");
+      
+    } else {
+      res.send("<script> alert('Invalid email or password'); window.location.href='/admin';</script>");
+      // res.render("admin/login.ejs", { message: "Invalid email or password" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.send(err.message);
+  }
 });
 
+router.use(veryfyLogin);
+
 router.get("/dashboard", (req, res) => {
+
   res.render("admin/dashboard");
 });
 
