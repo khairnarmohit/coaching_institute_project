@@ -1,172 +1,290 @@
 <%- include('navbar') %>
 
+<%
+  counts = counts || {
+    students: 0,
+    batches: 0,
+    courses: 0,
+    faculty: 0,
+    admissions: 0,
+    contact_enquiries: 0,
+    contact_active: 0,
+    contact_closed: 0
+  };
+%>
+
 <style>
-:root {
-  --gov-dark: #0b1c2d;
-  --gov-accent: #f59e0b;
-  --gov-bg: #f8fafc;
-  --gov-border: #e5e7eb;
-  --gov-shadow: 0 12px 32px -6px rgba(0,0,0,0.08);
-  --gov-radius: 18px;
-}
+  :root {
+    --gov-dark: #0b1c2d;
+    --gov-accent: #f59e0b;
+    --gov-border: #e5e7eb;
+    --gov-shadow: 0 12px 32px -6px rgba(0,0,0,.08);
+    --gov-radius: 18px;
+  }
 
-/* ===== DASHBOARD HEADER ===== */
-.dashboard-title {
-  color: var(--gov-dark);
-  font-weight: 800;
-  letter-spacing: .5px;
-}
+  .dashboard-title { font-weight: 800; color: var(--gov-dark); }
 
-/* ===== SUMMARY CARDS ===== */
-.summary-card {
-  background: #fff;
-  border: 1px solid var(--gov-border);
-  border-radius: var(--gov-radius);
-  box-shadow: var(--gov-shadow);
-  padding: 26px 22px;
-  position: relative;
-  transition: all .3s ease;
-  overflow: hidden;
-}
+  .summary-card {
+    background: #fff;
+    border: 1px solid var(--gov-border);
+    border-radius: var(--gov-radius);
+    box-shadow: var(--gov-shadow);
+    padding: 26px 22px;
+    transition: .3s;
+  }
 
-.summary-card:hover {
-  transform: translateY(-6px);
-}
+  .summary-cards {
+    background: #fff;
+    border: 1px solid var(--gov-border);
+    border-radius: var(--gov-radius);
+    box-shadow: var(--gov-shadow);
+    padding: 26px 22px;
+    height: 390px;
+    width: 750px;
+  }
 
-/* Accent line */
-.summary-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 5px;
-  width: 100%;
-  background: var(--gov-accent);
-}
+  .summary-card:hover { transform: translateY(-4px); }
 
-/* Icon */
-.card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--gov-dark);
-  color: var(--gov-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  margin-bottom: 12px;
-}
+  .compact-card { padding: 18px; }
 
-.summary-card h6 {
-  color: #475569;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--gov-dark);
+    color: var(--gov-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
 
-.summary-card h3 {
-  color: var(--gov-dark);
-  font-weight: 800;
-  margin: 0;
-}
+  h6 { color: #475569; font-weight: 600; }
+  h3 { font-weight: 800; color: var(--gov-dark); }
 
-/* ===== CHART CARD ===== */
-.chart-card {
-  background: #fff;
-  border: 1px solid var(--gov-border);
-  border-radius: var(--gov-radius);
-  box-shadow: var(--gov-shadow);
-  padding: 24px;
-  margin-bottom: 40px;
-}
+  .chart-box { height: 280px; }
 
-.chart-card h5 {
-  font-weight: 700;
-  color: var(--gov-dark);
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+  /* ================= QUICK LINKS – BETTER DESIGN ================= */
 
-.chart-card h5 i {
-  color: var(--gov-accent);
-}
+  .quick-card {
+    background: #f9fafb;
+  }
 
-.chart-container {
-  background: var(--gov-bg);
-  padding: 18px;
-  border-radius: 12px;
-}
+  .quick-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid var(--gov-border);
+    border-left: 6px solid var(--gov-accent);
+    text-decoration: none;
+    color: #1f2937;
+    box-shadow: 0 6px 14px rgba(0,0,0,.05);
+    transition: .25s;
+  }
+
+  .quick-link:hover {
+    transform: translateY(-6px);
+    background: #fefce8;
+  }
+
+  .quick-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(245,158,11,.15);
+    color: var(--gov-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .quick-text span {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .quick-text small {
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
 </style>
 
-<div class="container mt-2">
+<div class="container mt-3">
 
-  <!-- DASHBOARD TITLE -->
-  <div class="mb-4">
-    <h3 class="dashboard-title">
-      <i class="bi bi-speedometer2" style="color:var(--gov-accent)"></i>
-      Dashboard Overview
-    </h3>
+  <!-- HEADER -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="dashboard-title mb-1">
+        <i class="bi bi-speedometer2 text-warning"></i>
+        Dashboard Overview
+      </h3>
+      <small class="text-muted">Welcome back, Admin 👋</small>
+    </div>
+
+    <div class="d-flex gap-3 align-items-center">
+      <span class="text-muted small">
+        <i class="bi bi-calendar-event"></i>
+        <%= new Date().toLocaleDateString('en-IN', { day:'2-digit', month:'long', year:'numeric' }) %>
+      </span>
+
+      <a href="/admin/upcoming" class="btn btn-outline-success btn-sm">
+        <i class="fas fa-layer-group"></i> Update Batch
+      </a>
+    </div>
   </div>
 
-  <!-- SUMMARY CARDS -->
-  <div class="row g-4 mb-4">
+  <!-- SUMMARY ROW -->
+  <div class="row g-4">
 
+    <!-- STUDENTS -->
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon">
-          <i class="fas fa-user-graduate"></i>
-        </div>
+        <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
         <h6>Total Students</h6>
-        <h3>1,250</h3>
+        <h3><%= counts.students %></h3>
       </div>
     </div>
 
+    <!-- BATCHES -->
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon">
-          <i class="fas fa-users"></i>
-        </div>
+        <div class="card-icon"><i class="fas fa-users"></i></div>
         <h6>Total Batches</h6>
-        <h3>18</h3>
+        <h3><%= counts.batches %></h3>
       </div>
     </div>
 
+    <!-- COURSES -->
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon">
-          <i class="fas fa-book"></i>
-        </div>
-        <h6>Courses</h6>
-        <h3>6</h3>
+        <div class="card-icon"><i class="fas fa-book"></i></div>
+        <h6>Total Courses</h6>
+        <h3><%= counts.courses %></h3>
       </div>
     </div>
 
+    <!-- FACULTY -->
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon">
-          <i class="fas fa-chalkboard-teacher"></i>
+        <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h6>Faculty Members</h6>
+        <h3><%= counts.faculty %></h3>
+      </div>
+    </div>
+
+    <!-- COMPACT STACK -->
+    <div class="col-md-3">
+      <div class="summary-card compact-card">
+        <div class="card-icon"><i class="fas fa-check-circle"></i></div>
+        <h6>Approved Admissions</h6>
+        <h3><%= counts.admissions %></h3>
+        <progress max="100" value="<%= counts.admissions %>"></progress>
+      </div>
+
+      <div class="summary-card compact-card mt-2">
+        <div class="card-icon"><i class="fas fa-envelope-open-text"></i></div>
+        <h6>Total Enquiries</h6>
+        <h3><%= counts.contact_enquiries %></h3>
+        <small class="text-success">Active: <%= counts.contact_active %></small><br>
+        <small class="text-danger">Closed: <%= counts.contact_closed %></small>
+      </div>
+    </div>
+
+    <!-- LINE CHART -->
+    <div class="col-md-6">
+      <div class="summary-cards">
+        <h6 class="mb-3 text-center">Enquiry Trend Overview</h6>
+        <div class="chart-box">
+          <canvas id="enquiryChart"></canvas>
         </div>
-        <h6>Faculty</h6>
-        <h3>12</h3>
+      </div>
+    </div>
+
+    <!-- QUICK LINKS (IMPROVED DESIGN ONLY) -->
+    <div class="col-md-12">
+      <div class="summary-card quick-card">
+        <h6 class="mb-4">Quick Access</h6>
+
+        <div class="row g-4">
+          <div class="col-md-3">
+            <a href="/admin/admission" class="quick-link">
+              <div class="quick-icon"><i class="fas fa-check-circle"></i></div>
+              <div class="quick-text">
+                <span>View Admissions</span>
+                <small>Approved & pending</small>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-3">
+            <a href="/admin/enquiries" class="quick-link">
+              <div class="quick-icon"><i class="fas fa-envelope"></i></div>
+              <div class="quick-text">
+                <span>View Enquiries</span>
+                <small>Student queries</small>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-3">
+            <a href="/admin/courses_list" class="quick-link">
+              <div class="quick-icon"><i class="fas fa-book"></i></div>
+              <div class="quick-text">
+                <span>Total Courses</span>
+                <small>Available syllabus</small>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-3">
+            <a href="/admin/faculty_expert" class="quick-link">
+              <div class="quick-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+              <div class="quick-text">
+                <span>Total Faculty</span>
+                <small>Expert instructors</small>
+              </div>
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
 
   </div>
-
-  <!-- CHART -->
-  <div class="chart-card">
-    <h5>
-      <i class="bi bi-graph-up"></i>
-      Admissions Growth
-    </h5>
-
-    <div class="chart-container">
-      <canvas id="chart"></canvas>
-    </div>
-  </div>
-
 </div>
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  new Chart(document.getElementById('enquiryChart'), {
+    type: 'line',
+    data: {
+      labels: ['Students','Active Enquiries','Closed Enquiries'],
+      datasets: [{
+        data: [
+          <%= counts.students %>,
+          <%= counts.contact_active %>,
+          <%= counts.contact_closed %>
+        ],
+        borderColor: '#3b82f6',
+        backgroundColor: 'rgba(59,130,246,0.1)',
+        tension: 0.4,
+        fill: true,
+        pointRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+</script>
 
 <%- include('footer') %>
