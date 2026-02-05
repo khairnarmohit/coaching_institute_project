@@ -98,6 +98,7 @@ button.buttons-pdf:hover {
         <p><strong>Name:</strong> <span id="viewName"></span></p>
         <p><strong>Email:</strong> <span id="viewEmail"></span></p>
         <p><strong>Mobile:</strong> <span id="viewMobile"></span></p>
+        <p><strong>Subject of Interest:</strong> <span id="viewSubject"></span></p>
         <p><strong>Message:</strong></p>
         <div class="border rounded p-3 bg-light" id="viewMessage"></div>
       </div>
@@ -135,6 +136,7 @@ button.buttons-pdf:hover {
           <th>Name</th>
           <th>Email</th>
           <th>Mobile</th>
+          <!-- <th hidden>Subject of interest</th> -->
           <th>Message</th>
           <th width="160">Action</th>
         </tr>
@@ -147,6 +149,7 @@ button.buttons-pdf:hover {
           <td><%= result[i].name %></td>
           <td><%= result[i].email %></td>
           <td><%= result[i].mo_number %></td>
+          <!-- <td hidden><%= result[i].subject %></td> -->
           <td class="message-ellipsis"><%= result[i].message %></td>
           <td class="text-center">
             <a class="btn btn-sm btn-warning"
@@ -156,6 +159,7 @@ button.buttons-pdf:hover {
                  "<%= result[i].name %>",
                  "<%= result[i].email %>",
                  "<%= result[i].mo_number %>",
+                 "<%= result[i].subject %>",
                  "<%= result[i].message %>"
                )'>
               <i class="bi bi-eye"></i>
@@ -175,10 +179,11 @@ button.buttons-pdf:hover {
 </div>
 
 <script>
-function viewEnquiry(name, email, mobile, message) {
+function viewEnquiry(name, email, mobile, subject, message) {
   document.getElementById('viewName').textContent = name;
   document.getElementById('viewEmail').textContent = email;
   document.getElementById('viewMobile').textContent = mobile;
+  document.getElementById('viewSubject').textContent = subject;
   document.getElementById('viewMessage').innerText = message;
 }
 </script>
