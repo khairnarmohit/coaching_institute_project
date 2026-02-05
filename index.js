@@ -2,6 +2,16 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const upload = require("express-fileupload");
+var session = require('express-session');
+
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: true,
+ 
+}));
+
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(upload());

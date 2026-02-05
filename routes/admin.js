@@ -5,73 +5,48 @@ const path = require("path");
 const fs = require("fs");
 
 
-router.get("/login", (req, res) => {
-  res.render("admin/login");
+function veryfyLogin(req, res, next) {
+  if (req.session.admin_id) {
+    next();
+  } else {
+    res.redirect("/admin");
+  }
+}
+
+
+
+
+
+router.get("/", (req, res) => {
+  res.render('admin/login.ejs');
+  
 });
-
-
-
-
-
-// router.get("/", (req, res) => {
-//   res.render("admin/dashboard");
-// });
-
-// ================= DASHBOARD =================
-// ================= DASHBOARD =================
-// ================= DASHBOARD =================
-router.get(["/", "/dashboard"], async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
-    const [
-      students,
-      batches,
-      courses,
-      faculty,
-      admissions,
-      enquiryActive,
-      enquiryClosed
-    ] = await Promise.all([
-      exe("SELECT COUNT(*) AS total FROM admissions"),
-      exe("SELECT COUNT(*) AS total FROM upcoming_batches WHERE is_active=1"),
-      exe("SELECT COUNT(*) AS total FROM courses_list"),
-      exe("SELECT COUNT(*) AS total FROM faculty"),
-      exe("SELECT COUNT(*) AS total FROM admissions WHERE status='Approved'"),
-      exe("SELECT COUNT(*) AS total FROM contact_enquiries WHERE status='1'"),
-      exe("SELECT COUNT(*) AS total FROM contact_enquiries WHERE status='0'")
-    ]);
 
-    res.render("admin/dashboard", {
-      counts: {
-        students: students[0].total,
-        batches: batches[0].total,
-        courses: courses[0].total,
-        faculty: faculty[0].total,
-        admissions: admissions[0].total,
-        contact_active: enquiryActive[0].total,
-        contact_closed: enquiryClosed[0].total,
-        contact_enquiries:
-          enquiryActive[0].total + enquiryClosed[0].total
-      }
-    });
-
+    var sql = `SELECT email,password FROM admin WHERE email = ? AND password = ?`;
+    var result = await exe(sql, [req.body.email, req.body.password]);
+    if (result.length > 0) {
+      req.session.admin_id=1;
+      // res.send("Login Successfull");
+      res.redirect("/admin/dashboard");
+      
+    } else {
+      res.send("<script> alert('Invalid email or password'); window.location.href='/admin';</script>");
+      // res.render("admin/login.ejs", { message: "Invalid email or password" });
+    }
   } catch (err) {
-    console.error("Dashboard Error:", err);
-    res.render("admin/dashboard", {
-      counts: {
-        students: 0,
-        batches: 0,
-        courses: 0,
-        faculty: 0,
-        admissions: 0,
-        contact_active: 0,
-        contact_closed: 0,
-        contact_enquiries: 0
-      }
-    });
+    console.log(err);
+    res.send(err.message);
   }
 });
 
+router.use(veryfyLogin);
 
+router.get("/dashboard", (req, res) => {
+
+  res.render("admin/dashboard");
+});
 
 // Home Banner Code start...................................................
 router.get("/home_banner", async (req, res) => {
