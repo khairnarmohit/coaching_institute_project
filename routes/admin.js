@@ -1075,10 +1075,10 @@ router.post("/edit_gallery_video/:id", async (req, res) => {
   }
 });
 
-router.get("/admission", async (req, res) => {
-  let sql = `SELECT * FROM admissions`;
-  let data = await exe(sql);
-  res.render("admin/admission.ejs", { admissions: data });
+router.get("/admission",async (req, res) => {
+    let sql = `SELECT * FROM admissions`;
+    let data = await exe(sql);
+    res.render("admin/admission.ejs",{admissions: data });
 });
 
 
@@ -1146,6 +1146,7 @@ router.post("/admission/reject/:id", async (req, res) => {
   await exe(`UPDATE admissions SET status='Rejected' WHERE admission_id='${req.params.id}'`);
   res.json({ success: true });
 });
+
 
 router.get("/academy_information", async function (req, res) {
   try {
