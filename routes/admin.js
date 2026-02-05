@@ -503,15 +503,15 @@ router.get("/upcoming", async (req, res) => {
 });
 router.post("/add_batch", async (req, res) => {
   var d = req.body;
-  var sql = `insert into upcoming_batches (batch_title,status_label,batch_status,duration,fees,total_strength) values (?,?,?,?,?,?)`;
-  var result = await exe(sql, [d.title, d.statusLabel, d.batch_status, d.duration, d.fees, d.total_strength]);
+  var sql = `insert into upcoming_batches (batch_title,status_label,batch_status,duration,fees,total_strength,start_date) values (?,?,?,?,?,?,?)`;
+  var result = await exe(sql, [d.title, d.statusLabel, d.batch_status, d.duration, d.fees, d.total_strength, d.start_date]);
   res.redirect("/admin/upcoming");
 
 })
 router.post("/update_batch", async (req, res) => {
   var d = req.body;
-  var sql = `update upcoming_batches set batch_title=?,status_label=?,batch_status=?,duration=?,fees=?,total_strength=?,mode=? where id=?`;
-  var result = await exe(sql, [d.title, d.statusLabel, d.batch_status, d.duration, d.fees, d.total_strength, d.mode, d.batch_id]);
+  var sql = `update upcoming_batches set batch_title=?,status_label=?,batch_status=?,duration=?,fees=?,total_strength=?,start_date=?,mode=? where id=?`;
+  var result = await exe(sql, [d.title, d.statusLabel, d.batch_status, d.duration, d.fees, d.total_strength, d.start_date, d.mode, d.batch_id]);
   res.redirect("/admin/upcoming");
 });
 router.get("/delete_batch/:id", async (req, res) => {
