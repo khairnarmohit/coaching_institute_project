@@ -812,11 +812,11 @@ router.get("/courses_details", (req, res) => {
 // });
 
 
-// router.get("/gallery_image", async (req, res) => {
-//   let sql = `SELECT * FROM gallery_images`;
-//   let gallery = await exe(sql);
-//   res.render("admin/gallery_image.ejs", { gallery });
-// });
+router.get("/gallery_image", async (req, res) => {
+  let sql = `SELECT * FROM gallery_images`;
+  let gallery = await exe(sql);
+  res.render("admin/gallery_image.ejs", { gallery });
+});
 
 // router.post("/academy_information", async function (req, res) {
 //   try {
