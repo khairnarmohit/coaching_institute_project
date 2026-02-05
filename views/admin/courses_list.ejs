@@ -1,91 +1,181 @@
 <%- include("navbar.ejs") %>
 
     <style>
-        .course-card {
+        :root {
+            --dark: #0b1c2d;
+            --accent: #f59e0b;
+            --accent-soft: rgba(245, 158, 11, .12);
+            --bg: #f6f8fc;
+            --border: #e6e9ef;
+            --shadow: 0 18px 45px -12px rgba(11, 28, 45, .15);
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        /* ===== PAGE BG ===== */
+        body {
+            background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+        }
+
+        /* ===== CARD BASE ===== */
+        .card {
+            border-radius: var(--radius);
             border: none;
-            border-radius: 14px;
+            box-shadow: var(--shadow);
         }
 
+        /* ===== FORM CARD ===== */
         .course-card .card-header {
-            background: linear-gradient(135deg, #141e30, #243b55);
-            padding: 10px 18px;
+            background: linear-gradient(135deg, var(--dark), #1e293b);
+            border-radius: var(--radius) var(--radius) 0 0;
         }
 
+        .course-card .card-body {
+            background: #fff;
+        }
+
+        /* ===== LABELS ===== */
         .course-card label {
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 2px;
-            color: #444;
+            font-size: 11px;
+            font-weight: 700;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: .4px;
         }
 
+        /* ===== INPUTS ===== */
         .course-card .form-control,
         .course-card .form-select {
             font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 8px;
+            padding: 7px 10px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: #fbfdff;
+            transition: .25s;
         }
 
+        .course-card .form-control:focus,
+        .course-card .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, .15);
+            background: #fff;
+        }
+
+        /* ===== TEXTAREA ===== */
         .course-card textarea {
             resize: none;
         }
 
-        .course-card .card-body {
-            padding: 14px 18px;
-        }
-
+        /* ===== BUTTONS ===== */
         .course-card .btn {
             font-size: 12px;
-            padding: 4px 18px;
-            border-radius: 20px;
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-weight: 600;
         }
 
-        /* ===== TABLE DESIGN ===== */
-        .table-card {
-            border-radius: 14px;
+        .btn-success {
+            background: linear-gradient(135deg, var(--accent), #fbbf24);
             border: none;
-            background: #f8f9fb;
+        }
+
+        .btn-success:hover {
+            opacity: .9;
+        }
+
+        /* ===== TABLE CARD ===== */
+        .table-card {
+            background: transparent;
+        }
+
+        .table-card .card-header {
+            background: linear-gradient(135deg, #020617, #0f172a);
+            border-radius: var(--radius) var(--radius) 0 0;
         }
 
         .table-card .card-body {
-            background: #ffffff;
-            border-radius: 12px;
+            background: #fff;
+            border-radius: 0 0 var(--radius) var(--radius);
         }
 
-        .table th {
-            font-size: 12px;
-            background: #f1f3f6;
+        /* ===== TABLE ===== */
+        .table {
+            border-collapse: separate;
+            border-spacing: 0 6px;
+        }
+
+        .table thead th {
+            font-size: 11px;
+            font-weight: 800;
+            background: #f1f5f9;
+            color: #334155;
+            border: none;
             text-transform: uppercase;
+        }
+
+        .table tbody tr {
+            background: #fff;
+            transition: .25s;
+        }
+
+        .table tbody tr:hover {
+            transform: scale(1.003);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, .08);
         }
 
         .table td {
             font-size: 12px;
+            border: none;
+            padding: 10px 12px;
             vertical-align: middle;
         }
 
+        /* ===== IMAGE ===== */
+        .table td img {
+            width: 44px;
+            height: 44px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        /* ===== STATUS ===== */
         .status-badge {
             font-size: 10px;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 20px;
+            letter-spacing: .4px;
+        }
+
+        /* ===== ACTION BUTTONS ===== */
+        .table .btn {
+            border-radius: 10px;
             padding: 4px 8px;
+        }
+
+        /* ===== EMPTY ROW ===== */
+        .table tbody tr td[colspan] {
+            background: #f8fafc;
             border-radius: 12px;
         }
 
-        /* ===== IMAGE SIZE SAME & SMALL ===== */
-        .table td img {
-            width: 42px;
-            height: 42px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid #e1e1e1;
-        }
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:768px) {
+            .course-card .card-body {
+                padding: 12px;
+            }
 
-        .row {
-            margin-left: 0;
-            margin-right: 0;
+            .table td {
+                white-space: nowrap;
+            }
         }
     </style>
 
 
 
-    <div class="container px-4 mt-3">
+
+    <div class="container p-0 m-0 mt-3">
 
         <!-- ================= FORM CARD ================= -->
         <div class="card course-card shadow-sm">

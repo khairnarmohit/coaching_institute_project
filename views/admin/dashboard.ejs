@@ -1,172 +1,205 @@
 <%- include('navbar') %>
 
+<%
+  counts = counts || {
+    students: 0,
+    batches: 0,
+    courses: 0,
+    faculty: 0,
+    admissions: 0,
+    contact_enquiries: 0,
+    contact_active: 0,
+    contact_closed: 0
+  };
+%>
+
 <style>
-:root {
-  --gov-dark: #0b1c2d;
-  --gov-accent: #f59e0b;
-  --gov-bg: #f8fafc;
-  --gov-border: #e5e7eb;
-  --gov-shadow: 0 12px 32px -6px rgba(0,0,0,0.08);
-  --gov-radius: 18px;
-}
+  :root {
+    --gov-dark: #0b1c2d;
+    --gov-accent: #f59e0b;
+    --gov-border: #e5e7eb;
+    --gov-shadow: 0 12px 32px -6px rgba(0,0,0,.08);
+    --gov-radius: 18px;
+  }
 
-/* ===== DASHBOARD HEADER ===== */
-.dashboard-title {
-  color: var(--gov-dark);
-  font-weight: 800;
-  letter-spacing: .5px;
-}
+  .dashboard-title {
+    font-weight: 800;
+    color: var(--gov-dark);
+  }
 
-/* ===== SUMMARY CARDS ===== */
-.summary-card {
-  background: #fff;
-  border: 1px solid var(--gov-border);
-  border-radius: var(--gov-radius);
-  box-shadow: var(--gov-shadow);
-  padding: 26px 22px;
-  position: relative;
-  transition: all .3s ease;
-  overflow: hidden;
-}
+  .summary-card {
+    background: #fff;
+    border: 1px solid var(--gov-border);
+    border-radius: var(--gov-radius);
+    box-shadow: var(--gov-shadow);
+    padding: 26px 22px;
+    transition: .3s;
+  }
 
-.summary-card:hover {
-  transform: translateY(-6px);
-}
+  .summary-card:hover {
+    transform: translateY(-6px);
+  }
 
-/* Accent line */
-.summary-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 5px;
-  width: 100%;
-  background: var(--gov-accent);
-}
+  .card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--gov-dark);
+    color: var(--gov-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
 
-/* Icon */
-.card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--gov-dark);
-  color: var(--gov-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  margin-bottom: 12px;
-}
+  h6 {
+    color: #475569;
+    font-weight: 600;
+  }
 
-.summary-card h6 {
-  color: #475569;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.summary-card h3 {
-  color: var(--gov-dark);
-  font-weight: 800;
-  margin: 0;
-}
-
-/* ===== CHART CARD ===== */
-.chart-card {
-  background: #fff;
-  border: 1px solid var(--gov-border);
-  border-radius: var(--gov-radius);
-  box-shadow: var(--gov-shadow);
-  padding: 24px;
-  margin-bottom: 40px;
-}
-
-.chart-card h5 {
-  font-weight: 700;
-  color: var(--gov-dark);
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.chart-card h5 i {
-  color: var(--gov-accent);
-}
-
-.chart-container {
-  background: var(--gov-bg);
-  padding: 18px;
-  border-radius: 12px;
-}
+  h3 {
+    font-weight: 800;
+    color: var(--gov-dark);
+  }
 </style>
 
-<div class="container mt-2">
+<div class="container mt-3">
 
-  <!-- DASHBOARD TITLE -->
-  <div class="mb-4">
-    <h3 class="dashboard-title">
-      <i class="bi bi-speedometer2" style="color:var(--gov-accent)"></i>
-      Dashboard Overview
-    </h3>
-  </div>
+  <h3 class="dashboard-title mb-4">
+    <i class="bi bi-speedometer2 text-warning"></i>
+    Dashboard Overview
+  </h3>
 
-  <!-- SUMMARY CARDS -->
-  <div class="row g-4 mb-4">
+  <div class="row g-4">
 
+    <!-- STUDENTS -->
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon">
-          <i class="fas fa-user-graduate"></i>
-        </div>
+        <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
         <h6>Total Students</h6>
-        <h3>1,250</h3>
+        <h3><%= counts.students %></h3>
       </div>
     </div>
 
+    <!-- BATCHES -->
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon">
-          <i class="fas fa-users"></i>
-        </div>
+        <div class="card-icon"><i class="fas fa-users"></i></div>
         <h6>Total Batches</h6>
-        <h3>18</h3>
+        <h3><%= counts.batches %></h3>
       </div>
     </div>
 
+    <!-- COURSES -->
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon">
-          <i class="fas fa-book"></i>
-        </div>
-        <h6>Courses</h6>
-        <h3>6</h3>
+        <div class="card-icon"><i class="fas fa-book"></i></div>
+        <h6>Total Courses</h6>
+        <h3><%= counts.courses %></h3>
       </div>
     </div>
 
+    <!-- FACULTY -->
     <div class="col-md-3">
       <div class="summary-card">
-        <div class="card-icon">
-          <i class="fas fa-chalkboard-teacher"></i>
+        <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h6>Faculty Members</h6>
+        <h3><%= counts.faculty %></h3>
+      </div>
+    </div>
+
+    <!-- APPROVED ADMISSIONS -->
+    <div class="col-md-3">
+      <div class="summary-card">
+        <div class="card-icon"><i class="fas fa-check-circle"></i></div>
+        <h6>Approved Admissions</h6>
+        <h3><%= counts.admissions %></h3>
+      </div>
+    </div>
+
+    <!-- TOTAL ENQUIRY + DONUT -->
+    <div class="col-md-6">
+      <div class="summary-card h-100">
+        <div class="d-flex justify-content-between align-items-center">
+
+          <div>
+            <div class="card-icon">
+              <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <h6>Total Enquiries</h6>
+            <h3><%= counts.contact_enquiries %></h3>
+
+            <small class="text-success">
+              Active: <%= counts.contact_active %>
+            </small><br>
+            <small class="text-danger">
+              Closed: <%= counts.contact_closed %>
+            </small>
+          </div>
+
+          <div style="width:180px">
+            <canvas id="enquiryChart"></canvas>
+          </div>
+
         </div>
-        <h6>Faculty</h6>
-        <h3>12</h3>
       </div>
     </div>
 
   </div>
-
-  <!-- CHART -->
-  <div class="chart-card">
-    <h5>
-      <i class="bi bi-graph-up"></i>
-      Admissions Growth
-    </h5>
-
-    <div class="chart-container">
-      <canvas id="chart"></canvas>
-    </div>
-  </div>
-
 </div>
+
+ 
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const ctx = document.getElementById('enquiryChart');
+
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: [
+        'Students',
+        'Active Enquiries',
+        'Closed Enquiries'
+      ],
+      datasets: [{
+        data: [
+          <%= counts.students %>,
+          <%= counts.contact_active %>,
+          <%= counts.contact_closed %>
+        ],
+        backgroundColor: [
+          '#3b82f6', // blue - students
+          '#22c55e', // green - active
+          '#ef4444'  // red - closed
+        ],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      cutout: '68%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            boxWidth: 12,
+            padding: 15
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.label + ': ' + context.raw;
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
+
 
 <%- include('footer') %>
