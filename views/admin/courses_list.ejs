@@ -1,183 +1,209 @@
 <%- include("navbar.ejs") %>
 
-    <style>
-        :root {
-            --dark: #0b1c2d;
-            --accent: #f59e0b;
-            --accent-soft: rgba(245, 158, 11, .12);
-            --bg: #f6f8fc;
-            --border: #e6e9ef;
-            --shadow: 0 18px 45px -12px rgba(11, 28, 45, .15);
-            --radius: 16px;
-            --radius-sm: 10px;
-        }
+<style>
+    .course-card {
+        border: none;
+        border-radius: 14px;
+    }
 
-        /* ===== PAGE BG ===== */
-        body {
-            background: linear-gradient(180deg, #f8fafc, #f1f5f9);
-        }
+    .course-card .card-header {
+        background: linear-gradient(135deg, #141e30, #243b55);
+        padding: 10px 18px;
+    }
 
-        /* ===== CARD BASE ===== */
-        .card {
-            border-radius: var(--radius);
-            border: none;
-            box-shadow: var(--shadow);
-        }
+    .course-card label {
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 2px;
+        color: #444;
+    }
 
-        /* ===== FORM CARD ===== */
-        .course-card .card-header {
-            background: linear-gradient(135deg, var(--dark), #1e293b);
-            border-radius: var(--radius) var(--radius) 0 0;
-        }
+    .course-card .form-control,
+    .course-card .form-select {
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 8px;
+    }
 
-        .course-card .card-body {
-            background: #fff;
-        }
+    .course-card textarea {
+        resize: none;
+    }
 
-        /* ===== LABELS ===== */
-        .course-card label {
-            font-size: 11px;
-            font-weight: 700;
-            color: #475569;
-            text-transform: uppercase;
-            letter-spacing: .4px;
-        }
+    .course-card .card-body {
+        padding: 14px 18px;
+    }
 
-        /* ===== INPUTS ===== */
-        .course-card .form-control,
-        .course-card .form-select {
-            font-size: 12px;
-            padding: 7px 10px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: #fbfdff;
-            transition: .25s;
-        }
+    .course-card .btn {
+        font-size: 12px;
+        padding: 4px 18px;
+        border-radius: 20px;
+    }
 
-        .course-card .form-control:focus,
-        .course-card .form-select:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(245, 158, 11, .15);
-            background: #fff;
-        }
+    .table-card {
+        border-radius: 14px;
+        border: none;
+        background: #f8f9fb;
+    }
 
-        /* ===== TEXTAREA ===== */
-        .course-card textarea {
-            resize: none;
-        }
+    .table-card .card-body {
+        background: #ffffff;
+        border-radius: 12px;
+    }
 
-        /* ===== BUTTONS ===== */
-        .course-card .btn {
-            font-size: 12px;
-            padding: 6px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-        }
+    .table th {
+        font-size: 12px;
+        background: #f1f3f6;
+        text-transform: uppercase;
+    }
 
-        .btn-success {
-            background: linear-gradient(135deg, var(--accent), #fbbf24);
-            border: none;
-        }
+    .table td {
+        font-size: 12px;
+        vertical-align: middle;
+    }
 
-        .btn-success:hover {
-            opacity: .9;
-        }
+    .status-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+        border-radius: 12px;
+    }
 
-        /* ===== TABLE CARD ===== */
-        .table-card {
-            background: transparent;
-        }
+    .table td img {
+        width: 42px;
+        height: 42px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e1e1e1;
+    }
 
-        .table-card .card-header {
-            background: linear-gradient(135deg, #020617, #0f172a);
-            border-radius: var(--radius) var(--radius) 0 0;
-        }
-
-        .table-card .card-body {
-            background: #fff;
-            border-radius: 0 0 var(--radius) var(--radius);
-        }
-
-        /* ===== TABLE ===== */
-        .table {
-            border-collapse: separate;
-            border-spacing: 0 6px;
-        }
-
-        .table thead th {
-            font-size: 11px;
-            font-weight: 800;
-            background: #f1f5f9;
-            color: #334155;
-            border: none;
-            text-transform: uppercase;
-        }
-
-        .table tbody tr {
-            background: #fff;
-            transition: .25s;
-        }
-
-        .table tbody tr:hover {
-            transform: scale(1.003);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, .08);
-        }
-
-        .table td {
-            font-size: 12px;
-            border: none;
-            padding: 10px 12px;
-            vertical-align: middle;
-        }
-
-        /* ===== IMAGE ===== */
-        .table td img {
-            width: 44px;
-            height: 44px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-
-        /* ===== STATUS ===== */
-        .status-badge {
-            font-size: 10px;
-            font-weight: 700;
-            padding: 5px 10px;
-            border-radius: 20px;
-            letter-spacing: .4px;
-        }
-
-        /* ===== ACTION BUTTONS ===== */
-        .table .btn {
-            border-radius: 10px;
-            padding: 4px 8px;
-        }
-
-        /* ===== EMPTY ROW ===== */
-        .table tbody tr td[colspan] {
-            background: #f8fafc;
-            border-radius: 12px;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media(max-width:768px) {
-            .course-card .card-body {
-                padding: 12px;
-            }
-
-            .table td {
-                white-space: nowrap;
-            }
-        }
-    </style>
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
 
 
+    /* ===== TABLE COMPACT & CLEAN ===== */
+.table {
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+/* Vertical + Horizontal lines */
+.table th,
+.table td {
+    border: 1px solid #dee2e6;
+    padding: 6px 8px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* Header design */
+.table thead th {
+    background: #f3f5f9;
+    font-weight: 600;
+    text-align: center;
+    color: #333;
+}
+
+/* Row hover effect */
+.table tbody tr:hover {
+    background-color: #f8faff;
+}
+
+/* Remove scrollbar */
+.table-responsive {
+    overflow-x: hidden !important;
+}
+
+/* Image small & neat */
+.table td img {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+}
+
+/* Status badge small */
+.status-badge {
+    font-size: 9px;
+    padding: 3px 7px;
+}
+
+/* Action buttons very small */
+.table .btn-sm {
+    padding: 2px 6px !important;
+    font-size: 10px !important;
+    min-width: 24px;
+    height: 24px;
+    line-height: 1;
+}
+
+/* Center important columns */
+.table td:first-child,
+.table td:last-child,
+.table td:nth-last-child(2) {
+    text-align: center;
+}
+
+/* ===== ICON SQUARE BUTTONS (LIKE IMAGE) ===== */
+.table .btn-sm {
+    width: 34px;
+    height: 34px;
+    padding: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px !important;   /* square with slight smooth edge */
+    background: transparent;
+    font-size: 14px;
+}
+
+/* EDIT BUTTON (BLUE) */
+.table .btn-outline-primary {
+    border: 1.5px solid #0d6efd;
+    color: #0d6efd;
+}
+
+.table .btn-outline-primary:hover {
+    background: #e7f1ff;
+    color: #0d6efd;
+}
+
+/* DELETE BUTTON (RED) */
+.table .btn-outline-danger {
+    border: 1.5px solid #dc3545;
+    color: #dc3545;
+}
+
+.table .btn-outline-danger:hover {
+    background: #fdeaea;
+    color: #dc3545;
+}
+
+/* ICON CENTER & SIZE */
+.table .btn-sm i {
+    font-size: 15px;
+}
+
+/* REMOVE EXTRA MARGIN */
+.table .btn + .btn {
+    margin-left: 6px;
+}
 
 
-    <div class="container p-0 m-0 mt-3">
+</style>
 
-        <!-- ================= FORM CARD ================= -->
+<div class="container px-4 mt-3">
+
+    <!-- 🔽 TOGGLE BUTTON -->
+    <div class="text-end mb-2">
+        <button class="btn btn-primary btn-sm"
+                data-bs-toggle="collapse"
+                data-bs-target="#courseForm">
+            <i class="fa fa-plus me-1"></i> Add Course
+        </button>
+    </div>
+
+    <!-- ================= FORM DROPDOWN ================= -->
+    <div class="collapse" id="courseForm">
         <div class="card course-card shadow-sm">
             <div class="card-header text-white">
                 <h6 class="mb-0">
@@ -272,111 +298,83 @@
 
                     </form>
                 </div>
-
             </div>
         </div>
-
-        <!-- ================= TABLE CARD ================= -->
-        <div class="card table-card shadow-sm mt-4">
-            <div class="card-header bg-dark text-white">
-                <h6 class="mb-0">
-                    <i class="fa fa-list me-2"></i> Course List
-                </h6>
-            </div>
-
-            <div class="card-body p-2">
-                <div class="table-responsive">
-                    <table class="table table-sm table-hover align-middle mb-0">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Course</th>
-                                <th>Category</th>
-                                <th>Duration</th>
-                                <th>Eligibility</th>
-                                <th>Features</th>
-                                <th>Admission Notice</th>
-
-                                <th>Fee Sturcture</th>
-                                <th>Image</th>
-
-                                <th>Status</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <% if(courses && courses.length> 0){ %>
-                                <% courses.forEach((c,i)=>{ %>
-                                    <tr>
-                                        <td>
-                                            <%= i+1 %>
-                                        </td>
-                                        <td>
-                                            <strong>
-                                                <%= c.title %>
-                                            </strong><br>
-                                            <small class="text-muted">
-                                                <%= c.course_key %>
-                                            </small>
-                                        </td>
-                                        <td>
-                                            <%= c.category %>
-                                        </td>
-                                        <td>
-                                            <%= c.duration %>
-                                        </td>
-                                        <td>
-                                            <%= c.eligibility %>
-                                        </td>
-                                        <td>
-                                            <%= c.features %>
-                                        </td>
-                                        <td>
-                                            <%= c.admission_notice %>
-                                        </td>
-                                        <td>
-                                            <%= c.fees_structure %>
-
-                                        </td>
-                                        <td>
-                                            <img src="/images/<%= c.image %>">
-                                        </td>
-                                        <td>
-                                            <% if(c.status==1){ %>
-                                                <span class="badge bg-success status-badge">Active</span>
-                                                <% } else { %>
-                                                    <span class="badge bg-danger status-badge">Inactive</span>
-                                                    <% } %>
-                                        </td>
-
-                                        <td class="text-center">
-                                            <a href="/admin/edit_course/<%= c.id %>"
-                                                class="btn btn-sm btn-outline-primary">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="/admin/delete_course/<%= c.id %>"
-                                                onclick="return confirm('Delete this course?')"
-                                                class="btn btn-sm btn-outline-danger ms-1">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <% }) %>
-                                        <% } else { %>
-                                            <tr>
-                                                <td colspan="11" class="text-center text-muted py-3">
-                                                    No courses found
-                                                </td>
-                                            </tr>
-
-                                            <% } %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <%- include("footer.ejs") %>
+    <!-- ================= TABLE CARD ================= -->
+    <div class="card table-card shadow-sm mt-4">
+        <div class="card-header bg-dark text-white">
+            <h6 class="mb-0">
+                <i class="fa fa-list me-2"></i> Course List
+            </h6>
+        </div>
+
+        <div class="card-body p-2">
+            <div class="table-responsive">
+                <table class="table table-sm table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Course</th>
+                            <!-- <th>Category</th> -->
+                            <th>Duration</th>
+                            <th>Eligibility</th>
+                            <!-- <th>Features</th> -->
+                            <!-- <th>Admission Notice</th> -->
+                            <th>Fee Sturcture</th>
+                            <th>Image</th>
+                            <th>Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <% if(courses && courses.length>0){ %>
+                            <% courses.forEach((c,i)=>{ %>
+                                <tr>
+                                    <td><%= i+1 %></td>
+                                    <td>
+                                        <strong><%= c.title %></strong><br>
+                                        <small class="text-muted"><%= c.course_key %></small>
+                                    </td>
+                                    <!-- <td><%= c.category %></td> -->
+                                    <td><%= c.duration %></td>
+                                    <td><%= c.eligibility %></td>
+                                    <!-- <td><%= c.features %></td> -->
+                                    <!-- <td><%= c.admission_notice %></td> -->
+                                    <td><%= c.fees_structure %></td>
+                                    <td><img src="/images/<%= c.image %>"></td>
+                                    <td>
+                                        <% if(c.status==1){ %>
+                                            <span class="badge bg-success status-badge">Active</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger status-badge">Inactive</span>
+                                        <% } %>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/admin/edit_course/<%= c.id %>" class="btn btn-sm btn-outline-primary">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="/admin/delete_course/<%= c.id %>" class="btn btn-sm btn-outline-danger ms-1">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="11" class="text-center text-muted py-3">
+                                    No courses found
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<%- include("footer.ejs") %>
