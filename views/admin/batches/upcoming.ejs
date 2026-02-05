@@ -205,6 +205,13 @@
             background-color: #047857;
         }
 
+        .gov-header {
+  background: var(--gov-dark);
+  color: #fff;
+  border-radius: var(--gov-radius) var(--gov-radius) 0 0;
+  
+}
+
         @media (max-width: 768px) {
             .batches-grid {
                 grid-template-columns: 1fr;
@@ -305,7 +312,9 @@
       id="addBatchBtn">
       <i class="fas fa-plus"></i> Add Batch
     </button>
-
+      <div class="gov-header px-4 py-3 fw-bold">
+      <i class="bi bi-list-ul"></i> Batches List
+    </div>
     <table class="table table-bordered">
       <thead>
         <tr>

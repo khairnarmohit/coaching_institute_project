@@ -1,254 +1,208 @@
 <%- include("navbar.ejs") %>
 
-    <style>
-        .main-content {
-            background: #f8fafc;
-            min-height: 100vh;
-        }
+<style>
+:root {
+  --gov-dark: #0b1c2d;
+  --gov-accent: #f59e0b;
+  --gov-bg: #f8fafc;
+  --gov-border: #e5e7eb;
+  --gov-shadow: 0 12px 32px -6px rgba(0,0,0,0.08);
+  --gov-radius: 18px;
+}
 
-        .form-card {
-            background: #ffffff;
-            border-radius: 14px;
-            padding: 22px;
-            border: none;
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
-        }
+body {
+  overflow-x: hidden;
+  background: var(--gov-bg);
+}
 
-        .section-title {
-            font-size: 14px;
-            font-weight: 600;
-            border-left: 4px solid #0d6efd;
-            padding-left: 10px;
-            margin: 18px 0 12px;
-        }
+/* CARD */
+.gov-card {
+  background: #fff;
+  border: 1px solid var(--gov-border);
+  border-radius: var(--gov-radius);
+  box-shadow: var(--gov-shadow);
+}
 
-        label {
-            font-size: 12px;
-            font-weight: 600;
-            color: #444;
-        }
+/* HEADER */
+.gov-header {
+  background: var(--gov-dark);
+  color: #fff;
+  border-radius: var(--gov-radius) var(--gov-radius) 0 0;
+}
 
-        .form-control {
-            font-size: 12px;
-            border-radius: 8px;
-            padding: 6px 10px;
-        }
+/* LABEL */
+.gov-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gov-dark);
+}
 
-        .btn {
-            font-size: 12px;
-            border-radius: 20px;
-            padding: 4px 16px;
-        }
+/* INPUT */
+.form-control {
+  font-size: 13px;
+  border-radius: 10px;
+  padding: 8px 12px;
+}
 
-        .table td img {
-            width: 42px;
-            height: 42px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-    </style>
+/* BUTTON */
+.gov-btn {
+  background: var(--gov-accent);
+  color: #000;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 10px 26px;
+  border: none;
+}
+.gov-btn:hover {
+  background: #e89b06;
+  color: #000;
+}
 
-    
-        <div class="container-fluid px-4 mt-3">
+/* IMAGE PREVIEW */
+.preview-box img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--gov-border);
+}
 
-            <!-- ================= FORM CARD ================= -->
-            <div class="card form-card">
-                <h6 class="mb-3">
-                    <i class="fa fa-user-tie me-2"></i> Founder Message Information
-                </h6>
+/* SECTION TITLE */
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gov-dark);
+  border-left: 4px solid var(--gov-accent);
+  padding-left: 10px;
+  margin: 22px 0 12px;
+}
+</style>
 
-                <form method="post" action="/admin/founder_information" enctype="multipart/form-data">
+<div class="container mt-4 mb-5">
 
-                    <!-- Founder Image -->
-                    <div class="mb-2">
-                        <label>Founder Image</label>
-                        <input type="file" name="founder_image" class="form-control">
-                    </div>
+  <div class="gov-card">
 
-                    <!-- Founder Name -->
-                    <div class="mb-2">
-                        <label>Founder Name</label>
-                        <input type="text" name="founder_name" class="form-control" placeholder="Hon. Rajendra Singh">
-                    </div>
+    <!-- HEADER -->
+    <div class="gov-header px-4 py-3">
+      <h5 class="mb-0">
+        <i class="fa fa-user-tie me-2"></i> Edit Founder Message
+      </h5>
+    </div>
 
-                    <!-- Designation -->
-                    <div class="mb-2">
-                        <label>Designation</label>
-                        <input type="text" name="founder_designation" class="form-control" placeholder="IPS (Retd.)">
-                    </div>
+    <!-- BODY -->
+    <div class="card-body p-4" style="background:var(--gov-bg)">
 
-                    <!-- Quote -->
-                    <div class="section-title">Inspirational Quote</div>
-                    <div class="mb-2">
-                        <textarea name="quote_text" id="quote_text" rows="3" class="form-control"
-                            placeholder="At EduInstitute, we don't just teach subjects..."></textarea>
-                    </div>
+      <form action="/admin/founder_information_update" method="post" enctype="multipart/form-data">
 
-                    <!-- Detailed Message -->
-                    <div class="section-title">Founder Detailed Message</div>
-                    <div class="mb-3">
-                        <textarea name="detailed_message" rows="4" class="form-control"
-                            placeholder="We are committed to creating a responsible and ethical administrative workforce..."></textarea>
-                    </div>
+        <!-- HIDDEN -->
+        <input type="hidden" name="id" value="<%= founder ? founder.id : '' %>">
+        <input type="hidden" name="old_founder_image" value="<%= founder ? founder.founder_image : '' %>">
 
-                    <!-- Academy Name -->
-                    <div class="mb-3">
-                        <label>Academy / Signature Line</label>
-                        <input type="text" name="academy_name" class="form-control"
-                            placeholder="Founder, EduInstitute Academy">
-                    </div>
+        <!-- IMAGE -->
+        <div class="row mb-4 align-items-center">
+          <div class="col-md-6">
+            <label class="gov-label">Founder Image</label>
+            <input type="file" name="founder_image" class="form-control">
+          </div>
 
-                    <!-- Journey -->
-                    <div class="section-title">Founder Journey</div>
-                    <div class="mb-3">
-                        <textarea name="journey" id="journey" rows="3" class="form-control"
-                            placeholder="Brief journey of the founder..."></textarea>
-                    </div>
-
-                    <!-- Core Philosophy -->
-                    <div class="section-title">Core Philosophy</div>
-                    <div class="mb-3">
-                        <textarea name="core_philosophy" id="core_philosophy" rows="3" class="form-control"
-                            placeholder="Integrity, Discipline, Nation First, Ethical Leadership"></textarea>
-                        <small class="text-muted">Use comma ( , ) to add multiple points</small>
-                    </div>
-
-                    <!-- Submit -->
-                    <div class="text-end">
-                        <button class="btn btn-success">
-                            <i class="fa fa-save me-1"></i> Save Founder Message
-                        </button>
-                    </div>
-                </form>
-            </div>
+          <div class="col-md-6 text-center preview-box">
+            <% if(founder && founder.founder_image){ %>
+              <img src="/images/<%= founder.founder_image %>">
+            <% } else { %>
+              <span class="text-muted">No Image</span>
+            <% } %>
+          </div>
         </div>
 
-        <!-- ================= TABLE CARD ================= -->
-        <div class="card table-card shadow-sm mt-4 mx-4">
-            <div class="card-header bg-dark text-white">
-                <h6 class="mb-0">
-                    <i class="fa fa-list me-2"></i> Founder Message List
-                </h6>
-            </div>
+        <!-- NAME / DESIGNATION -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <label class="gov-label">Founder Name</label>
+            <input type="text" name="founder_name"
+                   value="<%= founder ? founder.founder_name : '' %>"
+                   class="form-control">
+          </div>
 
-            <div class="card-body p-2">
-                <div class="table-responsive">
-                    <table class="table table-sm table-hover align-middle mb-0">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Designation</th>
-                                <th>Quote</th>
-                                <th>Message</th>
-                                <th>Academy</th>
-                                <th>Journey</th>
-                                <th>Core Philosophy</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <% if(founderData && founderData.length> 0){ %>
-                                <% founderData.forEach((f,i)=>{ %>
-                                    <tr>
-                                        <td>
-                                            <%= i+1 %>
-                                        </td>
-
-                                        <td>
-                                            <% if(f.founder_image){ %>
-                                                <img src="/images/<%= f.founder_image %>">
-                                                <% } else { %>
-                                                    <span class="text-muted">No Image</span>
-                                                    <% } %>
-                                        </td>
-
-                                        <td>
-                                            <%= f.founder_name %>
-                                        </td>
-                                        <td>
-                                            <%= f.founder_designation %>
-                                        </td>
-
-                                        <td style="max-width:200px"><%- f.quote_text %></td>
-
-                                        <td style="max-width:260px">
-                                            <div style="max-height:80px; overflow:auto;">
-                                                <%- f.detailed_message %>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <%= f.academy_name %>
-                                        </td>
-
-                                        <td style="max-width:220px">
-                                            <div style="max-height:80px; overflow:auto;">
-                                                <%- f.journey %>
-                                            </div>
-                                        </td>
-
-                                        <td style="max-width:220px">
-                                            <%- f.core_philosophy %>
-                                        </td>
-
-                                        <td class="text-center">
-                                            <a href="/admin/edit_founder/<%= f.id %>"
-                                                class="btn btn-sm btn-outline-primary">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="/admin/delete_founder/<%= f.id %>"
-                                                onclick="return confirm('Delete this record?')"
-                                                class="btn btn-sm btn-outline-danger ms-1">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <% }) %>
-                                        <% } else { %>
-                                            <tr>
-                                                <td colspan="10" class="text-center text-muted py-3">
-                                                    No founder message found
-                                                </td>
-                                            </tr>
-                                            <% } %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+          <div class="col-md-6">
+            <label class="gov-label">Designation</label>
+            <input type="text" name="founder_designation"
+                   value="<%= founder ? founder.founder_designation : '' %>"
+                   class="form-control">
+          </div>
         </div>
 
+        <!-- QUOTE -->
+        <div class="section-title">Inspirational Quote</div>
+        <div class="mb-4">
+          <textarea name="quote_text" id="quote_text" rows="3" class="form-control">
+<%- founder ? founder.quote_text : '' %>
+          </textarea>
+        </div>
 
-    <!-- ================= CKEDITOR ================= -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+        <!-- MESSAGE -->
+        <div class="section-title">Founder Detailed Message</div>
+        <div class="mb-4">
+          <textarea name="detailed_message" rows="4" class="form-control">
+<%- founder ? founder.detailed_message : '' %>
+          </textarea>
+        </div>
 
-    <script>
-        function initEditor(id) {
-            ClassicEditor
-                .create(document.querySelector(id), {
-                    toolbar: [
-                        'heading',
-                        '|',
-                        'bold',
-                        'italic',
-                        'link',
-                        '|',
-                        'bulletedList',
-                        'numberedList',
-                        '|',
-                        'undo',
-                        'redo'
-                    ]
-                })
-                .catch(error => console.error(error));
-        }
+        <!-- SIGNATURE -->
+        <div class="mb-4">
+          <label class="gov-label">Academy / Signature Line</label>
+          <input type="text" name="academy_name"
+                 value="<%= founder ? founder.academy_name : '' %>"
+                 class="form-control">
+        </div>
 
-        initEditor('#quote_text');
-        initEditor('#journey');
-        initEditor('#core_philosophy');
-    </script>
+        <!-- JOURNEY -->
+        <div class="section-title">Founder Journey</div>
+        <div class="mb-4">
+          <textarea name="journey" id="journey" rows="3" class="form-control">
+<%- founder ? founder.journey : '' %>
+          </textarea>
+        </div>
 
-    <%- include("footer.ejs") %>
+        <!-- PHILOSOPHY -->
+        <div class="section-title">Core Philosophy</div>
+        <div class="mb-4">
+          <textarea name="core_philosophy" id="core_philosophy" rows="3" class="form-control">
+<%- founder ? founder.core_philosophy : '' %>
+          </textarea>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="text-end">
+          <button class="gov-btn">
+            <i class="fa fa-save me-1"></i> Update Founder Message
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- CKEDITOR -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+function initEditor(id){
+  ClassicEditor
+    .create(document.querySelector(id), {
+      toolbar: [
+        'heading','|',
+        'bold','italic','link',
+        'bulletedList','numberedList',
+        '|','undo','redo'
+      ]
+    })
+    .catch(err => console.error(err));
+}
+
+initEditor('#quote_text');
+initEditor('#journey');
+initEditor('#core_philosophy');
+</script>
+
+<%- include("footer.ejs") %>

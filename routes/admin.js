@@ -13,13 +13,9 @@ function veryfyLogin(req, res, next) {
   }
 }
 
-
-
-
-
 router.get("/", (req, res) => {
   res.render('admin/login.ejs');
-  
+
 });
 router.post("/login", async (req, res) => {
   try {
@@ -27,10 +23,10 @@ router.post("/login", async (req, res) => {
     var sql = `SELECT email,password FROM admin WHERE email = ? AND password = ?`;
     var result = await exe(sql, [req.body.email, req.body.password]);
     if (result.length > 0) {
-      req.session.admin_id=1;
+      req.session.admin_id = 1;
       // res.send("Login Successfull");
       res.redirect("/admin/dashboard");
-      
+
     } else {
       res.send("<script> alert('Invalid email or password'); window.location.href='/admin';</script>");
       // res.render("admin/login.ejs", { message: "Invalid email or password" });
@@ -592,10 +588,6 @@ router.get("/delete_enquiry/:id", async (req, res) => {
   res.redirect("/admin/enquiries");
 });
 
-
-
-
-
 router.get("/faculty_expert", async (req, res) => {
   console.log("FACULTY EXPERT ROUTE HIT");
   var sql = `SELECT * FROM faculty ORDER BY id DESC`;
@@ -700,25 +692,12 @@ router.post("/update_faculty_expert/:id", async (req, res) => {
   res.redirect("/admin/faculty_expert");
 });
 
-
-
 router.get("/delete_faculty_expert/:id", async (req, res) => {
   const facultyId = req.params.id;
   const sql = "DELETE FROM faculty WHERE id = ?";
   await exe(sql, [facultyId]);
   res.redirect("/admin/faculty_expert");
 });
-
-
-
-
-
-
-
-
-
-
-
 
 // GET courses_list page
 router.get("/courses_list", async (req, res) => {
@@ -812,26 +791,25 @@ router.get("/courses_details", (req, res) => {
 });
 
 
+// router.get("/academy_information", async function (req, res) {
+//   try {
+//     var sql = `
+//       SELECT *
+//       FROM academy_info
+//       ORDER BY id DESC
+//     `;
 
-router.get("/academy_information", async function (req, res) {
-  try {
-    var sql = `
-      SELECT *
-      FROM academy_info
-      ORDER BY id DESC
-    `;
+//     var rows = await exe(sql);
 
-    var rows = await exe(sql);
+//     res.render("admin/academy_information.ejs", {
+//       academyInfo: rows
+//     });
 
-    res.render("admin/academy_information.ejs", {
-      academyInfo: rows
-    });
-
-  } catch (err) {
-    console.error("Academy Info Fetch Error:", err);
-    res.status(500).send("Something went wrong");
-  }
-});
+//   } catch (err) {
+//     console.error("Academy Info Fetch Error:", err);
+//     res.status(500).send("Something went wrong");
+//   }
+// });
 
 
 router.get("/gallery_image", async (req, res) => {
@@ -840,136 +818,136 @@ router.get("/gallery_image", async (req, res) => {
   res.render("admin/gallery_image.ejs", { gallery });
 });
 
-router.post("/academy_information", async function (req, res) {
-  try {
-    var short_info = req.body.short_info;
-    var vision = req.body.vision;
-    var mission = req.body.mission;
-    var specializations = req.body.specializations;
-    var methodology = req.body.methodology;
+// router.post("/academy_information", async function (req, res) {
+//   try {
+//     var short_info = req.body.short_info;
+//     var vision = req.body.vision;
+//     var mission = req.body.mission;
+//     var specializations = req.body.specializations;
+//     var methodology = req.body.methodology;
 
-    var about_image = null;
+//     var about_image = null;
 
-    // ===== IMAGE UPLOAD (NO MULTER) =====
-    if (req.files && req.files.about_image) {
-      var image = req.files.about_image;
+// ===== IMAGE UPLOAD (NO MULTER) =====
+// if (req.files && req.files.about_image) {
+//   var image = req.files.about_image;
 
-      var ext = path.extname(image.name);
-      var fileName = Date.now() + ext;
+//   var ext = path.extname(image.name);
+//   var fileName = Date.now() + ext;
 
-      var uploadPath = path.join(
-        __dirname,
-        "../public/images/",
-        fileName
-      );
+//   var uploadPath = path.join(
+//     __dirname,
+//     "../public/images/",
+//     fileName
+//   );
 
-      await image.mv(uploadPath);
+//   await image.mv(uploadPath);
 
-      about_image = fileName;
-    }
+//   about_image = fileName;
+// }
 
-    // ===== INSERT QUERY =====
-    var sql = `
-      INSERT INTO academy_info
-      (short_info, vision, mission, specializations, methodology, about_image)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `;
+// ===== INSERT QUERY =====
+//     var sql = `
+//       INSERT INTO academy_info
+//       (short_info, vision, mission, specializations, methodology, about_image)
+//       VALUES (?, ?, ?, ?, ?, ?)
+//     `;
 
-    var values = [
-      short_info,
-      vision,
-      mission,
-      specializations,
-      methodology,
-      about_image
-    ];
+//     var values = [
+//       short_info,
+//       vision,
+//       mission,
+//       specializations,
+//       methodology,
+//       about_image
+//     ];
 
-    await exe(sql, values);
+//     await exe(sql, values);
 
-    res.redirect("/admin/academy_information");
-  } catch (err) {
-    console.error("Academy Info Insert Error:", err);
-    res.status(500).send("Something went wrong");
-  }
-});
+//     res.redirect("/admin/academy_information");
+//   } catch (err) {
+//     console.error("Academy Info Insert Error:", err);
+//     res.status(500).send("Something went wrong");
+//   }
+// });
 
-router.get("/edit_academy/:id", async function (req, res) {
-  try {
-    var sql = `
-      SELECT *
-      FROM academy_info
-      WHERE id = ?
-    `;
+// router.get("/edit_academy/:id", async function (req, res) {
+//   try {
+//     var sql = `
+//       SELECT *
+//       FROM academy_info
+//       WHERE id = ?
+//     `;
 
-    var rows = await exe(sql, [req.params.id]);
+//     var rows = await exe(sql, [req.params.id]);
 
-    if (rows.length > 0) {
-      res.render("admin/edit_academy.ejs", {
-        academy: rows[0]
-      });
-    } else {
-      res.redirect("/admin/academy_information");
-    }
+//     if (rows.length > 0) {
+//       res.render("admin/edit_academy.ejs", {
+//         academy: rows[0]
+//       });
+//     } else {
+//       res.redirect("/admin/academy_information");
+//     }
 
-  } catch (err) {
-    console.error("Academy Info Fetch Error:", err);
-    res.status(500).send("Something went wrong");
-  }
-});
+//   } catch (err) {
+//     console.error("Academy Info Fetch Error:", err);
+//     res.status(500).send("Something went wrong");
+//   }
+// });
 
-router.post("/edit_academy/:id", async function (req, res) {
-  try {
-    var id = req.params.id;
-    var d = req.body;
-    var about_image = d.old_about_image;
+// router.post("/edit_academy/:id", async function (req, res) {
+//   try {
+//     var id = req.params.id;
+//     var d = req.body;
+//     var about_image = d.old_about_image;
 
-    if (req.files && req.files.about_image) {
-      var image = req.files.about_image;
-      var ext = path.extname(image.name);
-      var fileName = Date.now() + ext;
-      var uploadPath = path.join(__dirname, "../public/images/", fileName);
-      await image.mv(uploadPath);
-      about_image = fileName;
-    }
+//     if (req.files && req.files.about_image) {
+//       var image = req.files.about_image;
+//       var ext = path.extname(image.name);
+//       var fileName = Date.now() + ext;
+//       var uploadPath = path.join(__dirname, "../public/images/", fileName);
+//       await image.mv(uploadPath);
+//       about_image = fileName;
+//     }
 
-    var sql = `
-      UPDATE academy_info
-      SET short_info = ?, vision = ?, mission = ?, specializations = ?, methodology = ?, about_image = ?
-      WHERE id = ?
-    `;
+//     var sql = `
+//       UPDATE academy_info
+//       SET short_info = ?, vision = ?, mission = ?, specializations = ?, methodology = ?, about_image = ?
+//       WHERE id = ?
+//     `;
 
-    var values = [
-      d.short_info,
-      d.vision,
-      d.mission,
-      d.specializations,
-      d.methodology,
-      about_image,
-      id
-    ];
+//     var values = [
+//       d.short_info,
+//       d.vision,
+//       d.mission,
+//       d.specializations,
+//       d.methodology,
+//       about_image,
+//       id
+//     ];
 
-    await exe(sql, values);
-    res.redirect("/admin/academy_information");
+//     await exe(sql, values);
+//     res.redirect("/admin/academy_information");
 
-  } catch (err) {
-    console.error("Academy Info Update Error:", err);
-    res.status(500).send("Something went wrong");
-  }
-});
+//   } catch (err) {
+//     console.error("Academy Info Update Error:", err);
+//     res.status(500).send("Something went wrong");
+//   }
+// });
 
-router.get("/delete_academy/:id", async function (req, res) {
-  try {
-    var sql = `
-      DELETE FROM academy_info
-      WHERE id = ?
-    `;
-    await exe(sql, [req.params.id]);
-    res.redirect("/admin/academy_information");
-  } catch (err) {
-    console.error("Academy Info Delete Error:", err);
-    res.status(500).send("Something went wrong");
-  }
-});
+// router.get("/delete_academy/:id", async function (req, res) {
+//   try {
+//     var sql = `
+//       DELETE FROM academy_info
+//       WHERE id = ?
+//     `;
+//     await exe(sql, [req.params.id]);
+//     res.redirect("/admin/academy_information");
+//   } catch (err) {
+//     console.error("Academy Info Delete Error:", err);
+//     res.status(500).send("Something went wrong");
+//   }
+// });
 
 // POST route to add gallery image
 router.post("/gallery_image/add", async (req, res) => {
@@ -1148,10 +1126,10 @@ router.post("/edit_gallery_video/:id", async (req, res) => {
   }
 });
 
-router.get("/admission",async (req, res) => {
-    let sql = `SELECT * FROM admissions`;
-    let data = await exe(sql);
-    res.render("admin/admission.ejs",{admissions: data });
+router.get("/admission", async (req, res) => {
+  let sql = `SELECT * FROM admissions`;
+  let data = await exe(sql);
+  res.render("admin/admission.ejs", { admissions: data });
 });
 
 
@@ -1221,137 +1199,77 @@ router.post("/admission/reject/:id", async (req, res) => {
 });
 
 
-router.get("/academy_information", async function (req, res) {
+// Academy Information Start
+router.get("/academy_information", async (req, res) => {
   try {
-    var sql = `
-      SELECT *
-      FROM academy_info
-      ORDER BY id DESC
-    `;
+    const rows = await exe(
+      "SELECT * FROM academy_info ORDER BY id DESC LIMIT 1"
+    );
 
-    var rows = await exe(sql);
+    // console.log("ACADEMY DATA:", rows); //
 
     res.render("admin/academy_information.ejs", {
-      academyInfo: rows
+      academy: rows[0] || null
     });
 
   } catch (err) {
-    console.error("Academy Info Fetch Error:", err);
+    console.error(err);
     res.status(500).send("Something went wrong");
   }
 });
 
 
-
-router.post("/academy_information", async function (req, res) {
+router.post("/academy_information_update", async (req, res) => {
   try {
-    var short_info = req.body.short_info;
-    var vision = req.body.vision;
-    var mission = req.body.mission;
-    var specializations = req.body.specializations;
-    var methodology = req.body.methodology;
+    const { id, old_about_image, ...data } = req.body;
 
-    var about_image = null;
+    let fields = [];
+    let values = [];
 
-    // ===== IMAGE UPLOAD (NO MULTER) =====
+    // ===== IMAGE UPLOAD (OPTIONAL) =====
     if (req.files && req.files.about_image) {
-      var image = req.files.about_image;
+      const image = req.files.about_image;
+      const ext = path.extname(image.name);
+      const fileName = Date.now() + ext;
 
-      var ext = path.extname(image.name);
-      var fileName = Date.now() + ext;
-
-      var uploadPath = path.join(
+      const uploadPath = path.join(
         __dirname,
         "../public/images/",
         fileName
       );
 
       await image.mv(uploadPath);
-
-      about_image = fileName;
-    }
-
-    // ===== INSERT QUERY =====
-    var sql = `
-      INSERT INTO academy_info
-      (short_info, vision, mission, specializations, methodology, about_image)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `;
-
-    var values = [
-      short_info,
-      vision,
-      mission,
-      specializations,
-      methodology,
-      about_image
-    ];
-
-    await exe(sql, values);
-
-    res.redirect("/admin/academy_information");
-  } catch (err) {
-    console.error("Academy Info Insert Error:", err);
-    res.status(500).send("Something went wrong");
-  }
-});
-
-router.get("/edit_academy/:id", async function (req, res) {
-  try {
-    var sql = `
-      SELECT *
-      FROM academy_info
-      WHERE id = ?
-    `;
-
-    var rows = await exe(sql, [req.params.id]);
-
-    if (rows.length > 0) {
-      res.render("admin/edit_academy.ejs", {
-        academy: rows[0]
-      });
+      data.about_image = fileName;
     } else {
-      res.redirect("/admin/academy_information");
+      data.about_image = old_about_image;
     }
 
-  } catch (err) {
-    console.error("Academy Info Fetch Error:", err);
-    res.status(500).send("Something went wrong");
-  }
-});
-
-router.post("/edit_academy/:id", async function (req, res) {
-  try {
-    var id = req.params.id;
-    var d = req.body;
-    var about_image = d.old_about_image;
-
-    if (req.files && req.files.about_image) {
-      var image = req.files.about_image;
-      var ext = path.extname(image.name);
-      var fileName = Date.now() + ext;
-      var uploadPath = path.join(__dirname, "../public/images/", fileName);
-      await image.mv(uploadPath);
-      about_image = fileName;
+    // ===== DYNAMIC FIELD BUILD =====
+    for (let key in data) {
+      if (
+        data[key] !== "" &&
+        data[key] !== null &&
+        data[key] !== undefined
+      ) {
+        fields.push(`${key}=?`);
+        values.push(data[key]);
+      }
     }
 
-    var sql = `
+    if (fields.length === 0) {
+      return res.redirect("/admin/academy_information");
+    }
+
+    values.push(id);
+
+    const sql = `
       UPDATE academy_info
-      SET short_info = ?, vision = ?, mission = ?, specializations = ?, methodology = ?, about_image = ?
+      SET ${fields.join(", ")}
       WHERE id = ?
     `;
 
-    var values = [
-      d.short_info,
-      d.vision,
-      d.mission,
-      d.specializations,
-      d.methodology,
-      about_image,
-      id
-    ];
-
     await exe(sql, values);
+
     res.redirect("/admin/academy_information");
 
   } catch (err) {
@@ -1360,185 +1278,98 @@ router.post("/edit_academy/:id", async function (req, res) {
   }
 });
 
-router.get("/delete_academy/:id", async function (req, res) {
-  try {
-    var sql = `
-      DELETE FROM academy_info
-      WHERE id = ?
-    `;
-    await exe(sql, [req.params.id]);
-    res.redirect("/admin/academy_information");
-  } catch (err) {
-    console.error("Academy Info Delete Error:", err);
-    res.status(500).send("Something went wrong");
-  }
-});
+// academy information end
 
+
+// Founder Information Start  
 router.get("/founder_information", async (req, res) => {
   try {
-    var sql = `
-      SELECT *
-      FROM founder_info`;
-    var rows = await exe(sql);
+    const rows = await exe(
+      "SELECT * FROM founder_info ORDER BY id DESC LIMIT 1"
+    );
+
+    // console.log("FOUNDER DATA:", rows); // debug
+
     res.render("admin/founder_information.ejs", {
-      founderData: rows
+      founder: rows[0] || null
     });
+
   } catch (err) {
     console.error("Founder Info Fetch Error:", err);
     res.status(500).send("Something went wrong");
   }
 });
-
-
-router.post("/founder_information", async (req, res) => {
+router.post("/founder_information_update", async (req, res) => {
   try {
-    const d = req.body;
-    let fileName = "";
+    const { id, old_founder_image, ...data } = req.body;
 
-    // ✅ SAFE image handling
+    let fields = [];
+    let values = [];
+
+    // ===== IMAGE UPLOAD (OPTIONAL) =====
     if (req.files && req.files.founder_image) {
       const image = req.files.founder_image;
       const ext = path.extname(image.name);
-      fileName = Date.now() + ext;
+      const fileName = Date.now() + ext;
 
-      const uploadPath = path.join(__dirname, "../public/images/", fileName);
+      const uploadPath = path.join(
+        __dirname,
+        "../public/images/",
+        fileName
+      );
+
       await image.mv(uploadPath);
-    }
+      data.founder_image = fileName;
 
-    const sql = `
-      INSERT INTO founder_info
-      (founder_name, founder_designation, founder_image, quote_text, detailed_message, academy_name, journey, core_philosophy)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    const values = [
-      d.founder_name,
-      d.founder_designation,
-      fileName,
-      d.quote_text,
-      d.detailed_message,
-      d.academy_name,
-      d.journey,
-      d.core_philosophy
-    ];
-
-    await exe(sql, values);
-    res.redirect("/admin/founder_information");
-
-  } catch (err) {
-    console.error("Founder Info Insert Error:", err);
-    res.status(500).send("Something went wrong");
-  }
-});
-
-
-
-router.get("/edit_founder/:id", async (req, res) => {
-  try {
-    var sql = `
-      SELECT *
-      FROM founder_info
-      WHERE id = ?
-    `;
-    var rows = await exe(sql, [req.params.id]);
-    if (rows.length > 0) {
-      res.render("admin/edit_founder.ejs", {
-        founder: rows[0]
-      });
-    } else {
-      res.redirect("/admin/founder_information");
-    }
-  } catch (err) {
-    console.error("Founder Info Fetch Error:", err);
-    res.status(500).send("Something went wrong");
-  }
-});
-
-router.post("/update_founder/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const d = req.body;
-    let imageName = d.old_founder_image; // default old image
-    // 🔹 Agar new image upload hui hai
-    if (req.files && req.files.founder_image) {
-      const image = req.files.founder_image;
-      const ext = path.extname(image.name);
-      imageName = Date.now() + ext;
-      const uploadPath = path.join(__dirname, "../public/images/", imageName);
-      await image.mv(uploadPath);
-      // 🔹 Old image delete
-      if (d.old_founder_image) {
-        const oldPath = path.join(__dirname, "../public/images/", d.old_founder_image);
+      // 🔹 old image delete
+      if (old_founder_image) {
+        const oldPath = path.join(
+          __dirname,
+          "../public/images/",
+          old_founder_image
+        );
         if (fs.existsSync(oldPath)) {
           fs.unlinkSync(oldPath);
         }
       }
+    } else {
+      data.founder_image = old_founder_image;
     }
-    // 🔹 UPDATE query
+
+    // ===== DYNAMIC FIELD BUILD =====
+    for (let key in data) {
+      if (
+        data[key] !== "" &&
+        data[key] !== null &&
+        data[key] !== undefined
+      ) {
+        fields.push(`${key}=?`);
+        values.push(data[key]);
+      }
+    }
+
+    if (fields.length === 0) {
+      return res.redirect("/admin/founder_information");
+    }
+
+    values.push(id);
+
     const sql = `
-      UPDATE founder_info SET
-        founder_image = ?,
-        founder_name = ?,
-        founder_designation = ?,
-        quote_text = ?,
-        journey = ?,
-        core_philosophy = ?,
-        detailed_message = ?,
-        academy_name = ?
+      UPDATE founder_info
+      SET ${fields.join(", ")}
       WHERE id = ?
     `;
-
-    const values = [
-      imageName,
-      d.founder_name,
-      d.founder_designation,
-      d.quote_text,
-      d.journey,
-      d.core_philosophy,
-      d.detailed_message,
-      d.academy_name,
-      id
-    ];
 
     await exe(sql, values);
 
     res.redirect("/admin/founder_information");
 
   } catch (err) {
-    console.error("Founder Update Error:", err);
-    res.status(500).send("Update failed");
+    console.error("Founder Info Update Error:", err);
+    res.status(500).send("Something went wrong");
   }
 });
 
-
-router.get("/delete_founder/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const rows = await exe(
-      "SELECT founder_image FROM founder_info WHERE id = ?",
-      [id]
-    );
-    if (rows.length === 0) {
-      return res.redirect("/admin/founder_information");
-    }
-    const founderImage = rows[0].founder_image;
-    if (founderImage) {
-      const imagePath = path.join(
-        __dirname,
-        "../public/images/",
-        founderImage
-      );
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
-      }
-    }
-    await exe("DELETE FROM founder_info WHERE id = ?", [id]);
-    res.redirect("/admin/founder_information");
-  } catch (err) {
-    console.error("Founder Delete Error:", err);
-    res.status(500).send("Delete failed");
-  }
-});
-
+// founder information end
 
 module.exports = router;
