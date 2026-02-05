@@ -357,7 +357,8 @@
               data-duration="<%= result[i].duration %>"
               data-fees="<%= result[i].fees %>"
               data-total_strength="<%= result[i].total_strength %>"
-              data-start_date="<%= result[i].start_date %>"
+              data-start_date="<%= new Date(result[i].start_date).toLocaleDateString('en-CA') %>"
+
               data-mode="<%= result[i].mode %>">
               <i class="fa-solid fa-pen-to-square"></i>
             </a>
