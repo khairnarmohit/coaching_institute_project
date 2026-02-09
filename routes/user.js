@@ -224,7 +224,7 @@ router.get("/course-details/:id", async (req, res) => {
 
     const sql = "SELECT * FROM courses_list WHERE id = ? AND status = 1";
     const data = await exe(sql, [id]);
-     const result = await exe("SELECT * FROM contact_details WHERE id = 1");
+    const result = await exe("SELECT * FROM contact_details WHERE id = 1");
 
     if (data.length === 0) {
       return res.redirect("/courses");
@@ -238,7 +238,7 @@ router.get("/course-details/:id", async (req, res) => {
       course.features = [];
     }
 
-    res.render("user/course-details.ejs", { course ,contact: result[0] });
+    res.render("user/course-details.ejs", { course, contact: result[0] });
 
   } catch (err) {
     console.log(err);
@@ -265,6 +265,19 @@ router.get("/founder_info", (req, res) => {
     res.send("Error loading founder information");
   });
 })
+
+
+router.get("/results", async (req, res) => {
+  try {
+    const toppers = await exe("SELECT * FROM toppers ORDER BY id DESC");
+
+    res.render("user/results.ejs", { toppers });
+  } catch (err) {
+
+    console.log("Error fetching results (Table might not exist yet):", err.message);
+    res.render("user/results.ejs", { toppers: [] });
+  }
+});
 
 
 module.exports = router;
