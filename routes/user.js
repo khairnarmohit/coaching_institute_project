@@ -62,10 +62,21 @@ router.get('/contact', async (req, res) => {
 });
 
 router.post("/contact_enquiry", async (req, res) => {
+  try{
   var d = req.body;
   var sql = `insert into contact_enquiries (name,email,mo_number,message,subject) values (?,?,?,?,?)`;
   var result = await exe(sql, [d.name, d.email, d.mo_number, d.message, d.subject]);
-  res.send("<script>alert('Enquiry Submitted Successfully');window.location= document.referrer</script>");
+   res.send({
+      success: true,
+      message: "Enquiry submitted successfully"
+    });
+  }catch(err){
+    console.log(err);
+     res.status(500).json({
+      success: false,
+      message: "Database error"
+    });
+  }
 });
 
 
