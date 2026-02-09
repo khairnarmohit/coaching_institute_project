@@ -20,22 +20,145 @@
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
-        /* Hero Section */
+
+        /* Main hero animation */
         .results-hero {
-            background: linear-gradient(135deg, var(--gov-dark), #1e293b);
-            color: white;
-            padding: 80px 0;
+            background: linear-gradient(rgba(11, 28, 45, 0.9), rgba(11, 28, 45, 0.8)),
+                url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
+            padding: 150px 0 110px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+
+            opacity: 0;
+            animation: heroZoom 1.8s ease-out forwards;
         }
 
+        /* Soft moving glow */
+        .results-hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top,
+                    rgba(245, 158, 11, 0.18),
+                    transparent 65%);
+            animation: glowFloat 7s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        /* Hero zoom animation */
+        @keyframes heroZoom {
+            from {
+                opacity: 0;
+                transform: scale(1.08);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Glow floating */
+        @keyframes glowFloat {
+            0% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+
+            100% {
+                opacity: 0.4;
+            }
+        }
+
+        /* Content layer */
+        .results-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Title animation */
         .results-hero h1 {
             font-weight: 800;
-            margin-bottom: 20px;
+            opacity: 0;
+            animation: titleReveal 1s ease-out forwards;
+            animation-delay: 0.4s;
         }
 
+        /* Highlight gradient */
         .results-hero .highlight {
-            color: var(--gov-accent);
+            background: linear-gradient(135deg, #f59e0b, #fde68a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
+        /* Subtitle animation */
+        /* Subtitle – Glassmorphism */
+        .results-hero p {
+            opacity: 0;
+            animation: subtitleReveal 1s ease-out forwards;
+            animation-delay: 0.9s;
+
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 30px;
+
+            color: #f1f5f9;
+            font-size: 1.2rem;
+            font-weight: 500;
+
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.25),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        }
+
+
+        /* Text animations */
+        @keyframes titleReveal {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+                filter: blur(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes subtitleReveal {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .results-hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+
 
         /* Topper Card */
         .topper-card {
