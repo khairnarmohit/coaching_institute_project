@@ -272,12 +272,17 @@
 
             <div class="col-md-6 mb-3">
               <label class="form-label">Fees</label>
-              <input type="number" name="fees" id="fees" class="form-control" placeholder="51000">
+              <input type="number" name="fees" id="fees" class="form-control" placeholder="51000" min="8500" max="75000">
             </div>
 
             <div class="col-md-6 mb-3">
               <label class="form-label">Total Strength</label>
               <input type="number" name="total_strength" id="total_strength" class="form-control" placeholder="50">
+            </div>
+             
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Start Date</label>
+              <input type="date" name="start_date" id="start_date" class="form-control">
             </div>
 
             <div class="col-md-6 mb-3">
@@ -352,6 +357,8 @@
               data-duration="<%= result[i].duration %>"
               data-fees="<%= result[i].fees %>"
               data-total_strength="<%= result[i].total_strength %>"
+              data-start_date="<%= new Date(result[i].start_date).toLocaleDateString('en-CA') %>"
+
               data-mode="<%= result[i].mode %>">
               <i class="fa-solid fa-pen-to-square"></i>
             </a>
@@ -386,6 +393,7 @@ $(document).on("click", ".editBatchBtn", function () {
   $("#duration").val($(this).data("duration"));
   $("#fees").val($(this).data("fees"));
   $("#total_strength").val($(this).data("total_strength"));
+  $("#start_date").val($(this).data("start_date"));
   $("#modeSelect").val($(this).data("mode"));
 
   $(".modal-title").text("Edit Batch");

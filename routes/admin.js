@@ -503,15 +503,15 @@ router.get("/upcoming", async (req, res) => {
 });
 router.post("/add_batch", async (req, res) => {
   var d = req.body;
-  var sql = `insert into upcoming_batches (batch_title,status_label,batch_status,duration,fees,total_strength) values (?,?,?,?,?,?)`;
-  var result = await exe(sql, [d.title, d.statusLabel, d.batch_status, d.duration, d.fees, d.total_strength]);
+  var sql = `insert into upcoming_batches (batch_title,status_label,batch_status,duration,fees,total_strength,start_date) values (?,?,?,?,?,?,?)`;
+  var result = await exe(sql, [d.title, d.statusLabel, d.batch_status, d.duration, d.fees, d.total_strength, d.start_date]);
   res.redirect("/admin/upcoming");
 
 })
 router.post("/update_batch", async (req, res) => {
   var d = req.body;
-  var sql = `update upcoming_batches set batch_title=?,status_label=?,batch_status=?,duration=?,fees=?,total_strength=?,mode=? where id=?`;
-  var result = await exe(sql, [d.title, d.statusLabel, d.batch_status, d.duration, d.fees, d.total_strength, d.mode, d.batch_id]);
+  var sql = `update upcoming_batches set batch_title=?,status_label=?,batch_status=?,duration=?,fees=?,total_strength=?,start_date=?,mode=? where id=?`;
+  var result = await exe(sql, [d.title, d.statusLabel, d.batch_status, d.duration, d.fees, d.total_strength, d.start_date, d.mode, d.batch_id]);
   res.redirect("/admin/upcoming");
 });
 router.get("/delete_batch/:id", async (req, res) => {
@@ -1392,5 +1392,106 @@ router.post("/founder_information_update", async (req, res) => {
 });
 
 // founder information end
+
+
+
+// =======================
+// TOPPERS MANAGEMENT
+// =======================
+
+router.get("/toppers", async (req, res) => {
+  try {
+    // Ensure table exists
+    const createTableSql = `
+        CREATE TABLE IF NOT EXISTS toppers (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            course VARCHAR(255),
+            \`rank\` VARCHAR(100),
+            percentage VARCHAR(100),
+            batch_year VARCHAR(50),
+            image VARCHAR(255)
+        )
+    `;
+    await exe(createTableSql);
+
+    const toppers = await exe("SELECT * FROM toppers ORDER BY id DESC");
+    res.render("admin/toppers.ejs", { toppers, edit: null });
+
+  } catch (err) {
+    console.log(err);
+    res.send("Error loading toppers page");
+  }
+});
+
+router.post("/toppers/save", async (req, res) => {
+  try {
+    const d = req.body;
+    let imageName = "";
+
+    if (req.files && req.files.image) {
+      imageName = Date.now() + "_" + req.files.image.name;
+      req.files.image.mv("public/images/" + imageName);
+    }
+
+    const sql = `INSERT INTO toppers (name, course, \`rank\`, percentage, batch_year, image) VALUES (?, ?, ?, ?, ?, ?)`;
+    await exe(sql, [d.name, d.course, d.rank, d.percentage, d.batch_year, imageName]);
+
+    res.redirect("/admin/toppers");
+
+  } catch (err) {
+    console.log(err);
+    res.send("Error adding topper");
+  }
+});
+
+router.get("/toppers/delete/:id", async (req, res) => {
+  try {
+    await exe("DELETE FROM toppers WHERE id = ?", [req.params.id]);
+    res.redirect("/admin/toppers");
+  } catch (err) {
+    console.log(err);
+    res.send("Error deleting topper");
+  }
+});
+
+router.get("/toppers/edit/:id", async (req, res) => {
+  try {
+    const toppers = await exe("SELECT * FROM toppers ORDER BY id DESC");
+    const result = await exe("SELECT * FROM toppers WHERE id = ?", [req.params.id]);
+
+    if (result.length > 0) {
+      res.render("admin/toppers.ejs", { toppers, edit: result[0] });
+    } else {
+      res.redirect("/admin/toppers");
+    }
+
+  } catch (err) {
+    console.log(err);
+    res.send("Error loading edit page");
+  }
+});
+
+router.post("/toppers/update", async (req, res) => {
+  try {
+    const d = req.body;
+    let imageName = d.old_image;
+
+    if (req.files && req.files.image) {
+      imageName = Date.now() + "_" + req.files.image.name;
+      req.files.image.mv("public/images/" + imageName);
+    }
+
+    const sql = `UPDATE toppers SET name=?, course=?, \`rank\`=?, percentage=?, batch_year=?, image=? WHERE id=?`;
+    await exe(sql, [d.name, d.course, d.rank, d.percentage, d.batch_year, imageName, d.id]);
+
+    res.redirect("/admin/toppers");
+
+  } catch (err) {
+    console.log(err);
+    res.send("Error updating topper");
+  }
+});
+
 
 module.exports = router;
