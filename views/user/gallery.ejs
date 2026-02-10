@@ -268,41 +268,100 @@
         }
 
         .lightbox-content {
-            max-width: 90%;
-            max-height: 85vh;
-            margin: auto;
-            display: block;
-            border-radius: 15px;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-        }
-
+    max-width: 55%;
+    max-height: 65vh;
+    object-fit: contain;
+    border-radius: 15px;
+}
         .lightbox-video {
             width: 100%;
             height: 80vh;
         }
 
         .lightbox-close {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;   /* ADD THIS LINE */
+}
+
 
         .lightbox-close:hover {
             background: var(--gov-accent);
             color: var(--gov-dark);
             transform: rotate(90deg);
         }
+        /* ===== LIGHTBOX CENTER FIX ===== */
+#lightboxContainer{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.lightbox-nav button{
+    z-index:2100;
+}
+
+.lightbox-content{
+    z-index:2000;
+}
+
+
+/* LEFT & RIGHT BUTTON */
+.lightbox-nav button{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(255,255,255,0.15);
+    border:none;
+    color:#fff;
+    font-size:28px;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+#prevBtn{
+    left:30px;
+}
+
+#nextBtn{
+    right:30px;
+}
+
+.lightbox-nav button:hover{
+    background:#f59e0b;
+    color:#0b1c2d;
+}
+.lightbox-modal{
+    z-index:2000;
+}
+
+#lightboxContainer{
+    z-index:2050;
+}
+
+
     </style>
 </head>
 
@@ -418,6 +477,7 @@
                 <button id="prevBtn">❮</button>
                 <button id="nextBtn">❯</button>
             </div>
+
             <div id="lightboxContainer"></div>
             <div id="lightboxCaption" class="lightbox-caption"></div>
         </div>
@@ -444,8 +504,9 @@
 
                 $('#totalItems').text(galleryItems.length);
 
-                $('.gallery-card').click(function () {
-                    openLightbox($(this).data('index'));
+                $('.gallery-card').on('click', function (e) {
+                e.stopPropagation();
+                openLightbox($(this).data('index'));
                 });
 
                 $('.lightbox-close').click(closeLightbox);
@@ -458,9 +519,10 @@
                     else if (e.keyCode === 39) navigate(1);
                 });
 
-                $('#lightboxModal').click(function (e) {
-                    if (e.target === this) closeLightbox();
-                });
+                $('.lightbox-close').click(function () {
+    closeLightbox();
+});
+
             });
 
             function openLightbox(index) {
