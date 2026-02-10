@@ -4,7 +4,6 @@ const exe = require("../config/db");
 const path = require("path");
 const fs = require("fs");
 
-
 function veryfyLogin(req, res, next) {
   if (req.session.admin_id) {
     next();
@@ -83,26 +82,6 @@ router.post("/addmission_form", async function (req, res) {
   res.redirect("/admission");
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 router.use(veryfyLogin);
 
 router.get("/dashboard", async (req, res) => {
@@ -168,7 +147,7 @@ router.post("/home-update", async (req, res) => {
     let fields = [];
     let values = [];
 
-    // banner_image fallback
+    // banner_image fallback...................................................
     if (!data.banner_image || data.banner_image === "") {
       data.banner_image = img;
     }
@@ -202,6 +181,7 @@ router.post("/home-update", async (req, res) => {
   }
 });
 // Home Banner Code end...................................................
+// Feautred Course code Start...................................................
 
 router.get("/featured_courses", async (req, res) => {
   const courses = await exe("SELECT * FROM featured_courses");
@@ -268,6 +248,8 @@ router.get("/featured-courses/delete/:id", async (req, res) => {
     res.send(err.message);
   }
 });
+// featured course end ...................................................
+// achievements code start...................................................
 
 router.get('/achievements', async (req, res) => {
   const achievements = await exe("SELECT * FROM achievements");
@@ -314,7 +296,7 @@ router.post('/achievements/save', async (req, res) => {
     );
   }
 
-  res.redirect("/admin/achievements"); // ✅ FINAL FIX
+  res.redirect("/admin/achievements"); 
 });
 
 router.get('/achievements/delete/:id', async (req, res) => {
@@ -325,8 +307,8 @@ router.get('/achievements/delete/:id', async (req, res) => {
 
   res.redirect("/admin/achievements");
 });
-
-
+// achievements code end...................................................
+// upcoming batches code start...................................................
 router.get('/home_upcoming_batches', async (req, res) => {
   const batches = await exe("SELECT * FROM home_upcoming_batches");
 
@@ -376,12 +358,10 @@ router.get('/home_upcoming_batches/delete/:id', async (req, res) => {
   res.redirect("/admin/home_upcoming_batches");
 });
 
+// upcoming batches code end...................................................
 
 
-
-
-
-
+// testimonials code start...................................................
 // LIST
 router.get('/testimonials', async (req, res) => {
   const testimonials = await exe("SELECT * FROM testimonials ORDER BY id DESC");
@@ -423,8 +403,11 @@ router.get('/testimonials/delete/:id', async (req, res) => {
   res.redirect("/admin/testimonials");
 });
 
+// testimonials code end...................................................
 
 
+
+// contact code start...................................................
 router.get('/contact', async (req, res) => {
   const result = await exe("SELECT * FROM contact_details WHERE id=1");
 
@@ -472,7 +455,6 @@ router.post('/contact', async (req, res) => {
       ]
     );
 
-    // ✅ redirect to GET route (NOT .ejs)
     res.redirect('/admin/contact');
 
   } catch (err) {
@@ -480,6 +462,7 @@ router.post('/contact', async (req, res) => {
     res.send('Update Failed');
   }
 });
+// contact code end...................................................
 
 
 router.get("/hero-banner", async (req, res) => {
@@ -857,163 +840,12 @@ router.get("/courses_details", (req, res) => {
 });
 
 
-// router.get("/academy_information", async function (req, res) {
-//   try {
-//     var sql = `
-//       SELECT *
-//       FROM academy_info
-//       ORDER BY id DESC
-//     `;
-
-//     var rows = await exe(sql);
-
-//     res.render("admin/academy_information.ejs", {
-//       academyInfo: rows
-//     });
-
-//   } catch (err) {
-//     console.error("Academy Info Fetch Error:", err);
-//     res.status(500).send("Something went wrong");
-//   }
-// });
-
-
 router.get("/gallery_image", async (req, res) => {
   let sql = `SELECT * FROM gallery_images`;
   let gallery = await exe(sql);
   res.render("admin/gallery_image.ejs", { gallery });
 });
 
-// router.post("/academy_information", async function (req, res) {
-//   try {
-//     var short_info = req.body.short_info;
-//     var vision = req.body.vision;
-//     var mission = req.body.mission;
-//     var specializations = req.body.specializations;
-//     var methodology = req.body.methodology;
-
-//     var about_image = null;
-
-// ===== IMAGE UPLOAD (NO MULTER) =====
-// if (req.files && req.files.about_image) {
-//   var image = req.files.about_image;
-
-//   var ext = path.extname(image.name);
-//   var fileName = Date.now() + ext;
-
-//   var uploadPath = path.join(
-//     __dirname,
-//     "../public/images/",
-//     fileName
-//   );
-
-//   await image.mv(uploadPath);
-
-//   about_image = fileName;
-// }
-
-// ===== INSERT QUERY =====
-//     var sql = `
-//       INSERT INTO academy_info
-//       (short_info, vision, mission, specializations, methodology, about_image)
-//       VALUES (?, ?, ?, ?, ?, ?)
-//     `;
-
-//     var values = [
-//       short_info,
-//       vision,
-//       mission,
-//       specializations,
-//       methodology,
-//       about_image
-//     ];
-
-//     await exe(sql, values);
-
-//     res.redirect("/admin/academy_information");
-//   } catch (err) {
-//     console.error("Academy Info Insert Error:", err);
-//     res.status(500).send("Something went wrong");
-//   }
-// });
-
-// router.get("/edit_academy/:id", async function (req, res) {
-//   try {
-//     var sql = `
-//       SELECT *
-//       FROM academy_info
-//       WHERE id = ?
-//     `;
-
-//     var rows = await exe(sql, [req.params.id]);
-
-//     if (rows.length > 0) {
-//       res.render("admin/edit_academy.ejs", {
-//         academy: rows[0]
-//       });
-//     } else {
-//       res.redirect("/admin/academy_information");
-//     }
-
-//   } catch (err) {
-//     console.error("Academy Info Fetch Error:", err);
-//     res.status(500).send("Something went wrong");
-//   }
-// });
-
-// router.post("/edit_academy/:id", async function (req, res) {
-//   try {
-//     var id = req.params.id;
-//     var d = req.body;
-//     var about_image = d.old_about_image;
-
-//     if (req.files && req.files.about_image) {
-//       var image = req.files.about_image;
-//       var ext = path.extname(image.name);
-//       var fileName = Date.now() + ext;
-//       var uploadPath = path.join(__dirname, "../public/images/", fileName);
-//       await image.mv(uploadPath);
-//       about_image = fileName;
-//     }
-
-//     var sql = `
-//       UPDATE academy_info
-//       SET short_info = ?, vision = ?, mission = ?, specializations = ?, methodology = ?, about_image = ?
-//       WHERE id = ?
-//     `;
-
-//     var values = [
-//       d.short_info,
-//       d.vision,
-//       d.mission,
-//       d.specializations,
-//       d.methodology,
-//       about_image,
-//       id
-//     ];
-
-//     await exe(sql, values);
-//     res.redirect("/admin/academy_information");
-
-//   } catch (err) {
-//     console.error("Academy Info Update Error:", err);
-//     res.status(500).send("Something went wrong");
-//   }
-// });
-
-// router.get("/delete_academy/:id", async function (req, res) {
-//   try {
-//     var sql = `
-//       DELETE FROM academy_info
-//       WHERE id = ?
-//     `;
-//     await exe(sql, [req.params.id]);
-//     res.redirect("/admin/academy_information");
-//   } catch (err) {
-//     console.error("Academy Info Delete Error:", err);
-//     res.status(500).send("Something went wrong");
-//   }
-// });
 
 // POST route to add gallery image
 router.post("/gallery_image/add", async (req, res) => {
