@@ -166,23 +166,23 @@ required>
 <div class="section-card row g-3">
 
 <div class="col-md-6">
-<label class="form-label">Highest Qualification</label>
-<input type="text" class="form-control" name="qualification">
+<label class="form-label">Highest Qualification<span class="required-star">*</span></label>
+<input type="text" class="form-control" name="qualification" required >
 </div>
 
 <div class="col-md-6">
-<label class="form-label">College / University</label>
-<input type="text" class="form-control" name="college_name">
+<label class="form-label">College / University<span class="required-star">*</span></label>
+<input type="text" class="form-control" name="college_name" required >
 </div>
 
 <div class="col-md-6">
-<label class="form-label">Year of Passing</label>
+<label class="form-label">Year of Passing<span class="required-star">*</span></label>
 <input type="text" class="form-control"
 name="passing_year"
 maxlength="4"
 pattern="[0-9]{4}"
 inputmode="numeric"
-oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+oninput="this.value=this.value.replace(/[^0-9]/g,'')" required >
 </div>
 
 </div>
@@ -225,13 +225,21 @@ oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 <div class="section-card row g-3">
 
 <div class="col-md-6">
-<label class="form-label">Parent / Guardian Name</label>
-<input type="text" class="form-control" name="parent_name">
+<label class="form-label">Parent / Guardian Name<span class="required-star">*</span></label>
+<input type="text" class="form-control" name="parent_name" required >
 </div>
 
 <div class="col-md-6">
-<label class="form-label">Emergency Contact Number</label>
-<input type="text" class="form-control" name="parent_contact">
+<label class="form-label">Emergency Contact Number<span class="required-star">*</span></label>
+<input type="text" 
+class="form-control"
+name="parent_contact"
+placeholder="10-digit Mobile Number"
+maxlength="10"
+pattern="[0-9]{10}"
+inputmode="numeric"
+oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
+required>
 </div>
 
 </div>
@@ -243,13 +251,13 @@ oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 <div class="section-card row g-3">
 
 <div class="col-md-6">
-<label class="form-label">Passport Size Photo</label>
-<input type="file" class="form-control" name="photo">
+<label class="form-label">Passport Size Photo<span class="required-star">*</span></label>
+<input type="file" class="form-control" name="photo" required >
 </div>
 
 <div class="col-md-6">
-<label class="form-label">Identity Proof</label>
-<input type="file" class="form-control" name="id_proof">
+<label class="form-label">Identity Proof<span class="required-star">*</span></label>
+<input type="file" class="form-control" name="id_proof" required >
 </div>
 
 </div>
@@ -257,13 +265,17 @@ oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 <div class="form-check mt-3">
 <input class="form-check-input" type="checkbox" required>
 <label class="form-check-label">
-I confirm all details are correct
+I confirm all details are correct<span class="required-star">*</span>
 </label>
 </div>
 
-<button type="submit" class="btn btn-submit mt-4">
-Confirm & Submit Admission
+<button type="submit" id="submitBtn" class="btn btn-submit mt-4">
+<span id="btnText">Confirm & Submit Admission</span>
+<span id="btnTick" style="display:none;">
+    <i class="fa-solid fa-check"></i> Submitted
+</span>
 </button>
+
 </div>
 
 <!-- NAV BUTTONS -->
@@ -314,6 +326,33 @@ showStep(current);
 };
 
 showStep(0);
+
+document.getElementById("admissionForm").addEventListener("submit", function () {
+
+    // button text hide
+    document.getElementById("btnText").style.display = "none";
+
+    // show green tick
+    const tick = document.getElementById("btnTick");
+    tick.style.display = "inline";
+
+    // button disable
+    document.getElementById("submitBtn").disabled = true;
+
+    // 1.5 second nantar form reset + first page
+    setTimeout(() => {
+        this.reset();
+        current = 0;
+        showStep(0);
+
+        // button normal kara
+        document.getElementById("btnText").style.display = "inline";
+        tick.style.display = "none";
+        document.getElementById("submitBtn").disabled = false;
+
+    }, 1500);
+});
+
 </script>
 
 </body>
